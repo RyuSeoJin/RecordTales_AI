@@ -1,6 +1,8 @@
 # RecordTales — HTML Design Style Guide
 
 > **문서 성격**: **HTML 프로토타입 전용** 시각 디자인 기준 + 작업 제약.
+> 색상·폰트·간격·모션·컴포넌트 등 **시각 디자인 토큰과 스타일 규칙**을 정의합니다.
+> 페이지 레이아웃 좌표, z-index 계층, 초기화 시퀀스, 글로벌 함수 등 **구조·동작 인프라**는 `page-architecture.md` 참조.
 > 개발 최종은 언리얼 엔진이지만, 이 문서가 다루는 내용은 **HTML 프로토타입 단계**에 국한됩니다.
 > 언리얼 전환 시 이 문서의 시각 언어(색상 계열·타이포 위계·모션 철학)는 이식되지만, 구체적 CSS 값·기술 제약은 재번역 대상입니다.
 > 작성 규칙은 `project-docs-guide.md` 참조.
@@ -44,11 +46,13 @@
 
 **이 문서에 들어가지 않는 것**:
 
-- 개별 시스템의 UI 구현 세부 → `project-plan/approved/*.md`
+- 페이지 레이아웃 좌표·z-index·초기화 시퀀스·글로벌 함수 → `page-architecture.md`
+- 개별 시스템의 UI 구현 세부 → `project-wiki/` 내 각 시스템 문서
 - UI 요소의 명칭·구조 정의 → `project-dictionary.md`
 - 프로젝트 철학·정체성 → `project-identity.md`
 - 데이터 스키마 → `project-data.md` (예정)
 - **언리얼 엔진 최종본의 시각 가이드** → (향후 별도 문서로 작성)
+
 
 ### 0.2. 토큰 추가·수정 원칙
 
@@ -164,6 +168,16 @@ HTML 프로토타입(`guild-master-desktop.html`)을 유지·개선할 때 **반
 | `--border-gold` | `rgba(201,169,89,0.25)` | 강조 테두리 |
 | `--glass-b` | `rgba(201,169,89,0.2)` | 글래스 요소 전용 테두리 |
 
+### 2.7. 반복 인라인 컬러 패턴
+
+토큰화되지 ��았지만 여러 시스템에서 반복 사용되는 RGBA 패턴. 일회성 값이 아닌 **의도된 패턴**으로, 일관성 유지를 위해 기록한다.
+
+| 패턴 | 범위 | 용도 | 사용처 예시 |
+|------|------|------|-----------|
+| Hover white overlay | `rgba(255,255,255, 0.02~0.05)` | 인터랙티브 요소의 미묘한 호버 배경 | `.tl-todo-item`, `.todo-item`, `.tl-item` |
+| Gold glow | `rgba(232,200,124, 0.2~1.0)` | 골드 계열 text-shadow, box-shadow | `.sigil-letter`, `.pl-art-glyph`, `.nav-dot` |
+| Backdrop scrim | `rgba(0,0,0, 0.4~0.75)` | 모달·드롭다운 뒤 반투명 어둡게 | `.rec-modal-wrap`, `.cat-add-modal-wrap`, `.side-panel` box-shadow |
+
 ---
 
 ## 3. 타이포그래피 (Typography)
@@ -239,16 +253,35 @@ CSS 변수로 토큰화되어 있지는 않으나 코드 전반에서 반복 사
 
 **cubic-bezier(0.4, 0, 0.2, 1)** 은 Material Design의 "standard curve". 초기 빠른 반응 + 자연스러운 감속.
 
-### 5.2. 애니메이션 패턴
+### 5.2. 애니메이션 키프레임 카탈로그
 
-| 패턴 | 주기 | 용도 |
-|------|------|------|
-| `drift` | 10~20s linear | 파티클 부유 (상승 + 페이드 인아웃) |
-| `spin` | 120s linear | 시길 링 회전 (매우 느림, 명상적) |
-| EQ bars | 0.9s ease | 음악 재생 중 이퀄라이저 바 |
-| 패널 fade-in | 0.3s | 사이드 패널·모달 등장 |
+전체 7개 `@keyframes` 정의.
 
-### 5.3. 모션 원칙
+| 이름 | 주기 / 이징 | 정의 | 소유 시스템 |
+|------|------------|------|-----------|
+| `drift` | 10~20s linear | `0%{opacity:0; translateY(18px)}` → `15%{opacity:0.7}` → `85%{opacity:0.4}` → `100%{opacity:0; translateY(-40px)}` | 파티클 (ui/particles) |
+| `spin` | 120s linear | `to{transform:rotate(360deg)}` | 시길 링 (guild/sigil) |
+| `pdot` | 2s ease | `0%,100%{opacity:1}` → `50%{opacity:0.4}` | 알림 점 (todo-dot, nav-dot, sm-indicator) |
+| `eq` | 0.9s ease | `0%,100%{height:3px}` → `50%{height:13px}` | EQ 바 (audio/music-player). 3개 바에 delay -0.4s, -0.2s, 0s |
+| `glow` | 3s ease | `0%,100%{text-shadow:0 0 10px rgba(232,200,124,0.5)}` → `50%{text-shadow:0 0 22px rgba(232,200,124,1)}` | 앨범 아트 글리프 (audio/music-player, `.playing` 상태) |
+| `blk` | 1s step-end infinite | `0%,100%{opacity:1}` → `50%{opacity:0.2}` | 타이머 일시정지 깜빡임 (focus/timer, `.blink` 상태) |
+| `cdp` | 1.5s ease | `0%,100%{box-shadow:0 0 0 0 rgba(232,168,124,0.4)}` → `50%{box-shadow:0 0 0 4px rgba(232,168,124,0)}` | 현재 사이클 도트 펄스 (focus/timer, `.cdot.act`) |
+
+### 5.3. 트랜지션 패턴 변형
+
+`--tr` 외에 반복 사용되는 트랜지션 패턴들.
+
+| 패턴 이름 | 값 | 적용처 |
+|----------|-----|--------|
+| 기본 `var(--tr)` | `0.25s cubic-bezier(0.4,0,0.2,1)` | 대부분의 인터랙티브 요소 |
+| 패널 열기/닫기 | `opacity 0.25s ease, transform 0.25s ease, width 0.25s ease` | `.side-panel` |
+| 오버레이 슬라이드 | `max-height 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease` | `.todo-overlay`, `.routine-panel` |
+| 모드 스위치 인디케이터 | `transform 0.3s cubic-bezier(0.4,0,0.2,1)` | `.mode-sw-ind` |
+| 프로그레스 필 | `width 0.25s linear` | `.p-fill` (음악), `.amb-fill` |
+| SVG 스트로크 | `stroke-dashoffset 1s linear, stroke 0.4s` | `.ring-arc`, `.sw-ring-arc` |
+| 모달 등장 | `opacity 0.3s ease` (래퍼) + `transform 0.25s ease` (내부) | `.rec-modal-wrap`, `.cat-add-modal-wrap` |
+
+### 5.4. 모션 원칙
 
 - **느리고 의도적**: 집중 도구 철학 반영. 화려한 모션 지양
 - **사용자 액션 피드백은 즉시**, **배경 연출은 매우 느리게**: 주의를 분산시키지 않음
@@ -283,6 +316,19 @@ CSS 변수로 토큰화되어 있지는 않으나 코드 전반에서 반복 사
 
 **적용되는 주요 요소**: `.todo-overlay`, `.nav-bar`, `.ambient-overlay`, `.music-player`, `.rec-modal` 등.
 
+#### 블러 티어
+
+`.glass` 클래스는 `blur(24px)`를 사용하지만, 시스템별로 4단계의 블러 강도가 존재한다.
+
+| 블러 | 용도 | 적용 요소 |
+|------|------|----------|
+| `blur(10px)` | 모달 백드롭 (얇은 반투명) | `.rec-modal-wrap`, `.cat-add-modal-wrap` |
+| `blur(20px)` | 드롭다운 (중간 강도) | `.player-tracks` |
+| `blur(24px)` | 표준 `.glass` 패널 | `.guild-plate`, `.todo-overlay`, `.nav-bar`, `.music-player`, `.ambient-overlay`, `.cmd-btn` |
+| `blur(28px)` | 대형 오버레이 (강한 블러) | `.side-panel` |
+
+규칙: 면적이 넓을수록 블러를 강하게, 모달 백드롭은 내부 콘텐츠가 돋보이도록 약하게.
+
 ### 6.2. 배경 그라데이션 (스테이지)
 
 메인 스테이지(1920×1080)의 배경은 세 레이어 합성:
@@ -311,6 +357,52 @@ CSS 변수로 토큰화되어 있지는 않으나 코드 전반에서 반복 사
 
 - 주 그림자: `0 20px 60px rgba(0,0,0,0.45)` (아래쪽 짙은 드롭)
 - 내부 광택: `inset 0 1px 0 rgba(255,255,255,0.04)` (상단 하이라이트)
+
+### 6.4. 상태 클래스 시스템
+
+여러 시스템에서 공통으로 사용되는 CSS 상태 클래스. 각 클래스는 JS에서 `classList.toggle()`로 제어된다.
+
+#### 가시성·레이아웃 상태
+
+| 클래스 | 시각 효과 | 적용 대상 | 토글 주체 |
+|--------|----------|----------|----------|
+| `.open` | opacity 1 + transform 원위치 + pointer-events 활성 | `.side-panel`, `.ambient-overlay`, `.player-tracks`, `.rec-modal-wrap`, `.cat-add-modal-wrap`, `.panel-backdrop` | 각 open/close 함수 |
+| `.visible` | display 활성 | `.session-mini` | `renderSessionMini()` |
+| `.collapsed` | body max-height:0 + toggle 버튼 180° 회전 | `.todo-overlay` | `toggleTlTodos()` |
+| `.has-todos` | max-height: 400px, 오버레이 보임 | `.todo-overlay` | `renderTlTodos()` |
+| `.wide` | width: 760px (기본 460px 대신) | `.side-panel` | `openPanel('archive')` |
+| `.show` | opacity 1 + translateY(0) | `.toast` | `showToast()` |
+
+#### 인터랙션·선택 상태
+
+| 클래스 | 시각 효과 | 적용 대상 | 토글 주체 |
+|--------|----------|----------|----------|
+| `.active` | 악센트 색상 배경/텍스트 강조 | `.nav-btn`, `.ambient-btn`, `.tl-item` | 각 활성화 함수 |
+| `.on` | 탭/필터 활성 스타일 | `.qtab`, `.fchip` | 탭/필터 설정 함수 |
+| `.sel` | 악센트 배경 채움 | `.cat-chip` | 카테고리 선택 함수 |
+
+#### 데이터·상태 표현
+
+| 클래스 | 시각 효과 | 적용 대상 | 결정 주체 |
+|--------|----------|----------|----------|
+| `.done` | 배경 채움, 체크마크, line-through | `.tl-todo-chk`, `.todo-item`, `.cdot`, `.arch-q-card` | `instanceStatus()`, 렌더 함수 |
+| `.suspended` | 반투명, 이탤릭 | `.todo-item`, `.arch-q-card` | `instanceStatus()` |
+| `.overdue` | danger 색상 하이라이트 | `.todo-item`, `.tbadge.dday`, `.arch-q-card` | `instanceStatus()`, `ddayInfoForKey()` |
+| `.upcoming` | muted 스타일 | `.arch-q-card` | `instanceStatus()` |
+| `.near` | 경고 컬러 (D-day ≤ 3) | `.tbadge.dday` | `ddayInfoForKey()` |
+| `.today` | 하단 점 강조 | `.cal-day .day-num`, `.tbadge.dday` | 캘린더 렌더 |
+
+#### 모드·페이즈 상태
+
+| 클래스 | 시각 효과 | 적용 대상 | 토글 주체 |
+|--------|----------|----------|----------|
+| `.playing` | 앨범 아트 glow 애니메이션 활성 | `.music-player` | `togglePlay()` |
+| `.blink` | 1s step-end 깜빡임 (opacity 1↔0.2) | `.ring-time` | `toggleTimerPause()` |
+| `.pause` | 일시정지 인디케이터 스타일 | `.sm-indicator` | 타이머/스톱워치 일시정지 |
+| `.rest`, `.lrest` | 페이즈별 색상 (sky, violet) | `.btn-primary` (타이머 컨트롤) | `enterPhase()` |
+| `.sw` | 스톱워치 민트 색상 | `.btn-primary`, `.sm-indicator` | 스톱워치 모드 |
+| `.focus` | 포커스 코랄 색상 | `.sm-indicator` | 타이머 집중 페이즈 |
+| `.warn` | 경고 컬러 강조 | `.fchip` | 필터 칩 overdue 카운트 |
 
 ---
 
@@ -515,11 +607,12 @@ CSS 변수로 토큰화되어 있지는 않으나 코드 전반에서 반복 사
 
 | 문서 | 다루는 것 |
 |------|---------|
+| `page-architecture.md` | 페이지 레이아웃 좌표, z-index 계층, 초기화 시퀀스, 글로벌 함수·이벤트 (구조·동작 인프라) |
 | `project-docs-guide.md` | 문서 작성 공통 규칙 |
 | `project-identity.md` | 프로젝트 정체성, UX 원칙, 미래 방향성 |
 | `project-dictionary.md` | UI 명칭 정의 (이 문서의 식별색 토큰을 참조) |
 | `project-data.md` | 데이터 스키마 (예정) |
-| `project-plan/approved/*.md` | 각 시스템의 시각 적용 세부 |
+| `project-wiki/` | 각 시스템의 시각 적용 세부 |
 
 ---
 
@@ -530,3 +623,4 @@ CSS 변수로 토큰화되어 있지는 않으나 코드 전반에서 반복 사
 | 2026-04-24 | 초안 작성 (`design-style-guide.md`). `guild-master-desktop.html`의 실제 CSS 토큰 기반. 4종 폰트·6종 기능 식별색·글래스 모피즘·스테이지 배경 그라데이션 정리 |
 | 2026-04-24 | 파일명을 `html-design-style-guide.md`로 변경. **섹션 1. HTML 프로토타입 작업 제약** 신설 (기존 `project-identity.md` 섹션 5에서 이전). 기존 섹션 1~8은 2~9로 번호 이동. 문서 정체성을 "HTML 프로토타입 전용"으로 명확히 함 |
 | 2026-04-24 | 3차 수정 — **섹션 8. 공용 UI 컴포넌트** 신설. 버튼(5종 변형)·입력 필드·토글·칩의 공식 스펙을 HTML 실제 CSS에서 추출해 공식화. 기존 섹션 8(전역 UI), 9(관련 문서)는 9, 10으로 번호 이동. 컴포넌트 사용 원칙 4가지(색상 토큰 참조·높이 4단계·radius 범위·폰트 규칙) 추가 |
+| 2026-04-25 | **구조 보강** — §0.1 scope에 `page-architecture.md` 경계 명시, §2.7 반복 인라인 컬러 패턴, §5.2 애니메이션 키프레임 카탈로그(7개 전체), §5.3 트랜지션 패턴 변형, §6.1 블러 티어(4단계), §6.4 상태 클래스 시스템(23+개) 추가. 기존 §5.3 모션 원칙은 §5.4로 이동 |
