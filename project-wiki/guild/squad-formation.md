@@ -28,15 +28,15 @@
 ### 2.1. 와이어프레임
 
 ```
-[스쿼드1] [스쿼드2] [스쿼드3]     ← 프리셋 바
+[스쿼드1 (2/4)] [스쿼드2 (0/4)] [스쿼드3 (0/4)]   ← 프리셋 바 (멤버 수 표시)
 
 Squad (2/4)
-┌────┐ ┌────┐ ┌────┐ ┌────┐
+┌────┐ ┌────┐ ┌─ ─ ┐ ┌─ ─ ┐
 │이미지│ │이미지│ │ +  │ │ +  │
-│이름  │ │이름  │ │빈슬롯│ │빈슬롯│
-│★★   │ │★★★  │ │    │ │    │
+│이름  │ │이름  │ │탭하여│ │탭하여│     ← 빈 슬롯: pulse 애니메이션
+│★★   │ │★★★  │ │추가 │ │추가 │
 │  ✕  │ │  ✕  │ │    │ │    │
-└────┘ └────┘ └────┘ └────┘
+└────┘ └────┘ └─ ─ ┘ └─ ─ ┘
 
 ┌─────────┬─────────┐
 │집중 시간  │골드 획득  │    ← 스탯 합산
@@ -46,21 +46,31 @@ Squad (2/4)
 │   +0%   │  +8%    │
 └─────────┴─────────┘
 
+"아래 대기 길드원을 클릭하면 빈 슬롯에 편성됩니다"   ← 안내 텍스트
+
 대기 길드원 (4)
-[img][img][img][img]           ← 벤치
+┌────┐ ┌────┐ ┌────┐ ┌────┐
+│이미지│ │이미지│ │이미지│ │이미지│
+│ [+] │ │ [+] │ │ [+] │ │ [+] │   ← hover 시 + 오버레이
+│이름  │ │이름  │ │이름  │ │이름  │
+│집+5  │ │골+8  │ │퀘+12│ │스+6  │   ← 스탯 힌트 (축약)
+└────┘ └────┘ └────┘ └────┘
 ```
+
+> **UX 가이드라인**: 빈 슬롯에 `drop-target` pulse 애니메이션이 적용되어 "여기에 추가하세요"를 시각적으로 안내. 벤치 카드 hover 시 `+` 오버레이가 표시되어 클릭 가능함을 명시. 스쿼드가 가득 찬 경우 벤치 카드가 비활성화되고, 안내 텍스트가 "슬롯의 ✕를 눌러 길드원을 제거할 수 있습니다"로 전환.
 
 ### 2.2. CSS 클래스 구조
 
 ```
 .gm-preset-bar > .gm-preset-btn (.active) > .gm-preset-dot (.filled|.empty)
 .gm-squad-label
-.gm-squad-slots > .gm-slot (.filled, .filling)
+.gm-squad-slots > .gm-slot (.filled, .filling, .drop-target)
   > .gm-slot-img, .gm-slot-name, .gm-slot-rarity, .gm-slot-remove
   | .gm-slot-empty-icon, .gm-slot-empty-text
 .gm-squad-summary > .gm-summary-item > .gm-summary-label + .gm-summary-value (.zero)
+.gm-formation-hint
 .gm-bench-label
-.gm-bench (.highlight-mode) > .gm-bench-card > .gm-bench-img + .gm-bench-name
+.gm-bench (.highlight-mode) > .gm-bench-card > .gm-bench-img + .gm-bench-add + .gm-bench-name + .gm-bench-stat-hint
 ```
 
 ### 2.3. 시각 요소 상세
@@ -123,13 +133,42 @@ Squad (2/4)
 | 레이아웃 | `flex wrap` |
 | 카드 너비 | `80px` |
 | 이미지 비율 | `1:1` aspect ratio |
+| hover | blue border + `translateY(-2px)` + `+` 오버레이 표시 |
+| 스쿼드 full 시 | `opacity: 0.5`, `pointer-events: none` (비활성화) |
 | 하이라이트 | pulsing gold shadow animation (1s infinite) |
+
+#### 벤치 카드 오버레이 (`.gm-bench-add`)
+
+| 속성 | 값 |
+|------|----|
+| 배경 | `rgba(0,0,0,0.5)` |
+| 표시 조건 | hover 시 `opacity: 0→1` |
+| 내용 | `+` 아이콘 (16px, `rest-c` 색상) |
+
+#### 벤치 스탯 힌트 (`.gm-bench-stat-hint`)
+
+| 속성 | 값 |
+|------|----|
+| 폰트 | `DM Mono 7px` |
+| 색상 | `gold-soft` |
+| 내용 | 능력치 축약 (예: `집+5 골+8`) |
+
+#### 안내 텍스트 (`.gm-formation-hint`)
+
+| 속성 | 값 |
+|------|----|
+| 폰트 | `DM Mono 9px` |
+| 색상 | `text-muted`, `opacity: 0.7` |
+| 위치 | 스탯 요약 아래, 벤치 위 |
+| 내용 (빈 슬롯) | "아래 대기 길드원을 클릭하면 빈 슬롯에 편성됩니다" |
+| 내용 (full) | "슬롯의 ✕를 눌러 길드원을 제거할 수 있습니다" |
 
 #### 애니메이션
 
 | 이름 | 효과 |
 |------|----|
 | `@keyframes slotFill` | scale `0.8→1`, opacity `0.5→1` (0.35s) |
+| `@keyframes slotPulse` | border-color 파란 펄스 (1.5s, 빈 슬롯용) |
 | `@keyframes benchPulse` | gold box-shadow pulse (1s) |
 
 ## 3. 데이터 모델
@@ -185,10 +224,12 @@ Squad (2/4)
 
 | 액션 | 결과 |
 |------|------|
-| 프리셋 버튼 클릭 | 해당 프리셋으로 전환 |
-| 벤치 길드원 클릭 | 스쿼드에 추가 (슬롯 여유 시) |
+| 프리셋 버튼 클릭 | 해당 프리셋으로 전환 (멤버 수 표시) |
+| 벤치 길드원 클릭 | 스쿼드에 추가 (슬롯 여유 시). hover 시 `+` 오버레이로 클릭 가능 안내 |
+| 벤치 길드원 (full 시) | 비활성 (opacity 50%, pointer-events off) |
 | 슬롯 ✕ 버튼 클릭 | 스쿼드에서 제거 |
 | 빈 슬롯 클릭 | 벤치 영역 하이라이트 + 스크롤 |
+| 상태에 따른 힌트 | 빈 슬롯 있을 때/없을 때 다른 안내 텍스트 표시 |
 
 ## 6. 관련 시스템
 
@@ -206,3 +247,4 @@ Squad (2/4)
 |------|----------|
 | 2026-04-25 | 아이디어 단계 초안 작성 (draft). |
 | 2026-04-27 | HTML 구현 완료에 따라 승격. 전체 스펙 문서화. |
+| 2026-04-29 | 편성 UX 개선: 벤치 카드에 + 오버레이·스탯 힌트 추가, 빈 슬롯 pulse 애니메이션, 상황별 안내 텍스트, 프리셋 멤버 수 표시, 스쿼드 full 시 벤치 비활성화. |

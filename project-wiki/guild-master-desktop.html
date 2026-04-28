@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -52,8 +52,6 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 .sigil-core{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;}
 .sigil-anno{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.5em;color:rgba(201,169,89,0.4);text-transform:uppercase;margin-bottom:14px;}
 .sigil-letter{font-family:'Cinzel',serif;font-weight:700;font-size:80px;color:var(--gold-soft);line-height:1;text-shadow:0 0 40px rgba(232,200,124,0.2);}
-.sigil-letter.level-up-flash{animation:levelUpFlash 1.5s ease-out;}
-@keyframes levelUpFlash{0%{transform:scale(1);filter:brightness(1) drop-shadow(0 0 0 transparent);}30%{transform:scale(1.15);filter:brightness(1.6) drop-shadow(0 0 30px rgba(201,169,89,0.8));}100%{transform:scale(1);filter:brightness(1) drop-shadow(0 0 0 transparent);}}
 .sigil-motto{font-family:'DM Serif Display',serif;font-style:italic;font-size:17px;color:var(--text-secondary);margin-top:14px;letter-spacing:0.06em;}
 .sigil-trans{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.28em;color:var(--text-muted);margin-top:20px;text-transform:uppercase;}
 
@@ -215,17 +213,16 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 /* ══════════════════════════════════════════════
    BOTTOM-RIGHT — Command Post
 ══════════════════════════════════════════════ */
-.br-block{position:absolute;bottom:28px;right:36px;z-index:20;display:flex;flex-direction:column;align-items:flex-end;gap:14px;}
-.cmd-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(201,169,89,0.5);display:flex;align-items:center;gap:10px;}
-.cmd-label::before{content:'';display:inline-block;width:40px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,169,89,0.35));}
-.cmd-btns{display:flex;align-items:center;gap:12px;}
-.cmd-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:96px;height:96px;border-radius:18px;cursor:pointer;background:var(--glass);border:1px solid var(--glass-b);backdrop-filter:blur(24px);color:var(--text-muted);transition:all 0.3s cubic-bezier(0.4,0,0.2,1);box-shadow:0 12px 36px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.04);position:relative;}
-.cmd-btn::after{content:'Coming Soon';position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(4px);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-soft);background:var(--glass);border:1px solid var(--glass-b);padding:5px 12px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:all 0.25s ease;backdrop-filter:blur(20px);box-shadow:0 8px 24px rgba(0,0,0,0.35);}
-.cmd-btn:hover::after{opacity:1;transform:translateX(-50%) translateY(0);}
-.cmd-btn:hover{color:var(--gold-soft);border-color:rgba(201,169,89,0.4);transform:translateY(-3px);box-shadow:0 16px 44px rgba(0,0,0,0.5),0 0 20px rgba(201,169,89,0.06),inset 0 1px 0 rgba(255,255,255,0.06);}
-.cmd-btn svg{width:26px;height:26px;opacity:0.7;transition:opacity 0.3s;}
-.cmd-btn:hover svg{opacity:1;}
-.cmd-btn-label{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.12em;text-transform:uppercase;color:inherit;text-align:center;line-height:1.3;}
+.br-block{position:absolute;bottom:28px;right:36px;z-index:20;display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
+.cmd-label{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(201,169,89,0.45);display:flex;align-items:center;gap:10px;}
+.cmd-label::before{content:'';display:inline-block;width:30px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,169,89,0.3));}
+.cmd-btns{display:flex;align-items:center;gap:10px;}
+.cmd-btn{display:flex;flex-direction:column;align-items:center;gap:8px;width:96px;height:96px;border-radius:18px;cursor:pointer;background:linear-gradient(180deg,rgba(28,28,38,0.9) 0%,rgba(18,18,26,0.9) 100%);border:1px solid var(--border);color:var(--text-muted);transition:var(--tr);box-shadow:0 2px 10px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.03);position:relative;}
+.cmd-btn::after{content:'Coming Soon';position:absolute;bottom:calc(100%+8px);left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);background:rgba(14,14,20,0.95);border:1px solid var(--border);padding:4px 9px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;}
+.cmd-btn:hover::after{opacity:1;}
+.cmd-btn:hover{color:var(--text-secondary);border-color:rgba(255,255,255,0.12);transform:translateY(-2px);}
+.cmd-btn svg{width:28px;height:28px;}
+.cmd-btn-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:inherit;text-align:center;line-height:1.3;}
 
 /* ══════════════════════════════════════════════
    PANEL (single overlay — right side)
@@ -258,7 +255,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
   flex-shrink:0;
 }
 .sp-hdr-left{display:flex;flex-direction:column;gap:3px;}
-.sp-kicker{font-family:'Cinzel',serif;font-size:24px;letter-spacing:0.3em;text-transform:uppercase;}
+.sp-kicker{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.3em;text-transform:uppercase;}
 .sp-title{font-family:'DM Serif Display',serif;font-size:21px;letter-spacing:-0.02em;}
 .sp-close{background:none;border:1px solid var(--border);color:var(--text-secondary);width:30px;height:30px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--tr);}
 .sp-close:hover{background:var(--border);color:var(--text-primary);}
@@ -350,9 +347,6 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 .fav-star{color:var(--todo-c);font-size:10px;}
 .fav-empty{font-size:11px;color:var(--text-muted);font-family:'DM Mono',monospace;padding:4px 0;}
 .filter-chips{display:flex;gap:6px;flex-wrap:wrap;}
-.arch-filter-wrap{display:flex;flex-direction:column;gap:8px;margin-bottom:4px;}
-.arch-filter-row{display:flex;align-items:flex-start;gap:10px;}
-.arch-filter-label{margin-bottom:0;padding-top:5px;white-space:nowrap;flex-shrink:0;}
 .fchip{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;padding:4px 10px;border-radius:16px;background:var(--surface2);color:var(--text-muted);border:1px solid var(--border);cursor:pointer;transition:var(--tr);}
 .fchip:hover{color:var(--text-primary);}
 .fchip.on{background:var(--todo-dim);color:var(--todo-c);border-color:rgba(232,200,124,0.3);}
@@ -471,9 +465,8 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 .cal-day.empty{cursor:default;pointer-events:none;}
 .cal-day.today .day-num{color:var(--focus-c);}
 .cal-day.today .day-num::after{content:'';display:block;width:3px;height:3px;border-radius:50%;background:var(--focus-c);margin:1px auto 0;}
-.cal-day.sel{background:var(--focus-dim)!important;border:1px solid rgba(232,168,124,0.15);}
+.cal-day.sel{background:var(--focus-dim)!important;border:1px solid rgba(232,168,124,0.3);}
 .cal-day.sel .day-num{color:var(--focus-c);}
-.cal-day.anchor{border-color:rgba(232,168,124,0.6)!important;box-shadow:0 0 0 1px rgba(232,168,124,0.3);}
 .day-num{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-secondary);line-height:1;transition:color 0.2s;}
 .cal-day.sun .day-num{color:rgba(232,124,124,0.7);}
 .cal-day.sat .day-num{color:rgba(124,184,232,0.7);}
@@ -516,43 +509,6 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 .arch-todo-item.overdue .arch-todo-title{color:#f5b5b5;}
 .arch-todo-item.overdue .arch-todo-cat{color:var(--danger);}
 .arch-todo-title{font-size:12px;color:var(--text-primary);line-height:1.4;}
-/* ══ ARCHIVE CONTENT SPLIT ══ */
-.arch-content-split{display:flex;gap:10px;align-items:flex-start;}
-.arch-content-left{flex:1;min-width:0;}
-.arch-content-right{width:140px;flex-shrink:0;}
-.arch-q-section{margin-bottom:14px;}
-.arch-date-hdr{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:10px 0 5px;display:flex;gap:6px;flex-wrap:wrap;}
-.arch-q-card{display:flex;align-items:flex-start;gap:7px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 9px;margin-bottom:4px;cursor:pointer;transition:var(--tr);}
-.arch-q-card:hover{border-color:rgba(255,255,255,0.15);}
-.arch-q-icon{width:15px;height:15px;border-radius:3px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;}
-.arch-q-body{flex:1;min-width:0;}
-.arch-q-title{font-size:11px;color:var(--text-primary);line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.arch-q-meta{font-size:10px;color:var(--text-muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-/* done — 민트 그린 */
-.arch-q-card.done{border-color:rgba(124,232,168,0.2);background:rgba(124,232,168,0.04);}
-.arch-q-card.done:hover{border-color:rgba(124,232,168,0.4);}
-.done-icon{background:rgba(124,232,168,0.25);color:#7ce8a8;border:1px solid rgba(124,232,168,0.4);}
-.arch-q-card.done .arch-q-title{color:var(--text-secondary);}
-/* active — 스카이 블루 */
-.arch-q-card.active{border-color:rgba(124,184,232,0.2);background:rgba(124,184,232,0.04);}
-.arch-q-card.active:hover{border-color:rgba(124,184,232,0.4);}
-.active-icon{background:rgba(124,184,232,0.25);color:#7cb8e8;border:1px solid rgba(124,184,232,0.4);}
-.arch-q-card.active .arch-q-title{color:#a8d4f5;}
-/* overdue — 레드 */
-.arch-q-card.overdue{border-color:rgba(232,124,124,0.25);background:rgba(232,124,124,0.05);}
-.arch-q-card.overdue:hover{border-color:rgba(232,124,124,0.45);}
-.overdue-icon{background:rgba(232,124,124,0.25);color:#e87c7c;border:1px solid rgba(232,124,124,0.4);}
-.arch-q-card.overdue .arch-q-title{color:#f5a8a8;}
-/* suspended — 그레이 */
-.arch-q-card.suspended{border-color:rgba(160,160,160,0.15);opacity:0.7;}
-.arch-q-card.suspended:hover{border-color:rgba(160,160,160,0.35);opacity:1;}
-.suspended-icon{background:rgba(160,160,160,0.15);color:#a0a0a0;border:1px solid rgba(160,160,160,0.3);}
-.arch-q-card.suspended .arch-q-title{color:var(--text-muted);}
-/* upcoming — 퍼플 */
-.arch-q-card.upcoming{border-color:rgba(199,157,232,0.2);background:rgba(199,157,232,0.04);}
-.arch-q-card.upcoming:hover{border-color:rgba(199,157,232,0.4);}
-.upcoming-icon{background:rgba(199,157,232,0.2);color:#c79de8;border:1px solid rgba(199,157,232,0.35);}
-.arch-q-card.upcoming .arch-q-title{color:#d4b5f0;}
 .arch-todo-cat{font-family:'DM Mono',monospace;font-size:8px;color:var(--todo-c);letter-spacing:0.08em;text-transform:uppercase;margin-top:2px;}
 
 /* ══ RECORD MODAL ══ */
@@ -573,31 +529,6 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 .btn-rm-save:hover{filter:brightness(1.08);}
 .btn-rm-skip{height:42px;padding:0 14px;background:var(--surface2);color:var(--text-secondary);font-size:12px;border:1px solid var(--border);border-radius:8px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:var(--tr);}
 .btn-rm-skip:hover{color:var(--text-primary);}
-
-/* ══ DEADLINE OFFSET ══ */
-.deadline-offset-wrap{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:12px;}
-.deadline-offset-label{font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--text-secondary);white-space:nowrap;}
-.deadline-offset-input{width:60px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--text-primary);font-family:'DM Mono',monospace;font-size:14px;font-weight:500;padding:4px 8px;text-align:center;outline:none;transition:border-color 0.2s;}
-.deadline-offset-input:focus{border-color:rgba(232,200,124,0.4);}
-.deadline-offset-input::-webkit-inner-spin-button,.deadline-offset-input::-webkit-outer-spin-button{opacity:1;}
-
-/* ══ CAT ADD OPEN BTN ══ */
-.cat-add-open-btn{width:100%;margin-bottom:14px;padding:8px 0;background:transparent;border:1px dashed var(--border);border-radius:8px;color:var(--text-muted);font-family:'Noto Sans KR',sans-serif;font-size:12px;cursor:pointer;transition:var(--tr);}
-.cat-add-open-btn:hover{border-color:rgba(232,200,124,0.4);color:var(--text-primary);}
-
-/* ══ CAT ADD MODAL ══ */
-.cat-add-modal-wrap{position:absolute;inset:0;z-index:250;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,0.75);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity 0.25s ease;}
-.cat-add-modal-wrap.open{opacity:1;pointer-events:all;}
-.cat-add-modal{background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;padding:24px 22px;width:100%;max-width:320px;transform:translateY(12px) scale(0.97);transition:transform 0.25s cubic-bezier(0.4,0,0.2,1);}
-.cat-add-modal-wrap.open .cat-add-modal{transform:translateY(0) scale(1);}
-.cam-title{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:16px;letter-spacing:-0.02em;}
-.cam-name-row{display:flex;align-items:center;gap:8px;margin-bottom:0;}
-.cam-color-preview{flex-shrink:0;width:18px;height:18px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);}
-.cam-name-input{flex:1;min-width:0;box-sizing:border-box;}
-.cam-color-row{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
-.cam-color-input{width:44px;height:36px;padding:2px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);cursor:pointer;}
-.cam-actions{display:flex;gap:8px;}
-.cam-actions .btn{flex:1;height:40px;font-size:12px;}
 
 /* ══ TOAST ══ */
 .toast{position:absolute;bottom:28px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--glass);border:1px solid rgba(124,232,168,0.3);color:var(--success);font-size:11px;font-family:'DM Mono',monospace;padding:8px 16px;border-radius:18px;opacity:0;transition:all 0.3s ease;pointer-events:none;white-space:nowrap;z-index:300;letter-spacing:0.05em;}
@@ -686,497 +617,6 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 .btn-primary.danger{background:var(--danger);color:#1a0a0a;}
 .btn-primary.danger:hover{background:#e47272;}
 .btn-primary:disabled{opacity:0.35;cursor:not-allowed;}
-
-/* ══════════════════════════════════════════════
-   GUILD MEMBER HIRE
-══════════════════════════════════════════════ */
-/* Gold display in guild-plate */
-.guild-gold{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;color:var(--gold-soft);background:var(--gold-dim);border:1px solid rgba(201,169,89,0.3);padding:2px 8px;border-radius:6px;white-space:nowrap;}
-.guild-xp-wrap{width:100%;height:3px;background:rgba(201,169,89,0.1);border-radius:2px;margin-top:4px;overflow:hidden;}
-.guild-xp-bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));border-radius:2px;transition:width 0.6s cubic-bezier(0.4,0,0.2,1);box-shadow:0 0 6px rgba(201,169,89,0.3);}
-.guild-xp-text{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.08em;color:var(--text-muted);margin-top:2px;}
-
-/* Hire modal wrapper */
-.hire-modal-wrap{position:absolute;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:opacity 0.3s ease;}
-.hire-modal-wrap.open{opacity:1;pointer-events:all;}
-.hire-modal{background:var(--glass);border:1px solid var(--glass-b);border-radius:18px;padding:32px 30px;width:100%;max-width:720px;transform:translateY(16px) scale(0.97);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);max-height:95vh;overflow-y:auto;}
-.hire-modal-wrap.open .hire-modal{transform:translateY(0) scale(1);}
-.hire-title{font-family:'Cinzel',serif;font-size:18px;font-weight:600;letter-spacing:0.12em;text-align:center;color:var(--text-primary);margin-bottom:20px;}
-
-/* Guild manage tabs */
-.gm-tabs{display:flex;gap:4px;justify-content:center;margin-bottom:24px;padding:3px;background:var(--surface2);border-radius:10px;border:1px solid var(--border);}
-.gm-tab{flex:1;padding:8px 0;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;text-align:center;color:var(--text-muted);background:transparent;border:none;border-radius:8px;cursor:pointer;transition:var(--tr);}
-.gm-tab:hover{color:var(--text-secondary);}
-.gm-tab.active{background:var(--glass);color:var(--gold-soft);border:1px solid rgba(201,169,89,0.2);box-shadow:0 2px 8px rgba(0,0,0,0.2);}
-.gm-tab-content{display:none;}
-.gm-tab-content.active{display:block;}
-
-/* Members tab — card grid */
-.gm-members-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px;max-height:420px;overflow-y:auto;padding:4px;}
-.gm-member-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:0;overflow:hidden;cursor:pointer;transition:var(--tr);display:flex;flex-direction:column;}
-.gm-member-card:hover{border-color:rgba(201,169,89,0.3);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.3);}
-.gm-member-card.in-squad{border-color:rgba(124,184,232,0.4);box-shadow:0 0 12px rgba(124,184,232,0.1);}
-.gm-member-img{width:100%;aspect-ratio:1160/1760;object-fit:cover;object-position:center top;border-bottom:1px solid var(--border);}
-.gm-member-info{padding:8px 10px;}
-.gm-member-name{font-family:'Cinzel',serif;font-size:11px;font-weight:600;color:var(--text-primary);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.gm-member-rarity{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;}
-.gm-member-stats{margin-top:4px;}
-.gm-member-stat{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);display:flex;justify-content:space-between;}
-.gm-member-stat-val{color:var(--gold-soft);}
-.gm-members-empty{text-align:center;padding:60px 20px;color:var(--text-muted);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.08em;line-height:2;}
-
-/* Filter bar */
-.gm-filter-bar{display:flex;gap:8px;align-items:center;padding:0 4px;margin-bottom:16px;}
-.gm-filter-select{flex:1;padding:6px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-secondary);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;cursor:pointer;transition:var(--tr);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(240,237,232,0.3)'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;background-size:10px;padding-right:24px;}
-.gm-filter-select:hover{border-color:rgba(201,169,89,0.3);}
-.gm-filter-select:focus{border-color:rgba(201,169,89,0.5);outline:none;}
-.gm-filter-select option{background:var(--surface);color:var(--text-primary);}
-
-/* Squad badge on member card */
-.gm-member-squad-badge{display:inline-flex;align-items:center;gap:4px;margin-top:4px;padding:2px 6px;background:rgba(124,184,232,0.08);border:1px solid rgba(124,184,232,0.2);border-radius:4px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.08em;text-transform:uppercase;color:var(--rest-c);}
-.gm-member-squad-badge::before{content:'✦';font-size:7px;}
-
-/* Member detail view */
-.gm-detail{display:flex;gap:24px;padding:8px 0;}
-.gm-detail-card{width:200px;flex-shrink:0;border-radius:14px;overflow:hidden;border:1px solid var(--glass-b);}
-.gm-detail-card img{width:100%;aspect-ratio:1160/1760;object-fit:cover;object-position:center top;}
-.gm-detail-info{flex:1;display:flex;flex-direction:column;gap:12px;min-width:0;}
-.gm-detail-rarity{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:0.15em;}
-.gm-detail-name{font-family:'Cinzel',serif;font-size:22px;font-weight:600;letter-spacing:0.08em;color:var(--text-primary);}
-.gm-detail-level{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;color:var(--text-muted);text-transform:uppercase;}
-.gm-detail-section-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);padding-bottom:6px;border-bottom:1px solid rgba(201,169,89,0.1);margin-top:8px;}
-.gm-detail-stat{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;}
-.gm-detail-stat-name{font-family:'Noto Sans KR',sans-serif;font-size:12px;color:var(--text-secondary);}
-.gm-detail-stat-val{font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:var(--gold-soft);}
-.gm-detail-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.05em;}
-.gm-detail-meta span{color:var(--rest-c);}
-.gm-back-btn{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;margin-bottom:12px;background:none;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;color:var(--text-muted);transition:var(--tr);}
-.gm-back-btn:hover{color:var(--gold-soft);}
-.gm-detail-actions{display:flex;gap:10px;margin-top:16px;}
-.gm-detail-actions button{flex:1;padding:8px 0;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;border-radius:8px;cursor:pointer;transition:var(--tr);}
-.gm-dismiss-btn{background:transparent;border:1px solid rgba(232,124,124,0.3);color:var(--danger);}
-.gm-dismiss-btn:hover{background:rgba(232,124,124,0.08);border-color:rgba(232,124,124,0.5);}
-.gm-unsquad-btn{background:transparent;border:1px solid var(--border);color:var(--text-secondary);}
-.gm-unsquad-btn:hover{border-color:rgba(124,184,232,0.4);color:var(--rest-c);}
-.gm-squad-btn{background:transparent;border:1px solid rgba(124,184,232,0.3);color:var(--rest-c);}
-.gm-squad-btn:hover{background:rgba(124,184,232,0.08);border-color:rgba(124,184,232,0.5);}
-
-/* Member detail — story section */
-.gm-detail-story{margin-top:12px;padding:14px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;position:relative;overflow:hidden;}
-.gm-detail-story::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(--gold-soft),transparent);border-radius:2px;}
-.gm-detail-story-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
-.gm-detail-story-text{font-family:'Noto Sans KR',sans-serif;font-size:12px;line-height:1.8;color:var(--text-secondary);font-style:italic;}
-.gm-detail-story-locked{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.05em;display:flex;align-items:center;gap:6px;}
-.gm-detail-story-locked::before{content:'🔒';font-size:12px;}
-
-/* Member detail — identity header */
-.gm-detail-header{display:flex;align-items:center;gap:12px;margin-bottom:4px;}
-.gm-detail-title{font-family:'Cinzel',serif;font-size:10px;font-weight:400;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted);opacity:0.6;}
-
-/* Members footer */
-.gm-members-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 4px 0;margin-top:8px;border-top:1px solid var(--border);}
-.gm-members-footer span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--text-muted);}
-
-/* Modal common footer */
-.gm-modal-footer{display:flex;justify-content:center;padding:16px 0 0;margin-top:16px;border-top:1px solid var(--border);}
-.gm-modal-footer .btn{min-width:120px;}
-
-/* Rarity border accents for member cards */
-.gm-member-card.rarity-rare{border-color:rgba(124,184,232,0.25);}
-.gm-member-card.rarity-epic{border-color:rgba(168,124,232,0.3);}
-.gm-member-card.rarity-legendary{border-color:rgba(232,160,92,0.35);}
-
-/* Formation tab — squad slots */
-.gm-formation{display:flex;flex-direction:column;gap:20px;}
-.gm-preset-bar{display:flex;gap:6px;margin-bottom:20px;padding:3px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;}
-.gm-preset-btn{flex:1;padding:7px 0;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;text-align:center;color:var(--text-muted);background:transparent;border:none;border-radius:8px;cursor:pointer;transition:var(--tr);}
-.gm-preset-btn:hover{color:var(--text-secondary);}
-.gm-preset-btn.active{background:var(--glass);color:var(--gold-soft);border:1px solid rgba(201,169,89,0.2);box-shadow:0 2px 8px rgba(0,0,0,0.2);}
-.gm-preset-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:4px;vertical-align:middle;}
-.gm-preset-dot.empty{background:var(--text-muted);opacity:0.3;}
-.gm-preset-dot.filled{background:var(--gold-soft);}
-.gm-squad-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:16px 0;margin:4px 0 16px;border-top:1px solid rgba(201,169,89,0.1);border-bottom:1px solid rgba(201,169,89,0.1);}
-.gm-summary-item{padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);display:flex;flex-direction:column;gap:4px;}
-.gm-summary-label{font-family:'Noto Sans KR',sans-serif;font-size:10px;color:var(--text-muted);}
-.gm-summary-value{font-family:'DM Mono',monospace;font-size:18px;font-weight:500;color:var(--gold-soft);}
-.gm-summary-value.zero{color:var(--text-muted);opacity:0.5;}
-.gm-squad-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
-/* Slot animations */
-.gm-slot.filling{animation:slotFill 0.35s cubic-bezier(0.34,1.56,0.64,1);}
-@keyframes slotFill{0%{transform:scale(0.8);opacity:0.5;}100%{transform:scale(1);opacity:1;}}
-.gm-bench-card.entering{animation:benchEnter 0.3s ease-out;}
-@keyframes benchEnter{0%{opacity:0;transform:translateY(-10px) scale(0.9);}100%{opacity:1;transform:translateY(0) scale(1);}}
-.gm-bench.highlight-mode .gm-bench-card{animation:benchPulse 1s ease infinite;}
-@keyframes benchPulse{0%,100%{box-shadow:0 0 0 rgba(201,169,89,0);}50%{box-shadow:0 0 12px rgba(201,169,89,0.3);}}
-.gm-squad-slots{display:flex;gap:12px;justify-content:center;}
-.gm-slot{width:120px;aspect-ratio:1160/1760;background:var(--surface2);border:1.5px dashed var(--border);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:var(--tr);position:relative;overflow:hidden;}
-.gm-slot:hover{border-color:rgba(201,169,89,0.3);background:rgba(201,169,89,0.03);}
-.gm-slot-empty-icon{font-size:20px;color:var(--text-muted);opacity:0.4;}
-.gm-slot-empty-text{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:0.1em;}
-.gm-slot.filled{border-style:solid;border-color:var(--border);padding:0;justify-content:flex-start;}
-.gm-slot.filled:hover{border-color:rgba(255,80,80,0.4);}
-.gm-slot-img{width:100%;aspect-ratio:1160/1760;object-fit:cover;object-position:center top;}
-.gm-slot-name{font-family:'Cinzel',serif;font-size:10px;font-weight:600;color:var(--text-primary);padding:6px 4px 2px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;}
-.gm-slot-rarity{font-family:'DM Mono',monospace;font-size:8px;text-align:center;padding-bottom:6px;}
-.gm-slot-remove{position:absolute;top:4px;right:4px;width:18px;height:18px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,80,80,0.4);border-radius:50%;color:rgba(255,80,80,0.8);font-size:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transition:var(--tr);}
-.gm-slot.filled:hover .gm-slot-remove{opacity:1;}
-.gm-slot-remove:hover{background:rgba(255,80,80,0.2);color:#ff6b6b;}
-.gm-bench-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;margin-top:4px;}
-.gm-bench{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;max-height:180px;overflow-y:auto;padding:4px;}
-.gm-bench-card{width:80px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:var(--tr);position:relative;}
-.gm-bench-card:hover{border-color:rgba(124,184,232,0.4);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3);}
-.gm-bench-card:hover .gm-bench-add{opacity:1;}
-.gm-bench-img{width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center top;}
-.gm-bench-name{font-family:'DM Mono',monospace;font-size:8px;text-align:center;padding:4px 2px;color:var(--text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.gm-bench-add{position:absolute;top:0;left:0;right:0;bottom:20px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.5);opacity:0;transition:var(--tr);font-family:'DM Mono',monospace;font-size:16px;color:var(--rest-c);}
-.gm-bench-stat-hint{font-family:'DM Mono',monospace;font-size:7px;text-align:center;color:var(--gold-soft);padding:0 4px 3px;letter-spacing:0.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.gm-formation-hint{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.05em;color:var(--text-muted);text-align:center;padding:8px 0;opacity:0.7;}
-.gm-slot.drop-target{border-color:rgba(124,184,232,0.5);background:rgba(124,184,232,0.05);animation:slotPulse 1.5s ease-in-out infinite;}
-@keyframes slotPulse{0%,100%{border-color:rgba(124,184,232,0.3);}50%{border-color:rgba(124,184,232,0.6);box-shadow:0 0 12px rgba(124,184,232,0.15);}}
-
-/* Unlock Shop */
-.unlock-modal{max-width:640px;}
-.unlock-level-header{text-align:center;margin-bottom:20px;}
-.unlock-lvl-title{font-family:'Cinzel',serif;font-size:18px;font-weight:600;color:var(--gold-soft);margin-bottom:4px;}
-.unlock-lvl-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.1em;margin-bottom:8px;}
-.unlock-xp-bar-wrap{width:100%;max-width:320px;height:6px;background:rgba(201,169,89,0.1);border-radius:3px;margin:0 auto 4px;overflow:hidden;}
-.unlock-xp-bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));border-radius:3px;transition:width 0.6s ease;box-shadow:0 0 8px rgba(201,169,89,0.3);}
-.unlock-xp-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:0.08em;}
-.unlock-tree{display:flex;flex-direction:column;gap:12px;max-height:420px;overflow-y:auto;padding:4px;}
-.unlock-level-block{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:var(--tr);}
-.unlock-level-block.current{border-color:rgba(201,169,89,0.3);box-shadow:0 0 12px rgba(201,169,89,0.08);}
-.unlock-level-block.locked{opacity:0.5;}
-.unlock-level-block.completed{opacity:0.8;}
-.unlock-level-label{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--gold-soft);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-.unlock-level-label .badge{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:4px;letter-spacing:0.1em;}
-.unlock-level-label .badge-current{background:rgba(201,169,89,0.15);color:var(--gold-soft);border:1px solid rgba(201,169,89,0.3);}
-.unlock-level-label .badge-done{background:rgba(124,232,168,0.1);color:var(--success);border:1px solid rgba(124,232,168,0.2);}
-.unlock-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid rgba(255,255,255,0.04);}
-.unlock-item:first-child{border-top:none;}
-.unlock-item-info{display:flex;flex-direction:column;gap:2px;}
-.unlock-item-name{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-primary);letter-spacing:0.05em;}
-.unlock-item-detail{font-family:'DM Mono',monospace;font-size:8px;color:var(--text-muted);letter-spacing:0.05em;}
-.unlock-item-tag{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;padding:3px 8px;border-radius:5px;}
-.tag-auto{background:rgba(124,184,232,0.1);color:var(--rest-c);border:1px solid rgba(124,184,232,0.2);}
-.tag-purchased{background:rgba(124,232,168,0.1);color:var(--success);border:1px solid rgba(124,232,168,0.2);}
-.tag-locked{background:var(--surface3);color:var(--text-muted);border:1px solid var(--border);}
-.tag-buy{background:rgba(201,169,89,0.12);color:var(--gold-soft);border:1px solid rgba(201,169,89,0.3);cursor:pointer;transition:var(--tr);}
-.tag-buy:hover{background:rgba(201,169,89,0.25);transform:translateY(-1px);}
-.tag-buy:disabled,.tag-buy[disabled]{opacity:0.4;cursor:not-allowed;transform:none;}
-.unlock-store-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-height:420px;overflow-y:auto;padding:4px;}
-.unlock-store-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;transition:var(--tr);}
-.unlock-store-card.available{border-color:rgba(201,169,89,0.25);}
-.unlock-store-card.available:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.3);}
-.unlock-store-card.purchased{opacity:0.5;}
-.unlock-store-card.level-locked{opacity:0.4;}
-.unlock-store-icon{font-size:24px;margin-bottom:8px;}
-.unlock-store-name{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-primary);letter-spacing:0.05em;margin-bottom:4px;}
-.unlock-store-req{font-family:'DM Mono',monospace;font-size:8px;color:var(--text-muted);margin-bottom:8px;}
-.unlock-store-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:6px 14px;border-radius:8px;border:none;cursor:pointer;transition:var(--tr);}
-.unlock-store-btn.buyable{background:linear-gradient(135deg,rgba(201,169,89,0.2),rgba(201,169,89,0.1));color:var(--gold-soft);border:1px solid rgba(201,169,89,0.3);}
-.unlock-store-btn.buyable:hover{background:rgba(201,169,89,0.3);}
-.unlock-store-btn.bought{background:rgba(124,232,168,0.1);color:var(--success);border:1px solid rgba(124,232,168,0.2);cursor:default;}
-.unlock-store-btn.locked{background:var(--surface3);color:var(--text-muted);border:1px solid var(--border);cursor:not-allowed;}
-
-.hire-result-msg{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-align:center;color:var(--gold-soft);margin-bottom:12px;opacity:0;transform:translateY(-8px);transition:opacity 0.4s ease,transform 0.4s ease;}
-.hire-result-msg.show{opacity:1;transform:translateY(0);}
-
-/* Card container */
-.hire-cards{display:flex;gap:16px;justify-content:center;margin-bottom:24px;min-height:340px;align-items:center;position:relative;}
-
-/* Idle — posted notice on board */
-.hire-summon{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;height:260px;}
-.hire-notice{width:150px;height:180px;background:linear-gradient(175deg,rgba(62,55,40,0.85),rgba(48,42,30,0.9));border:1px solid rgba(201,169,89,0.2);border-radius:3px;position:relative;display:flex;flex-direction:column;align-items:center;padding:20px 14px 14px;box-shadow:2px 3px 12px rgba(0,0,0,0.4),inset 0 0 20px rgba(0,0,0,0.15);transform:rotate(-1.5deg);animation:noticeIdle 3s ease-in-out infinite;}
-/* Pin */
-.hire-notice::before{content:'';position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:10px;height:10px;background:radial-gradient(circle at 35% 35%,rgba(201,169,89,0.9),rgba(140,110,50,0.8));border-radius:50%;box-shadow:0 2px 4px rgba(0,0,0,0.4);z-index:1;}
-/* Decorative border line inside */
-.hire-notice::after{content:'';position:absolute;inset:8px;border:1px solid rgba(201,169,89,0.1);border-radius:2px;pointer-events:none;}
-.hire-notice-title{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:rgba(201,169,89,0.6);letter-spacing:0.08em;text-align:center;line-height:1.4;margin-bottom:10px;}
-.hire-notice-divider{width:60%;height:1px;background:linear-gradient(90deg,transparent,rgba(201,169,89,0.25),transparent);margin-bottom:10px;}
-.hire-notice-body{font-family:'DM Mono',monospace;font-size:8px;color:rgba(201,169,89,0.3);letter-spacing:0.05em;text-align:center;line-height:1.8;}
-.hire-notice-seal{margin-top:auto;width:28px;height:28px;border:1.5px solid rgba(201,169,89,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:10px;color:rgba(201,169,89,0.3);}
-.hire-summon-text{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;color:var(--text-muted);text-transform:uppercase;}
-@keyframes noticeIdle{0%,100%{transform:rotate(-1.5deg) translateY(0);}50%{transform:rotate(-1.5deg) translateY(-3px);}}
-
-/* Notice flies away on hire start */
-.hire-summon.summoning .hire-notice{animation:noticeFly 0.6s ease-in forwards;}
-.hire-summon.summoning .hire-summon-text{animation:noticeTextFade 0.3s ease-out forwards;}
-@keyframes noticeFly{0%{transform:rotate(-1.5deg) translateY(0);opacity:1;}40%{transform:rotate(2deg) translateY(-20px) scale(1.02);opacity:1;}100%{transform:rotate(5deg) translateY(-80px) scale(0.8);opacity:0;}}
-@keyframes noticeTextFade{to{opacity:0;}}
-
-/* Individual card — 3D flip, 1160:1760 ratio */
-.hire-card{width:152px;aspect-ratio:1160/1760;perspective:800px;cursor:default;opacity:0;transform:translateY(40px) scale(0.7);transition:opacity 0.4s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);}
-.hire-card.dealt{opacity:1;transform:translateY(0) scale(1);}
-.hire-card-inner{position:relative;width:100%;height:100%;transition:transform 0.6s cubic-bezier(0.4,0,0.2,1);transform-style:preserve-3d;border-radius:14px;}
-.hire-card.flipped .hire-card-inner{transform:rotateY(180deg);}
-
-/* Card faces */
-.hire-card-front,.hire-card-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;border:1px solid var(--glass-b);overflow:hidden;}
-.hire-card-front{background:linear-gradient(180deg,rgba(28,28,38,0.95),rgba(14,14,20,0.98));display:flex;align-items:center;justify-content:center;}
-.hire-card-front-icon{font-size:36px;color:var(--text-muted);font-family:'Cinzel',serif;font-weight:700;}
-.hire-card-back{background:var(--glass);transform:rotateY(180deg);display:flex;flex-direction:column;}
-
-/* Card image */
-.hire-card-img{width:100%;height:55%;object-fit:cover;object-position:center top;border-bottom:1px solid var(--border);flex-shrink:0;}
-
-/* Card back content */
-.hire-card-body{display:flex;flex-direction:column;flex:1;padding:10px 12px 10px;min-height:0;}
-.hire-card-rarity{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-align:center;margin-bottom:3px;}
-.hire-card-name{font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:0.06em;text-align:center;color:var(--text-primary);margin-bottom:4px;line-height:1.3;}
-
-/* Card wrap — card + external stats + select */
-.hire-card-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;}
-.hire-card-ext-stats{display:flex;flex-direction:column;gap:3px;align-items:center;opacity:0;transform:translateY(6px);transition:opacity 0.4s ease,transform 0.4s ease;min-height:20px;}
-.hire-card-ext-stats.show{opacity:1;transform:translateY(0);}
-.hire-card-ext-stat{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.06em;color:var(--gold-soft);background:var(--surface2);border:1px solid var(--border);border-radius:5px;padding:2px 10px;white-space:nowrap;}
-.hire-card-ext-select{width:120px;height:30px;background:var(--gold);color:#1a1000;font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;border:none;border-radius:7px;cursor:pointer;transition:var(--tr);opacity:0;transform:translateY(6px);}
-.hire-card-ext-select.show{opacity:1;transform:translateY(0);transition:opacity 0.4s ease 0.15s,transform 0.4s ease 0.15s;}
-.hire-card-ext-select:hover{filter:brightness(1.12);}
-
-/* Door knock animation */
-/* — Medieval Door — */
-.hire-door-wrap{position:relative;width:100%;min-height:340px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
-/* Stone wall background behind door */
-.hire-door-wall{position:absolute;inset:0;z-index:1;
-  background:
-    repeating-linear-gradient(0deg,transparent,transparent 34px,rgba(0,0,0,0.2) 34px,rgba(0,0,0,0.2) 35px),
-    repeating-linear-gradient(90deg,transparent,transparent 52px,rgba(0,0,0,0.15) 52px,rgba(0,0,0,0.15) 53px),
-    linear-gradient(180deg,#1a1612,#12100c);
-  box-shadow:inset 0 0 60px rgba(0,0,0,0.5);}
-/* Stone archway frame */
-.hire-door-frame{position:absolute;top:-2px;bottom:-2px;left:12%;right:12%;z-index:3;pointer-events:none;
-  border:8px solid #4a3e2a;border-radius:50% 50% 0 0 / 18% 18% 0 0;
-  background:transparent;
-  box-shadow:0 0 0 3px rgba(40,34,26,0.6),inset 0 0 30px rgba(0,0,0,0.5),0 0 20px rgba(0,0,0,0.4),inset 0 0 0 2px #3a3228;}
-/* Keystone at arch top */
-.hire-door-keystone{position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:40px;height:24px;z-index:8;pointer-events:none;
-  background:linear-gradient(180deg,#5a4e3a,#4a4030);clip-path:polygon(20% 0%,80% 0%,100% 100%,0% 100%);
-  box-shadow:0 2px 6px rgba(0,0,0,0.4);}
-/* Door panels — aged oak wood */
-.hire-door-left,.hire-door-right{position:absolute;top:2%;bottom:0;width:38%;z-index:5;transition:transform 1.2s cubic-bezier(0.4,0,0.2,1);
-  background:
-    repeating-linear-gradient(180deg,
-      rgba(50,38,22,0) 0px,rgba(50,38,22,0.03) 3px,rgba(30,22,12,0.06) 6px,
-      rgba(50,38,22,0) 8px,rgba(40,30,18,0.04) 12px,rgba(50,38,22,0) 16px),
-    repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(0,0,0,0.18) 30px,rgba(0,0,0,0.18) 31.5px),
-    linear-gradient(180deg,#32281a 0%,#2a2015 20%,#221a10 50%,#1a140c 80%,#16120c 100%);
-  border:1px solid rgba(201,169,89,0.08);
-  box-shadow:inset 0 0 40px rgba(0,0,0,0.3),inset 0 -20px 40px rgba(0,0,0,0.2);}
-.hire-door-left{left:12%;border-right:2px solid rgba(10,8,5,0.9);transform-origin:left center;border-radius:24% 0 0 0 / 8% 0 0 0;}
-.hire-door-right{right:12%;border-left:2px solid rgba(10,8,5,0.9);transform-origin:right center;border-radius:0 24% 0 0 / 0 8% 0 0;}
-/* Iron horizontal bands */
-.hire-door-band{position:absolute;left:0;right:0;height:10px;z-index:7;pointer-events:none;
-  background:linear-gradient(180deg,#5a5040 0%,#3a3228 40%,#2a2620 60%,#4a4438 100%);
-  box-shadow:0 1px 3px rgba(0,0,0,0.6),inset 0 1px 0 rgba(120,105,80,0.2);
-  border-top:1px solid rgba(120,105,80,0.15);border-bottom:1px solid rgba(0,0,0,0.4);}
-.hire-door-band::before,.hire-door-band::after{content:'';position:absolute;top:50%;width:7px;height:7px;border-radius:50%;transform:translateY(-50%);
-  background:radial-gradient(circle at 35% 35%,#8a7e68,#4a4030);box-shadow:0 1px 2px rgba(0,0,0,0.5);}
-.hire-door-band::before{left:8px;}
-.hire-door-band::after{right:8px;}
-/* Iron hinges — decorative strap style */
-.hire-door-hinge{position:absolute;height:6px;z-index:8;pointer-events:none;
-  background:linear-gradient(180deg,#5a5040,#3a3228,#4a4438);border-radius:0 3px 3px 0;
-  box-shadow:0 1px 3px rgba(0,0,0,0.5);}
-.hire-door-hinge::before{content:'';position:absolute;top:-4px;width:12px;height:14px;border-radius:50%;
-  background:radial-gradient(circle at 40% 35%,#7a6e58,#4a4030);box-shadow:0 1px 3px rgba(0,0,0,0.4);}
-.hire-door-hinge::after{content:'';position:absolute;top:1px;right:0;width:0;height:0;
-  border-top:2px solid transparent;border-bottom:2px solid transparent;border-left:6px solid #5a5040;}
-.hire-door-left .hire-door-hinge{left:0;width:45%;border-radius:0 6px 6px 0 / 0 3px 3px 0;}
-.hire-door-left .hire-door-hinge::before{left:-3px;}
-.hire-door-right .hire-door-hinge{right:0;width:45%;border-radius:6px 0 0 6px / 3px 0 0 3px;}
-.hire-door-right .hire-door-hinge::before{right:-3px;}
-.hire-door-right .hire-door-hinge::after{right:auto;left:0;border-left:none;border-right:6px solid #5a5040;}
-/* Iron ring knocker */
-.hire-door-knocker{position:absolute;top:48%;z-index:8;transform:translateY(-50%);}
-.hire-door-knocker-plate{width:18px;height:24px;border-radius:3px 3px 2px 2px;
-  background:linear-gradient(180deg,#6a5e48,#4a4030,#5a5040);box-shadow:0 2px 6px rgba(0,0,0,0.5);
-  display:flex;align-items:flex-start;justify-content:center;padding-top:3px;}
-.hire-door-knocker-ring{width:14px;height:14px;border:2.5px solid #8a7e60;border-radius:50%;
-  box-shadow:0 2px 4px rgba(0,0,0,0.5),inset 0 0 2px rgba(120,105,80,0.3);}
-.hire-door-left .hire-door-knocker{right:14px;}
-.hire-door-right .hire-door-knocker{left:14px;}
-/* Keyhole */
-.hire-door-keyhole{position:absolute;top:52%;z-index:8;transform:translateY(-50%);}
-.hire-door-keyhole::before{content:'';display:block;width:8px;height:8px;border-radius:50%;background:#0a0806;border:2px solid #5a5040;
-  box-shadow:inset 0 0 3px rgba(0,0,0,0.8);}
-.hire-door-keyhole::after{content:'';display:block;width:4px;height:10px;margin:0 auto;margin-top:-1px;
-  background:#0a0806;border-left:2px solid #5a5040;border-right:2px solid #5a5040;border-bottom:2px solid #5a5040;border-radius:0 0 2px 2px;}
-.hire-door-left .hire-door-keyhole{right:20px;}
-/* Iron studs */
-.hire-door-studs{position:absolute;inset:0;pointer-events:none;z-index:7;}
-.hire-door-stud{position:absolute;width:6px;height:6px;border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,#8a7e68,#4a4030);
-  box-shadow:0 1px 2px rgba(0,0,0,0.5),inset 0 -1px 1px rgba(0,0,0,0.3);}
-/* Torch brackets */
-.hire-door-torch{position:absolute;top:30%;z-index:3;width:12px;display:flex;flex-direction:column;align-items:center;}
-.hire-door-torch-bracket{width:12px;height:28px;
-  background:linear-gradient(180deg,#5a5040,#3a3228);border-radius:2px;
-  box-shadow:0 2px 4px rgba(0,0,0,0.5);}
-.hire-door-torch-flame{width:10px;height:18px;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;margin-top:-4px;
-  background:radial-gradient(ellipse at 50% 60%,#ffd080,#e8a040 50%,#c06820 80%,transparent);
-  box-shadow:0 0 12px rgba(232,160,64,0.5),0 0 24px rgba(232,128,40,0.3);
-  animation:torchFlicker 1.5s ease-in-out infinite alternate;}
-.hire-door-torch-glow{position:absolute;top:20%;width:80px;height:80px;border-radius:50%;
-  background:radial-gradient(circle,rgba(232,160,64,0.12),transparent 70%);pointer-events:none;}
-.hire-door-torch.left{left:3%;}
-.hire-door-torch.left .hire-door-torch-glow{left:-34px;}
-.hire-door-torch.right{right:3%;}
-.hire-door-torch.right .hire-door-torch-glow{right:-34px;}
-@keyframes torchFlicker{0%{transform:scaleY(1) scaleX(1);opacity:0.9;}25%{transform:scaleY(1.1) scaleX(0.95);opacity:1;}50%{transform:scaleY(0.95) scaleX(1.05);opacity:0.85;}75%{transform:scaleY(1.05) scaleX(0.9);opacity:1;}100%{transform:scaleY(0.9) scaleX(1.1);opacity:0.9;}}
-/* Dust mote particles */
-.hire-door-dust{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(201,169,89,0.2);z-index:2;pointer-events:none;animation:dustFloat linear infinite;}
-@keyframes dustFloat{0%{opacity:0;transform:translateY(0) translateX(0);}20%{opacity:1;}80%{opacity:1;}100%{opacity:0;transform:translateY(-80px) translateX(20px);}}
-/* Door open */
-.hire-door-left.open{transform:perspective(800px) rotateY(-75deg);transition:transform 1.8s cubic-bezier(0.25,0.1,0.25,1);}
-.hire-door-right.open{transform:perspective(800px) rotateY(75deg);transition:transform 1.8s cubic-bezier(0.25,0.1,0.25,1);}
-/* Light between doors */
-.hire-door-light{position:absolute;top:0;bottom:0;left:50%;width:0;transform:translateX(-50%);z-index:4;transition:width 1.4s ease,opacity 1.2s ease;opacity:0;pointer-events:none;}
-.hire-door-light.show{width:180px;opacity:1;}
-/* Knock text */
-/* Knock impact particles */
-.hire-door-knock-burst{position:absolute;top:50%;left:50%;z-index:10;pointer-events:none;}
-.hire-door-knock-particle{position:absolute;border-radius:50%;pointer-events:none;opacity:0;animation:knockBurst 0.6s ease-out forwards;}
-.hire-door-knock-ring{position:absolute;top:50%;left:50%;width:0;height:0;border:2px solid rgba(201,169,89,0.5);border-radius:50%;transform:translate(-50%,-50%);opacity:0;animation:knockRing 0.7s ease-out forwards;pointer-events:none;z-index:10;}
-
-/* Betrayal gacha effects */
-.hire-betrayal-flash{position:absolute;inset:-40px;z-index:9;pointer-events:none;opacity:0;animation:betrayalFlash 0.5s ease-out forwards;}
-.hire-betrayal-particle{position:absolute;border-radius:50%;pointer-events:none;z-index:9;opacity:0;animation:betrayalBurst 0.8s ease-out forwards;}
-@keyframes betrayalFlash{0%{opacity:0;transform:scale(0.3);}20%{opacity:0.9;transform:scale(1.1);}100%{opacity:0;transform:scale(1.4);}}
-@keyframes betrayalBurst{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0.2);}}
-
-@keyframes doorKnock{0%,100%{transform:translateX(0);}25%{transform:translateX(-3px);}75%{transform:translateX(3px);}}
-@keyframes knockBurst{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(0.3);}}
-@keyframes knockRing{0%{width:0;height:0;opacity:0.7;}100%{width:60px;height:60px;opacity:0;}}
-@keyframes cardWalkIn{0%{opacity:0;transform:translateY(50px) scale(0.85);}100%{opacity:1;transform:translateY(0) scale(1);}}
-
-/* === Combo scenario: Bulletin Idle + Body Slam + Burst === */
-.hire-bulletin{position:relative;width:420px;height:280px;margin:0 auto;
-  background:radial-gradient(circle at 20% 30%,rgba(80,50,30,0.4),transparent 50%),radial-gradient(circle at 80% 70%,rgba(60,40,20,0.4),transparent 50%),linear-gradient(135deg,#8a6a4a 0%,#6a4a2a 100%);
-  border:6px solid #3a2818;border-radius:4px;box-shadow:0 8px 30px rgba(0,0,0,0.5),inset 0 0 40px rgba(60,40,20,0.5);
-  display:flex;align-items:center;justify-content:center;gap:24px;padding:20px;
-  animation:bulletinFloat 4s ease-in-out infinite;}
-@keyframes bulletinFloat{0%,100%{transform:rotate(-0.3deg);}50%{transform:rotate(0.3deg) translateY(-2px);}}
-.hire-bulletin.dismiss{animation:bulletinDismiss 0.7s cubic-bezier(0.5,0,0.7,0.4) forwards;}
-@keyframes bulletinDismiss{0%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(0.4) translateY(-200px);}}
-.hire-bulletin-paper{width:90px;height:115px;background:linear-gradient(180deg,#f0e5c8 0%,#d4c4a0 100%);
-  border-radius:2px;box-shadow:0 4px 10px rgba(0,0,0,0.4);position:relative;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-family:'Cinzel',serif;font-size:9px;color:#3a2818;text-align:center;padding:10px;}
-.hire-bulletin-paper::before{content:'⚜';font-size:16px;color:#6a4828;margin-bottom:6px;}
-.hire-bulletin-paper:nth-child(1){animation:paperWiggle1 5s ease-in-out infinite;transform:rotate(-4deg);}
-.hire-bulletin-paper:nth-child(2){animation:paperWiggle2 6s ease-in-out infinite;transform:rotate(2deg);}
-.hire-bulletin-paper:nth-child(3){animation:paperWiggle3 5.5s ease-in-out infinite;transform:rotate(-1deg);}
-@keyframes paperWiggle1{0%,100%{transform:rotate(-4deg);}50%{transform:rotate(-2deg);}}
-@keyframes paperWiggle2{0%,100%{transform:rotate(2deg);}50%{transform:rotate(4deg);}}
-@keyframes paperWiggle3{0%,100%{transform:rotate(-1deg);}50%{transform:rotate(1deg);}}
-.hire-bulletin-pin{position:absolute;top:6px;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;
-  background:radial-gradient(circle at 30% 30%,#ff6060,#a02020);box-shadow:0 2px 3px rgba(0,0,0,0.4);}
-
-/* Bash figure */
-.hire-bash-figure{position:absolute;left:50%;bottom:20%;transform:translateX(-50%) translateY(20px);
-  width:40px;height:80px;background:linear-gradient(180deg,rgba(0,0,0,0.95),rgba(0,0,0,0.7));
-  border-radius:50% 50% 30% 30%;filter:blur(1.5px);opacity:0;pointer-events:none;z-index:4;
-  transition:transform 0.25s cubic-bezier(0.5,0,0.7,1.5),opacity 0.3s ease;}
-.hire-bash-figure::before{content:'';position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:20px;height:20px;background:rgba(0,0,0,0.95);border-radius:50%;}
-.hire-bash-figure.show{opacity:0.85;}
-.hire-bash-figure.bash{transform:translateX(-50%) translateY(-10px);}
-.hire-bash-figure.recoil{transform:translateX(-50%) translateY(20px);}
-
-/* Door bashed shake */
-@keyframes doorBashed{0%,100%{transform:translateX(0);}50%{transform:translateY(-3px) scale(1.03,0.98);}}
-/* Burst open (harder than normal open) */
-.hire-door-left.burst-open{transform:perspective(800px) rotateY(-90deg) translateX(-10%);transition:transform 0.35s cubic-bezier(0.5,0,0.5,1.5);}
-.hire-door-right.burst-open{transform:perspective(800px) rotateY(90deg) translateX(10%);transition:transform 0.35s cubic-bezier(0.5,0,0.5,1.5);}
-
-/* Burst glow */
-.hire-burst-glow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(0);
-  width:200px;height:200px;border-radius:50%;opacity:0;pointer-events:none;z-index:14;filter:blur(3px);}
-.hire-burst-glow.burst{animation:hireBurstGlow 1.8s cubic-bezier(0.15,0.6,0.4,1) forwards;}
-@keyframes hireBurstGlow{0%{opacity:0;transform:translate(-50%,-50%) scale(0);}15%{opacity:1;transform:translate(-50%,-50%) scale(0.6);}55%{opacity:1;transform:translate(-50%,-50%) scale(2.5);}100%{opacity:0;transform:translate(-50%,-50%) scale(3.5);}}
-
-/* 8-directional rays */
-.hire-gate-ray{position:absolute;left:50%;top:50%;width:0;height:4px;
-  opacity:0;transform-origin:left center;pointer-events:none;z-index:13;}
-.hire-gate-ray.shoot{animation:hireRayShoot 1.4s cubic-bezier(0.2,0.6,0.5,1) forwards;}
-@keyframes hireRayShoot{0%{width:0;opacity:0;}20%{opacity:1;}100%{width:260px;opacity:0;}}
-
-/* Stage shake variants for hire */
-@keyframes hireShake{0%,100%{transform:translate(0,0);}20%{transform:translate(-3px,2px);}40%{transform:translate(3px,-2px);}60%{transform:translate(-2px,-3px);}80%{transform:translate(2px,3px);}}
-@keyframes hireShakeHard{0%,100%{transform:translate(0,0);}10%{transform:translate(-6px,3px);}20%{transform:translate(6px,-3px);}30%{transform:translate(-5px,-5px);}40%{transform:translate(5px,5px);}50%{transform:translate(-3px,3px);}60%{transform:translate(3px,-3px);}70%{transform:translate(-2px,-2px);}80%{transform:translate(2px,2px);}}
-
-/* Select celebration */
-.hire-card-wrap.selected .hire-card{transform:scale(1.08);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 0 20px rgba(201,169,89,0.5),0 0 40px rgba(201,169,89,0.2);border-color:var(--gold)!important;}
-.hire-card-wrap.dismissed{opacity:0;transform:translateY(20px);transition:opacity 0.4s ease,transform 0.4s ease;pointer-events:none;}
-
-/* Rarity colors */
-.rarity-normal .hire-card-rarity{color:var(--text-secondary);}
-.rarity-rare .hire-card-rarity{color:#7cb8e8;}
-.rarity-epic .hire-card-rarity{color:#a87ce8;}
-.rarity-legendary .hire-card-rarity{color:#e8a05c;}
-
-/* Rarity glow on flip */
-.rarity-rare.flipped .hire-card-inner{box-shadow:0 0 24px rgba(124,184,232,0.35),0 0 60px rgba(124,184,232,0.12);}
-.rarity-epic.flipped .hire-card-inner{box-shadow:0 0 24px rgba(168,124,232,0.4),0 0 60px rgba(168,124,232,0.15);}
-.rarity-legendary.flipped .hire-card-inner{box-shadow:0 0 28px rgba(232,160,92,0.5),0 0 70px rgba(232,160,92,0.2);animation:cardGlow 2s ease-in-out infinite;}
-
-@keyframes cardGlow{
-  0%,100%{box-shadow:0 0 28px rgba(232,160,92,0.5),0 0 70px rgba(232,160,92,0.2);}
-  50%{box-shadow:0 0 36px rgba(232,160,92,0.7),0 0 90px rgba(232,160,92,0.3);}
-}
-
-/* Rare — pulse on flip */
-.rarity-rare.flipped .hire-card-inner::after{content:'';position:absolute;inset:-4px;border-radius:16px;background:radial-gradient(ellipse at center,rgba(124,184,232,0.15),transparent 70%);animation:rarePulse 0.8s ease-out forwards;pointer-events:none;z-index:10;}
-@keyframes rarePulse{0%{opacity:1;transform:scale(0.95);}100%{opacity:0;transform:scale(1.15);}}
-
-/* Epic — wave pulse */
-.rarity-epic.flipped .hire-card-inner::after{content:'';position:absolute;inset:-6px;border-radius:18px;background:radial-gradient(ellipse at center,rgba(168,124,232,0.2),transparent 65%);animation:epicPulse 1s ease-out forwards;pointer-events:none;z-index:10;}
-@keyframes epicPulse{0%{opacity:1;transform:scale(0.9);}50%{opacity:0.7;transform:scale(1.1);}100%{opacity:0;transform:scale(1.25);}}
-
-/* Legendary — rotating gold border + persistent glow */
-.rarity-legendary.flipped .hire-card-inner::before{content:'';position:absolute;inset:-10px;border-radius:20px;background:conic-gradient(from 0deg,rgba(232,160,92,0.05),rgba(201,169,89,0.15),rgba(232,160,92,0.05),rgba(201,169,89,0.15),rgba(232,160,92,0.05));animation:legendaryRotate 4s linear infinite;pointer-events:none;z-index:-1;}
-@keyframes legendaryRotate{to{transform:rotate(360deg);}}
-
-/* Legendary screen flash */
-.hire-modal-wrap.legendary-flash{animation:legendFlash 0.3s ease-out;}
-@keyframes legendFlash{0%{background:rgba(232,160,92,0.25);}100%{background:rgba(0,0,0,0.7);}}
-
-/* Card particle */
-.card-particle{position:absolute;border-radius:50%;pointer-events:none;animation:particleFloat 2s ease-out forwards;}
-@keyframes particleFloat{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--px,20px),var(--py,-40px)) scale(0);}}
-
-/* Hire history */
-.hire-history-toggle{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;margin-top:16px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:var(--tr);}
-.hire-history-toggle:hover{border-color:rgba(201,169,89,0.3);}
-.hire-history-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
-.hire-history-chevron{width:14px;height:14px;color:var(--text-muted);transition:transform var(--tr);display:inline-block;}
-.hire-history-toggle.open .hire-history-chevron{transform:rotate(180deg);}
-.hire-history-list{max-height:0;overflow:hidden;transition:max-height 0.3s ease;}
-.hire-history-list.open{max-height:200px;overflow-y:auto;}
-.hire-history-item{display:flex;align-items:center;gap:10px;padding:6px 12px;border-bottom:1px solid rgba(255,255,255,0.03);}
-.hire-history-rarity{font-family:'DM Mono',monospace;font-size:9px;min-width:20px;}
-.hire-history-name{flex:1;font-family:'Cinzel',serif;font-size:10px;color:var(--text-primary);}
-.hire-history-action{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
-.hire-history-action.selected{color:var(--success);}
-.hire-history-action.passed{color:var(--text-muted);}
-
-/* Rarity card border accent */
-.rarity-rare .hire-card-back{border-color:rgba(124,184,232,0.35);}
-.rarity-epic .hire-card-back{border-color:rgba(168,124,232,0.4);}
-.rarity-legendary .hire-card-back{border-color:rgba(232,160,92,0.45);}
-
-/* Info & actions */
-.hire-info{display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono',monospace;font-size:11px;color:var(--text-secondary);margin-bottom:16px;padding:0 4px;letter-spacing:0.05em;}
-.hire-actions{display:flex;gap:10px;justify-content:center;}
-.hire-actions .btn{min-width:120px;}
-
-/* Pass button */
-.hire-pass-btn{width:100%;height:36px;background:transparent;border:1px solid var(--border);color:var(--text-muted);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;border-radius:8px;cursor:pointer;transition:var(--tr);}
-.hire-pass-btn:hover{border-color:rgba(255,255,255,0.18);color:var(--text-secondary);}
-
-/* Active command button (no Coming Soon tooltip) */
-.cmd-btn.cmd-active::after{display:none;}
-.cmd-btn.cmd-active{color:var(--text-secondary);}
-.cmd-btn.cmd-active:hover{color:var(--gold-soft);}
 </style>
 </head>
 <body>
@@ -1204,12 +644,9 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
       <div class="guild-info">
         <div class="guild-name">Grimhollow</div>
         <div class="guild-lvl-row">
-          <span class="guild-lvl" id="guildLvl">Lv.1</span>
-          <span class="guild-sub" id="guildSub">견습 길드마스터</span>
-          <span class="guild-gold" id="guildGold">💰 5,000</span>
+          <span class="guild-lvl">Lv.7</span>
+          <span class="guild-sub">Guild Master</span>
         </div>
-        <div class="guild-xp-wrap"><div class="guild-xp-bar" id="guildXpBar" style="width:0%"></div></div>
-        <div class="guild-xp-text" id="guildXpText">XP: 0 / 50</div>
       </div>
     </div>
     <div class="glass todo-overlay has-todos" id="tlTodoOverlay">
@@ -1318,17 +755,13 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
   <div class="br-block">
     <div class="cmd-label">Command Post</div>
     <div class="cmd-btns">
-      <button class="cmd-btn cmd-active glass" onclick="openRecruitModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
-        <span class="cmd-btn-label">길드원<br>모집</span>
+      <button class="cmd-btn glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        <span class="cmd-btn-label">길드원<br>고용</span>
       </button>
-      <button class="cmd-btn cmd-active glass" onclick="openGuildManage()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        <span class="cmd-btn-label">길드원<br>관리</span>
-      </button>
-      <button class="cmd-btn cmd-active glass" onclick="openUnlockShop()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-        <span class="cmd-btn-label">해금</span>
+      <button class="cmd-btn glass">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 6 6 1-4.5 4.5 1 6.5L12 17l-5.5 3 1-6.5L3 9l6-1z"/></svg>
+        <span class="cmd-btn-label">스쿼드<br>편성</span>
       </button>
       <button class="cmd-btn glass">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
@@ -1361,89 +794,15 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
       <div class="rm-stat"><div class="rm-stat-label" id="rmStatLabel">누적 집중 시간</div><div class="rm-stat-val" id="rmStatVal">25:00</div></div>
       <div class="sec-label">카테고리</div>
       <div class="cat-chips-wrap" id="rmCatChips"></div>
-      <button class="cat-add-open-btn" onclick="openCatAddModal()">+ 카테고리 추가</button>
+      <div class="cat-add-row">
+        <input class="cat-add-input" id="rmCatInput" placeholder="새 카테고리..." maxlength="20" onkeydown="if(event.key==='Enter')rmAddCat()">
+        <button class="cat-add-btn" onclick="rmAddCat()">+</button>
+      </div>
       <div class="sec-label">집중 내용 <span style="color:var(--text-muted);font-size:9px;">(선택)</span></div>
       <textarea class="form-textarea" id="rmNotes" placeholder="오늘 무엇에 집중했나요? 자유롭게 적어보세요." rows="3"></textarea>
       <div class="rm-actions">
         <button class="btn-rm-skip" onclick="closeRecModal()">건너뛰기</button>
         <button class="btn-rm-save" onclick="saveRecord()">기록 저장</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CAT ADD MODAL -->
-  <div class="cat-add-modal-wrap" id="catAddModalWrap">
-    <div class="cat-add-modal">
-      <div class="cam-title">카테고리 추가</div>
-      <div class="sec-label">카테고리 이름</div>
-      <div class="cam-name-row">
-        <span class="cam-color-preview" id="camColorPreview"></span>
-        <input class="cat-add-input cam-name-input" id="camNameInput" placeholder="이름 입력..." maxlength="20" onkeydown="if(event.key==='Enter')saveCatFromModal()">
-      </div>
-      <div class="sec-label" style="margin-top:14px;">카테고리 색상</div>
-      <div class="cam-color-row">
-        <input type="color" id="camColorInput" class="cam-color-input" value="#e8c87c">
-      </div>
-      <div class="cam-actions">
-        <button class="btn btn-secondary" onclick="closeCatAddModal()">취소</button>
-        <button class="btn btn-primary" onclick="saveCatFromModal()">카테고리 추가</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- RECRUIT MODAL (모집 전용) -->
-  <div class="hire-modal-wrap" id="hireModalWrap">
-    <div class="hire-modal">
-      <div class="hire-title">길드��� 모집</div>
-      <div class="hire-cards" id="hireCards"></div>
-      <div class="hire-info" id="hireInfo">
-        <span>소모: 💰 1,000 Gold</span>
-        <span id="hireMemberCount">보유: 0/8</span>
-      </div>
-      <div class="hire-actions" id="hireActions">
-        <button class="btn btn-secondary" onclick="closeRecruitModal()">닫기</button>
-        <button class="btn btn-primary" id="hireBtn" onclick="startHire()">모집하기</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MANAGE MODAL (길드원 관리 + 편성) -->
-  <div class="hire-modal-wrap" id="manageModalWrap">
-    <div class="hire-modal">
-      <div class="hire-title">길드원 관리</div>
-      <div class="gm-tabs">
-        <button class="gm-tab active" onclick="switchGmTab('members')">길드원</button>
-        <button class="gm-tab" onclick="switchGmTab('formation')">편성</button>
-      </div>
-      <div class="gm-tab-content active" id="gmTabMembers">
-        <div id="gmMembersList"></div>
-      </div>
-      <div class="gm-tab-content" id="gmTabFormation">
-        <div id="gmFormation"></div>
-      </div>
-      <div class="gm-modal-footer">
-        <button class="btn btn-secondary" onclick="closeManageModal()">닫기</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- UNLOCK MODAL (해금) -->
-  <div class="hire-modal-wrap" id="unlockModalWrap">
-    <div class="hire-modal unlock-modal">
-      <div class="hire-title">해금</div>
-      <div class="unlock-level-header" id="unlockLevelHeader"></div>
-      <div class="gm-tabs">
-        <button class="gm-tab active" onclick="switchUnlockTab('tree')">레벨 보상</button>
-        <button class="gm-tab" onclick="switchUnlockTab('shop')">상점</button>
-      </div>
-      <div class="gm-tab-content active" id="unlockTabTree">
-        <div id="unlockTree"></div>
-      </div>
-      <div class="gm-tab-content" id="unlockTabShop">
-        <div id="unlockStore"></div>
-      </div>
-      <div class="gm-modal-footer">
-        <button class="btn btn-secondary" onclick="closeUnlockShop()">닫기</button>
       </div>
     </div>
   </div>
@@ -1495,7 +854,7 @@ const A={
   repeatCount:4, isRoutine:false, autoRestart:false,
   // Stopwatch
   swRunning:false, swPaused:false,
-  swElapsed:0, swInterval:null,
+  swElapsed:0, swLapStart:0, swLaps:[], swInterval:null,
   // Record modal
   recMode:'timer', recSelCat:null,
   // Todos
@@ -1518,7 +877,6 @@ const A={
   questStartCalMonth:new Date().getMonth(),
   todoHasDeadline:false,
   todoDeadline:null,
-  todoDeadlineOffset:1,
   questDeadlineCalYear:new Date().getFullYear(),
   questDeadlineCalMonth:new Date().getMonth(),
   // Recurrence end date
@@ -1536,25 +894,13 @@ const A={
   lastRolloverDate:null,
   // Shared categories
   categories:['공부','프로젝트','업무','독서','운동','기타'],
-  catColors:{},
   // Records
   records:[],
   // Archive
   calYear:new Date().getFullYear(), calMonth:new Date().getMonth(),
-  selectedDay:null, archModeFilter:'all', archCatFilter:null, archPeriodFilter:'daily',
+  selectedDay:null, archFilter:'all',
   // TL overlay
   tlCollapsed:false,
-  // Gold economy
-  gold:5000, goldTickCounter:0, questGoldToday:0,
-  questGoldDailyCap:2000,
-  // Guild level & XP
-  guildLevel:1, guildXp:0, guildTotalXp:0,
-  unlockedIds:[],
-  focusStreakCount:0,
-  // Guild members
-  guildMembers:[], guildMemberCap:8, squad:[],
-  // Hire modal
-  hireState:'idle', hireCandidates:[], hireHistory:[],
 };
 
 const CIRC_P=465; // 2π×74 for panel ring r=74
@@ -1620,10 +966,6 @@ function processRollover(){
     performRolloverForDate(cur);
   }
   A.lastRolloverDate = tk;
-
-  // Daily resets
-  A.focusStreakCount=0;
-  A.questGoldToday=0;
 
   // UI 리프레시
   renderTlTodos();
@@ -1710,7 +1052,7 @@ function getInstance(masterId, dk){
   return {
     id: master.id, masterId: master.id, master,
     startDate: dk,  // instance's own start date is its occurrence date
-    deadline: master.deadlineOffset ? addDays(dk, master.deadlineOffset) : dk,
+    deadline: dk,   // recurring instances' deadline defaults to same day
     done: !!data.doneAt,
     doneAt: data.doneAt || null,
     suspended: !!data.suspendedAt,
@@ -1727,13 +1069,13 @@ function toggleInstanceDone(masterId, dk){
   const now = new Date();
   if(master.recurrence==='none'){
     if(master.doneAt){ master.doneAt=null; master.doneDate=null; }
-    else { master.doneAt = now.getTime(); master.doneDate = todayKey(); gainXp(10); }
+    else { master.doneAt = now.getTime(); master.doneDate = todayKey(); }
   } else {
     if(!master.recurData) master.recurData={};
     if(!master.recurData[dk]) master.recurData[dk]={};
     const d = master.recurData[dk];
     if(d.doneAt){ d.doneAt=null; d.doneDate=null; }
-    else { d.doneAt = now.getTime(); d.doneDate = todayKey(); gainXp(5); }
+    else { d.doneAt = now.getTime(); d.doneDate = todayKey(); }
   }
 }
 function setInstanceSuspended(masterId, dk, suspended, reason){
@@ -1871,9 +1213,9 @@ function toggleTlTodos(){A.tlCollapsed=!A.tlCollapsed;$('tlTodoOverlay').classLi
    SINGLE PANEL MANAGEMENT
 ══════════════════════════════════════════ */
 const PANEL_META={
-  focus:   {kicker:'FOCUS',   title:'', color:'var(--focus-c)', wide:false},
-  quests:  {kicker:'Quests',  title:'', color:'var(--todo-c)', wide:false},
-  archive: {kicker:'Archive', title:'', color:'var(--diary-c)',wide:true},
+  focus:   {kicker:'Concentrate', title:'Deep Work',   color:'var(--focus-c)', wide:false},
+  quests:  {kicker:'Quests',      title:"Today's Tasks",color:'var(--todo-c)', wide:false},
+  archive: {kicker:'Archive',     title:'Session Log',  color:'var(--diary-c)',wide:true},
 };
 
 function openPanel(key){
@@ -1902,7 +1244,7 @@ function renderPanelContent(key){
   if(key==='quests') renderQuestsPanel();
   if(key==='archive'){renderArchivePanel();}
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel();closeRecModal();closeRecruitModal();closeManageModal();closeUnlockShop();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel();closeRecModal();}});
 
 /* ══════════════════════════════════════════
    SESSION MINI WIDGET
@@ -2103,7 +1445,7 @@ function enterPhase(phase){
   A.timerState=phase;
   // When repeatCount===1, the single rest uses singleRestDuration (not lastRestDuration)
   let dur;
-  if(phase==='focusing'){dur=A.focusDuration*60;A.goldTickCounter=0;}
+  if(phase==='focusing')      dur=A.focusDuration*60;
   else if(phase==='resting')  dur=A.restDuration*60;
   else /* lastResting */      dur=(A.repeatCount===1?A.singleRestDuration:A.lastRestDuration)*60;
   A.remainingTime=A.totalTime=dur;
@@ -2115,7 +1457,7 @@ function timerTick(){
   if(A.timerState==='paused')return;
   if(A.remainingTime<=0){onPhaseEnd();return;}
   A.remainingTime--;
-  if(A.timerState==='focusing'){A.accFocusTime++;goldTick();}
+  if(A.timerState==='focusing')A.accFocusTime++;
   updateTimerDisplay();
   renderSessionMini();
 }
@@ -2128,12 +1470,6 @@ function onPhaseEnd(){
   clearInterval(A.timerInterval);
   playAlarm();
   if(A.timerState==='focusing'){
-    // XP for completing a focus phase
-    if(A.focusDuration>=25){
-      gainXp(15);
-      A.focusStreakCount++;
-      if(A.focusStreakCount%3===0){gainXp(20);showToast('연속 3회 집중 보너스! +20 XP');}
-    }
     if(!A.isRoutine){
       A.normalEnd=true;A.timerState='idle';
       openRecModal('timer',true);
@@ -2189,10 +1525,12 @@ function stopTimer(){
 function renderSWContent(el){
   if(!A.swRunning&&!A.swPaused){
     el.innerHTML=`
-      <div style="font-size:13px;color:var(--text-secondary);line-height:1.75;margin-bottom:18px;">시작 버튼을 누르면 0초부터 측정됩니다.</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.75;margin-bottom:18px;">시작 버튼을 누르면 0초부터 측정됩니다.<br>랩 버튼으로 구간을 기록할 수 있습니다.</div>
       <div class="btn-row"><button class="btn btn-primary sw" onclick="startSW()"><svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/></svg>시작</button></div>`;
   } else {
+    const lapTime=A.swElapsed-A.swLapStart;
     const offset=CIRC_P*(1-(A.swElapsed%60)/60);
+    const lapsHtml=A.swLaps.length?`<div class="lap-list">${[...A.swLaps].reverse().map(l=>`<div class="lap-item"><span class="lap-num">Lap ${l.num}</span><span class="lap-time">${fmt(l.lap)}</span></div>`).join('')}</div>`:'';
     el.innerHTML=`
       <div class="ring-wrap">
         <svg width="180" height="180" viewBox="0 0 180 180" style="transform:rotate(-90deg)">
@@ -2202,10 +1540,13 @@ function renderSWContent(el){
         <div class="ring-inner">
           <div class="ring-time${A.swPaused?' blink':''}" id="swDisp">${fmt(A.swElapsed)}</div>
           <div class="ring-phase" style="color:var(--sw-c)">${A.swPaused?'일시정지':'스톱워치'}</div>
+          <div class="sw-lap-badge">${A.swLaps.length>0?`랩 ${A.swLaps.length+1}  +${fmt(lapTime)}`:''}</div>
         </div>
       </div>
+      ${lapsHtml}
       <div class="btn-row">
         <button class="btn btn-secondary btn-danger" onclick="stopSW()"><svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><rect x="4" y="4" width="12" height="12" rx="2"/></svg></button>
+        <button class="btn btn-secondary" onclick="recordLap()" title="랩"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="17" height="17"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 14 14"/></svg></button>
         <button class="btn btn-primary sw" onclick="toggleSWPause()">
           <svg class="btn-icon" viewBox="0 0 20 20" fill="currentColor">${A.swPaused?'<path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>':'<rect x="5" y="3" width="4" height="14" rx="1"/><rect x="11" y="3" width="4" height="14" rx="1"/>'}</svg>
           ${A.swPaused?'재개':'일시정지'}
@@ -2213,10 +1554,11 @@ function renderSWContent(el){
       </div>`;
   }
 }
-function startSW(){A.swElapsed=0;A.swRunning=true;A.swPaused=false;A.goldTickCounter=0;clearInterval(A.swInterval);A.swInterval=setInterval(()=>{A.swElapsed++;goldTick();updateSWDisplay();renderSessionMini();},1000);if(A.currentPanel==='focus')renderFocusModeContent();renderSessionMini();}
+function startSW(){A.swElapsed=0;A.swLapStart=0;A.swLaps=[];A.swRunning=true;A.swPaused=false;clearInterval(A.swInterval);A.swInterval=setInterval(()=>{A.swElapsed++;updateSWDisplay();renderSessionMini();},1000);if(A.currentPanel==='focus')renderFocusModeContent();renderSessionMini();}
 function updateSWDisplay(){const d=$('swDisp');if(d)d.textContent=fmt(A.swElapsed);const arc=$('swRingArc');if(arc)arc.style.strokeDashoffset=CIRC_P*(1-(A.swElapsed%60)/60);}
-function toggleSWPause(){if(!A.swRunning)return;A.swPaused=!A.swPaused;if(A.swPaused)clearInterval(A.swInterval);else A.swInterval=setInterval(()=>{A.swElapsed++;goldTick();updateSWDisplay();renderSessionMini();},1000);if(A.currentPanel==='focus')renderFocusModeContent();renderSessionMini();}
-function stopSW(){clearInterval(A.swInterval);A.swRunning=false;A.swPaused=false;if(A.swElapsed>=25*60)gainXp(15);openRecModal('sw',false);if(A.currentPanel==='focus')renderFocusModeContent();renderSessionMini();}
+function recordLap(){if(!A.swRunning||A.swPaused)return;const lt=A.swElapsed-A.swLapStart;A.swLaps.push({num:A.swLaps.length+1,lap:lt});A.swLapStart=A.swElapsed;if(A.currentPanel==='focus')renderFocusModeContent();}
+function toggleSWPause(){if(!A.swRunning)return;A.swPaused=!A.swPaused;if(A.swPaused)clearInterval(A.swInterval);else A.swInterval=setInterval(()=>{A.swElapsed++;updateSWDisplay();renderSessionMini();},1000);if(A.currentPanel==='focus')renderFocusModeContent();renderSessionMini();}
+function stopSW(){clearInterval(A.swInterval);A.swRunning=false;A.swPaused=false;openRecModal('sw',false);if(A.currentPanel==='focus')renderFocusModeContent();renderSessionMini();}
 
 /* ══════════════════════════════════════════
    QUESTS PANEL
@@ -2241,17 +1583,15 @@ function renderQuestsList(){
 
   // ═══ 2. 상태 칩 (지연 배지 계산) ═══
   const overdueCount = countOverdue();
-  const sc=(val,label,col)=>{const on=A.statusFilter===val;const style=on?`background:${col}22;border-color:${col};color:${col};`:'';return`<div class="fchip" style="${style}" onclick="setStatusFilter('${val}')">${label}</div>`;};
+  const overdueChipCls = `fchip${A.statusFilter==='overdue'?' on':''}${overdueCount>0?' warn':''}`;
   const overdueBadge = overdueCount>0 ? `<span class="fchip-badge">${overdueCount}</span>` : '';
-  const overdueOn=A.statusFilter==='overdue';
-  const overdueStyle=overdueOn?`background:#e87c7c22;border-color:#e87c7c;color:#e87c7c;`:overdueCount>0?`border-color:rgba(232,124,124,0.4);color:#e87c7c99;`:'';
   const statusChips = `<div class="filter-chips" style="margin-top:10px;">
-    <div class="fchip" style="${A.statusFilter==='all'?'background:#c8c8d822;border-color:#c8c8d8;color:#c8c8d8;':''}" onclick="setStatusFilter('all')">전체</div>
-    <div class="fchip" style="${overdueStyle}" onclick="setStatusFilter('overdue')">지연${overdueBadge}</div>
-    ${sc('upcoming','진행 예정','#c79de8')}
-    ${sc('active','진행 중','#7cb8e8')}
-    ${sc('done','완료','#7ce8a8')}
-    ${sc('suspended','중단','#a0a0a0')}
+    <div class="fchip${A.statusFilter==='all'?' on':''}" onclick="setStatusFilter('all')">전체</div>
+    <div class="${overdueChipCls}" onclick="setStatusFilter('overdue')">지연${overdueBadge}</div>
+    <div class="fchip${A.statusFilter==='upcoming'?' on':''}" onclick="setStatusFilter('upcoming')">진행 예정</div>
+    <div class="fchip${A.statusFilter==='active'?' on':''}" onclick="setStatusFilter('active')">진행 중</div>
+    <div class="fchip${A.statusFilter==='done'?' on':''}" onclick="setStatusFilter('done')">완료</div>
+    <div class="fchip${A.statusFilter==='suspended'?' on':''}" onclick="setStatusFilter('suspended')">중단</div>
   </div>`;
 
   // ═══ 3. 리스트 ═══
@@ -2545,17 +1885,10 @@ function openQuestsForm(editId){
   A.questRecEndCalYear  = reBase.getFullYear();
   A.questRecEndCalMonth = reBase.getMonth();
 
-  // 마감일: 반복 퀘스트는 오프셋, 단발성은 날짜
-  const isRecurring = !!(t && t.recurrence && t.recurrence !== 'none') || (A.todoSelRec !== 'none');
-  if(isRecurring){
-    A.todoHasDeadline    = !!(t && t.deadlineOffset);
-    A.todoDeadlineOffset = (t && t.deadlineOffset) ? t.deadlineOffset : 1;
-    A.todoDeadline       = null;
-  } else {
-    // (dupFav 등이 deadline=startDate로 넣는 경우엔 '미설정'으로 간주)
-    A.todoHasDeadline = !!(t && t.deadline && t.deadline !== t.startDate);
-    A.todoDeadline    = A.todoHasDeadline ? t.deadline : null;
-  }
+  // 마감일: 편집 시 deadline이 있고 startDate와 다르면 별도 설정된 것
+  // (dupFav 등이 deadline=startDate로 넣는 경우엔 '미설정'으로 간주)
+  A.todoHasDeadline = !!(t && t.deadline && t.deadline !== t.startDate);
+  A.todoDeadline    = A.todoHasDeadline ? t.deadline : null;
   const dBase = A.todoDeadline ? parseKey(A.todoDeadline) : sBase;
   A.questDeadlineCalYear  = dBase.getFullYear();
   A.questDeadlineCalMonth = dBase.getMonth();
@@ -2595,7 +1928,10 @@ function renderQuestsForm(t){
 
       <div class="sec-label">카테고리 *</div>
       <div class="cat-chips-wrap" id="qCatChips"></div>
-      <button class="cat-add-open-btn" onclick="openCatAddModal('quest')">+ 카테고리 추가</button>
+      <div class="cat-add-row">
+        <input class="cat-add-input" id="qCatInput" placeholder="새 카테고리..." maxlength="20" onkeydown="if(event.key==='Enter')qAddCat()">
+        <button class="cat-add-btn" onclick="qAddCat()">+</button>
+      </div>
 
       <div class="sec-label">반복 주기</div>
       <div class="rec-row" id="qRecRow">
@@ -2608,10 +1944,10 @@ function renderQuestsForm(t){
       ${startBlockHtml}
 
       <div class="field-row" style="margin-bottom:10px;">
-        <div class="field-label">마감일 설정${(!isRecurring&&A.todoDeadline)?` <small style="color:var(--todo-c);">${A.todoDeadline}</small>`:isRecurring&&A.todoHasDeadline?` <small id="deadlineOffsetLabel" style="color:var(--todo-c);">+${A.todoDeadlineOffset}일</small>`:''}</div>
+        <div class="field-label">마감일 설정${A.todoDeadline?` <small style="color:var(--todo-c);">${A.todoDeadline}</small>`:''}</div>
         <label class="toggle"><input type="checkbox" id="qHasDeadline" ${A.todoHasDeadline?'checked':''} onchange="toggleDeadline()"><span class="toggle-slider"></span></label>
       </div>
-      <div id="qDeadlineCalWrap">${A.todoHasDeadline?(isRecurring?`<div class="deadline-offset-wrap"><span class="deadline-offset-label">발생일로부터</span><input class="deadline-offset-input" type="number" id="qDeadlineOffset" min="1" max="365" value="${A.todoDeadlineOffset}" oninput="setDeadlineOffset(this.value)"><span class="deadline-offset-label">일 후</span></div>`:renderDeadlineCalHtml()):''}</div>
+      <div id="qDeadlineCalWrap">${A.todoHasDeadline?renderDeadlineCalHtml():''}</div>
 
       <div class="btn-row">
         <button class="btn btn-flat" onclick="backToQuestsList()">취소</button>
@@ -2654,17 +1990,8 @@ function toggleRecEnd(){
 function toggleDeadline(){
   const el = $('qHasDeadline'); if(!el) return;
   A.todoHasDeadline = el.checked;
-  if(!A.todoHasDeadline){
-    A.todoDeadline = null;
-    A.todoDeadlineOffset = 1;
-  }
+  if(!A.todoHasDeadline) A.todoDeadline = null;
   rerenderForm();
-}
-function setDeadlineOffset(v){
-  const n = Math.max(1, Math.min(365, parseInt(v)||1));
-  A.todoDeadlineOffset = n;
-  const lbl = $('deadlineOffsetLabel');
-  if(lbl) lbl.textContent = `+${n}일`;
 }
 
 /* ══ 캘린더 공통 빌더 (3종 캘린더 공유) ══ */
@@ -2790,18 +2117,10 @@ function buildRecSummaryHtml(){
 }
 
 /* ══ 카테고리 관리 (Phase 2~3 동일 유지) ══ */
-function renderQCatChips(){
-  const c=$('qCatChips');if(!c)return;
-  if(!A.categories.length){c.innerHTML='<span style="font-size:11px;color:var(--text-muted);">아래에서 카테고리를 추가하세요.</span>';return;}
-  c.innerHTML=A.categories.map((cat,i)=>{
-    const col=A.catColors[cat]||null;
-    const selStyle=col&&A.todoSelCat===cat?`background:${col}22;border-color:${col};color:${col};`:'';
-    const dotStyle=col?`display:inline-block;width:8px;height:8px;border-radius:50%;background:${col};margin-right:4px;`:'display:none;';
-    return `<div class="cat-chip${A.todoSelCat===cat?' sel':''}" style="${selStyle}" onclick="selectQCat('${cat.replace(/'/g,"\\'")}')"><span style="${dotStyle}"></span>${esc(cat)}<span class="cat-chip-del" onclick="event.stopPropagation();delQCat(${i})">×</span></div>`;
-  }).join('');
-}
+function renderQCatChips(){const c=$('qCatChips');if(!c)return;if(!A.categories.length){c.innerHTML='<span style="font-size:11px;color:var(--text-muted);">아래에서 카테고리를 추가하세요.</span>';return;}c.innerHTML=A.categories.map((cat,i)=>`<div class="cat-chip${A.todoSelCat===cat?' sel':''}" onclick="selectQCat('${cat.replace(/'/g,"\\'")}')"> ${esc(cat)}<span class="cat-chip-del" onclick="event.stopPropagation();delQCat(${i})">×</span></div>`).join('');}
 function selectQCat(cat){A.todoSelCat=(A.todoSelCat===cat)?null:cat;renderQCatChips();}
-function delQCat(i){const c=A.categories[i];if(A.todoSelCat===c)A.todoSelCat=null;delete A.catColors[c];A.categories.splice(i,1);renderQCatChips();}
+function delQCat(i){const c=A.categories[i];if(A.todoSelCat===c)A.todoSelCat=null;A.categories.splice(i,1);renderQCatChips();}
+function qAddCat(){const el=$('qCatInput'),v=el.value.trim();if(!v)return;if(A.categories.includes(v)){showToast('이미 존재하는 카테고리');return;}if(A.categories.length>=12){showToast('최대 12개');return;}A.categories.push(v);A.todoSelCat=v;el.value='';renderQCatChips();}
 
 /* ══ 저장 (새 13자리 ID + 새 필드 구조) ══ */
 function saveQuest(){
@@ -2818,35 +2137,28 @@ function saveQuest(){
   if(A.todoSelRec !== 'none' && A.todoHasRecEnd && A.todoRecEnd && A.todoStartDate && A.todoRecEnd < A.todoStartDate){
     showToast('종료일은 시작일 이후여야 합니다');return;
   }
-  if(A.todoHasDeadline){
-    if(A.todoSelRec !== 'none'){
-      if(!A.todoDeadlineOffset || A.todoDeadlineOffset < 1){ showToast('마감일 일수를 1 이상으로 입력해주세요');return;}
-    } else {
-      if(!A.todoDeadline){ showToast('마감일을 선택해주세요');return;}
-      const sd = A.todoStartDate || todayKey();
-      if(A.todoDeadline < sd){ showToast('마감일은 시작일 이후여야 합니다');return;}
-    }
+  if(A.todoHasDeadline && !A.todoDeadline){      showToast('마감일을 선택해주세요');return;}
+  if(A.todoHasDeadline && A.todoDeadline){
+    const sd = A.todoStartDate || todayKey();
+    if(A.todoDeadline < sd){                     showToast('마감일은 시작일 이후여야 합니다');return;}
   }
 
   // 저장 값 계산
-  const startDate      = A.todoStartDate || todayKey();
-  const isRec          = A.todoSelRec !== 'none';
-  const deadline       = (!isRec && A.todoHasDeadline) ? A.todoDeadline : null;
-  const deadlineOffset = (isRec && A.todoHasDeadline) ? A.todoDeadlineOffset : null;
-  const recEndDate     = (isRec && A.todoHasRecEnd) ? A.todoRecEnd : null;
+  const startDate   = A.todoStartDate || todayKey();
+  const deadline    = A.todoHasDeadline ? A.todoDeadline : null;
+  const recEndDate  = (A.todoSelRec !== 'none' && A.todoHasRecEnd) ? A.todoRecEnd : null;
 
   if(A.editingTodoId){
     // 편집: 기존 객체의 필드만 업데이트 (ID / doneAt / recurData / isFavorite 유지)
     const t = A.todos.find(x=>x.id===A.editingTodoId);
     if(t){
-      t.title          = title;
-      t.description    = desc;
-      t.category       = A.todoSelCat;
-      t.recurrence     = A.todoSelRec;
-      t.startDate      = startDate;
-      t.deadline       = deadline;
-      t.deadlineOffset = deadlineOffset;
-      t.recEndDate     = recEndDate;
+      t.title       = title;
+      t.description = desc;
+      t.category    = A.todoSelCat;
+      t.recurrence  = A.todoSelRec;
+      t.startDate   = startDate;
+      t.deadline    = deadline;
+      t.recEndDate  = recEndDate;
       // 단발성으로 전환된 경우 recurData 정리 (옵셔널 - 남겨둬도 사용 안 됨)
       // if(A.todoSelRec === 'none') t.recurData = {};
     }
@@ -2862,7 +2174,6 @@ function saveQuest(){
       recurrence:    A.todoSelRec,
       startDate,
       deadline,
-      deadlineOffset,
       recEndDate,
       doneAt:        null,
       doneDate:      null,
@@ -2892,9 +2203,8 @@ function resetQuestFormState(){
   A.todoStartDate     = null;
   A.todoHasRecEnd     = false;
   A.todoRecEnd        = null;
-  A.todoHasDeadline     = false;
-  A.todoDeadline        = null;
-  A.todoDeadlineOffset  = 1;
+  A.todoHasDeadline   = false;
+  A.todoDeadline      = null;
 }
 function backToQuestsList(){
   A.questsView = 'list';
@@ -3304,30 +2614,24 @@ function renderArchivePanel(){
       </div>
       <div class="arch-right" id="archRight"></div>
     </div>`;
-  A.selectedDay = todayKey();
-  A.calYear = new Date().getFullYear();
-  A.calMonth = new Date().getMonth();
   renderCalGrid();
   renderArchiveRight();
 }
-function moveMonth(d){A.calMonth+=d;if(A.calMonth<0){A.calMonth=11;A.calYear--;}if(A.calMonth>11){A.calMonth=0;A.calYear++;}renderCalGrid();renderArchiveRight();}
-function getRecDayMap(){const m={};A.records.forEach(r=>{if(A.archModeFilter!=='all'&&r.mode!==A.archModeFilter)return;if(A.archCatFilter&&r.category!==A.archCatFilter)return;if(!m[r.date])m[r.date]={f:false,s:false};m[r.date][r.mode==='timer'?'f':'s']=true;});return m;}
+function moveMonth(d){A.calMonth+=d;if(A.calMonth<0){A.calMonth=11;A.calYear--;}if(A.calMonth>11){A.calMonth=0;A.calYear++;}A.selectedDay=null;updateDayStrip();renderCalGrid();renderArchiveRight();}
+function getRecDayMap(){const m={};A.records.forEach(r=>{if(A.archFilter!=='all'&&r.mode!==A.archFilter)return;if(!m[r.date])m[r.date]={f:false,s:false};m[r.date][r.mode==='timer'?'f':'s']=true;});return m;}
 function renderCalGrid(){
   const y=A.calYear,mo=A.calMonth;
   const months=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
   const ct=$('calTitle');if(ct)ct.innerHTML=`${y}<span> ${months[mo]}</span>`;
   const tk=todayKey(),dm=getRecDayMap();
-  const range=getArchDateRange();
   const firstDay=new Date(y,mo,1).getDay(),dim=new Date(y,mo+1,0).getDate(),dip=new Date(y,mo,0).getDate();
   let cells='';
   for(let i=firstDay-1;i>=0;i--)cells+=`<div class="cal-day empty other"><span class="day-num">${dip-i}</span></div>`;
   for(let d=1;d<=dim;d++){
     const dk=`${y}.${String(mo+1).padStart(2,'0')}.${String(d).padStart(2,'0')}`;
-    const dow=new Date(y,mo,d).getDay(),isT=dk===tk;
-    const isSel=dk>=range.start&&dk<=range.end;
-    const isAnchor=dk===A.selectedDay;
+    const dow=new Date(y,mo,d).getDay(),isT=dk===tk,isSel=dk===A.selectedDay;
     const hasRec=dm[dk],hasTodo=A.todos.some(t=>todoOccursOn(t,new Date(y,mo,d)));
-    let cls='cal-day';if(dow===0)cls+=' sun';if(dow===6)cls+=' sat';if(isT)cls+=' today';if(isSel)cls+=' sel';if(isAnchor)cls+=' anchor';
+    let cls='cal-day';if(dow===0)cls+=' sun';if(dow===6)cls+=' sat';if(isT)cls+=' today';if(isSel)cls+=' sel';if(dk!==tk&&dow!==0&&dow!==6)cls+='';
     let dots='';if(hasRec){if(hasRec.f)dots+=`<div class="ddot f"></div>`;if(hasRec.s)dots+=`<div class="ddot s"></div>`;}if(hasTodo)dots+=`<div class="ddot t"></div>`;
     const chk=(hasRec||hasTodo)?`<span class="day-chk">✓</span>`:'';
     cells+=`<div class="${cls}" onclick="selectCalDay('${dk}')">${chk}<span class="day-num">${d}</span><div class="day-dots">${dots}</div></div>`;
@@ -3336,120 +2640,63 @@ function renderCalGrid(){
   for(let d=1;d<=rem;d++)cells+=`<div class="cal-day empty other"><span class="day-num">${d}</span></div>`;
   const cg=$('calGrid');if(cg)cg.innerHTML=cells;
 }
-function selectCalDay(dk){A.selectedDay=dk;updateDayStrip();renderCalGrid();renderArchiveRight();}
+function selectCalDay(dk){if(A.selectedDay===dk){A.selectedDay=null;}else{A.selectedDay=dk;}updateDayStrip();renderCalGrid();renderArchiveRight();}
 function updateDayStrip(){const ds=$('dayStrip');if(!ds)return;if(A.selectedDay){const dt=parseKey(A.selectedDay);$('dayStripLabel').textContent=dateLong(dt)+' 선택됨';ds.classList.add('vis');}else{ds.classList.remove('vis');}}
 
 function renderArchiveRight(){
   const r=$('archRight');if(!r)return;
-  const fchipStyle=(col,isOn)=>isOn?`background:${col}22;border-color:${col};color:${col};`:'';
-  const catChips=A.categories.map(cat=>{const col=A.catColors[cat]||'#c79de8';const isOn=A.archCatFilter===cat;const dot=`<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${isOn?col:'var(--text-muted)'};margin-right:4px;vertical-align:middle;"></span>`;return`<div class="fchip" style="${fchipStyle(col,isOn)}" onclick="setArchCatFilter('${cat.replace(/'/g,"\\'")}')">${dot}${esc(cat)}</div>`;}).join('');
-  const periodChip=(val,label)=>`<div class="fchip${A.archPeriodFilter===val?' on arch':''}" onclick="setArchPeriodFilter('${val}')">${label}</div>`;
-  const filterHtml=`<div class="arch-filter-wrap"><div class="arch-filter-row"><div class="sec-label arch-filter-label">기간</div><div class="filter-chips">${periodChip('daily','일간')}${periodChip('weekly','주간')}${periodChip('monthly','월간')}</div></div><div class="arch-filter-row"><div class="sec-label arch-filter-label">타입</div><div class="filter-chips"><div class="fchip" style="${A.archModeFilter==='all'?'background:#c8c8d822;border-color:#c8c8d8;color:#c8c8d8;':''}" onclick="setArchModeFilter('all')">전체</div><div class="fchip" style="${fchipStyle('#e8a87c',A.archModeFilter==='timer')}" onclick="setArchModeFilter('timer')">Focus</div><div class="fchip" style="${fchipStyle('#7ce8a8',A.archModeFilter==='sw')}" onclick="setArchModeFilter('sw')">Stopwatch</div></div></div>${A.categories.length?`<div class="arch-filter-row"><div class="sec-label arch-filter-label">카테고리</div><div class="filter-chips"><div class="fchip" style="${!A.archCatFilter?'background:#c8c8d822;border-color:#c8c8d8;color:#c8c8d8;':''}" onclick="setArchCatFilter(null)">전체</div>${catChips}</div></div>`:''}</div>`;
-  const range=getArchDateRange();
-  const stripLabel=(()=>{
-    if(!A.selectedDay) return '';
-    if(A.archPeriodFilter==='daily') return dateLong(parseKey(A.selectedDay));
-    if(A.archPeriodFilter==='weekly') return `${range.start} ~ ${range.end}`;
-    if(A.archPeriodFilter==='monthly'){const d=parseKey(A.selectedDay);return `${d.getFullYear()}년 ${d.getMonth()+1}월`;}
-    return '';
-  })();
-  const stripHtml=`<div class="day-strip vis" id="dayStrip"><span class="day-strip-label" id="dayStripLabel">${stripLabel}</span></div>`;
-
-  // ── 집중 기록 ──
+  const filterHtml=`<div><div class="sec-label">기록 필터</div><div class="filter-chips">
+    <div class="fchip${A.archFilter==='all'?' on arch':''}" onclick="setArchFilter('all')">전체</div>
+    <div class="fchip${A.archFilter==='timer'?' on arch':''}" onclick="setArchFilter('timer')">Focus</div>
+    <div class="fchip${A.archFilter==='sw'?' on arch':''}" onclick="setArchFilter('sw')">Stopwatch</div>
+  </div></div>`;
+  const stripHtml=`<div class="day-strip${A.selectedDay?' vis':''}" id="dayStrip"><span class="day-strip-label" id="dayStripLabel">${A.selectedDay?dateLong(parseKey(A.selectedDay))+' 선택됨':''}</span><button class="day-strip-close" onclick="selectCalDay('${A.selectedDay||''}')">×</button></div>`;
   let recs=A.records;
-  if(A.archModeFilter!=='all')recs=recs.filter(x=>x.mode===A.archModeFilter);
-  if(A.archCatFilter)recs=recs.filter(x=>x.category===A.archCatFilter);
-  recs=recs.filter(x=>x.date>=range.start&&x.date<=range.end);
+  if(A.archFilter!=='all')recs=recs.filter(x=>x.mode===A.archFilter);
+  if(A.selectedDay)recs=recs.filter(x=>x.date===A.selectedDay);
   let recHtml='';
-  if(!recs.length){recHtml=`<div class="arch-empty"><div class="arch-empty-icon">📖</div><div class="arch-empty-msg">기록이 없습니다.</div></div>`;}
-  else{const groups={};recs.forEach(x=>{if(!groups[x.date])groups[x.date]=[];groups[x.date].push(x);});recHtml=Object.keys(groups).sort((a,b)=>b.localeCompare(a)).map(dk=>{const items=groups[dk];const tf=items.filter(x=>x.mode==='timer').reduce((a,x)=>a+x.time,0),ts=items.filter(x=>x.mode==='sw').reduce((a,x)=>a+x.time,0);const tl=[tf?`집중 ${fmt(tf)}`:'',ts?`스톱 ${fmt(ts)}`:''].filter(Boolean).join(' · ');return`<div class="arch-date-hdr">${items[0].dateLong||dk}<span style="color:var(--focus-c)">${tl}</span></div>${items.map(x=>`<div class="record-item"><div class="rec-top"><div class="rec-badges"><span class="rec-badge rb-cat${x.mode==='sw'?' sw':''}">${esc(x.category)}</span><span class="rec-badge rb-mode">${x.mode==='sw'?'Stopwatch':'Focus'}</span></div><div style="display:flex;align-items:center;gap:8px;"><span class="rec-clock">${x.clock}</span><span class="rec-time${x.mode==='sw'?' sw':''}">${fmt(x.time)}</span></div></div>${x.notes?`<div class="rec-notes">${esc(x.notes)}</div>`:`<div class="rec-notes-empty">내용 없음</div>`}</div>`).join('')}`;}).join('');}
-
-  // ── 퀘스트 분류 ──
-  const today=todayKey();
-  const allDates=getDatesInRange(range.start,range.end);
-  const pastDates=allDates.filter(dk=>dk<=today);
-  const futureDates=allDates.filter(dk=>dk>today);
-  const doneList=[],activeList=[],overdueList=[],suspendedList=[],upcomingList=[];
-  pastDates.forEach(dk=>{
-    const dt=parseKey(dk);
-    A.todos.filter(t=>todoOccursOn(t,dt)).forEach(m=>{
-      const inst=getInstance(m.id,dk);
-      const status=instanceStatus(inst);
-      if(inst.done) doneList.push({m,inst,dk});
-      else if(inst.suspended) suspendedList.push({m,inst,dk});
-      else if(status==='overdue') overdueList.push({m,inst,dk});
-      else activeList.push({m,inst,dk});
-    });
-  });
-  const seenRec=new Set();
-  futureDates.forEach(dk=>{
-    const dt=parseKey(dk);
-    A.todos.filter(t=>todoOccursOn(t,dt)).forEach(m=>{
-      if(m.recurrence!=='none'){if(seenRec.has(m.id))return;seenRec.add(m.id);}
-      upcomingList.push({m,inst:getInstance(m.id,dk),dk});
-    });
-  });
-
-  // ── 퀘스트 카드 렌더 헬퍼 ──
-  const recTxt=m=>m.recurrence==='none'?'단발':(m.recurrence==='daily'?'매일':m.recurrence==='weekly'?`매주 ${weekdayName(m.startDate).replace('요일','')}`:`매달 ${parseKey(m.startDate).getDate()}일`);
-  const multiDay=A.archPeriodFilter!=='daily';
-  const dayHdr=dk=>multiDay?`<div class="arch-date-hdr">${dateLong(parseKey(dk))}</div>`:'';
-
-  const renderDoneCard=({m,inst,dk})=>{
-    const doneAt=inst.doneAt?new Date(inst.doneAt).toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):'';
-    return `<div class="arch-q-card done" onclick="openTodoDetailFromArchive('${m.id}','${dk}')"><div class="arch-q-icon done-icon">✓</div><div class="arch-q-body"><div class="arch-q-title">${esc(m.title)}</div><div class="arch-q-meta">${esc(m.category)} · ${recTxt(m)}${doneAt?' · '+doneAt:''}</div></div></div>`;
-  };
-  const renderStatusCard=(cls,icon)=>({m,inst,dk})=>`<div class="arch-q-card ${cls}" onclick="openTodoDetailFromArchive('${m.id}','${dk}')"><div class="arch-q-icon ${cls}-icon">${icon}</div><div class="arch-q-body"><div class="arch-q-title">${esc(m.title)}</div><div class="arch-q-meta">${esc(m.category)} · ${recTxt(m)}${multiDay?' · '+dk:''}</div></div></div>`;
-
-  const groupByDay=list=>{const g={};list.forEach(x=>{if(!g[x.dk])g[x.dk]=[];g[x.dk].push(x);});return g;};
-
-  const renderSection=(label,list,cardFn,emptySkip=true)=>{
-    if(!list.length&&emptySkip) return '';
-    const g=groupByDay(list);
-    const cards=Object.keys(g).sort((a,b)=>b.localeCompare(a)).map(dk=>dayHdr(dk)+g[dk].map(cardFn).join('')).join('');
-    return `<div class="arch-q-section"><div class="sec-label">${label} (${list.length})</div>${cards}</div>`;
-  };
-
-  // ── LEFT: 완료 + 집중 기록 ──
-  const leftHtml=
-    renderSection('완료',doneList,renderDoneCard)+
-    `<div class="arch-q-section"><div class="sec-label">집중 기록</div>${recHtml}</div>`;
-
-  // ── RIGHT: 진행 중 / 지연 / 중단 / 진행 예정 ──
-  const rightHtml=
-    renderSection('진행 중',activeList,renderStatusCard('active','○'))+
-    renderSection('지연',overdueList,renderStatusCard('overdue','!'))+
-    renderSection('중단',suspendedList,renderStatusCard('suspended','–'))+
-    (futureDates.length?renderSection('진행 예정',upcomingList,renderStatusCard('upcoming','◇')):'');
-  const rightEmpty=!activeList.length&&!overdueList.length&&!suspendedList.length&&!upcomingList.length;
-
-  r.innerHTML=`${filterHtml}${stripHtml}<div class="arch-content-split"><div class="arch-content-left">${leftHtml}</div><div class="arch-content-right">${rightEmpty?`<div class="arch-empty"><div class="arch-empty-icon">✦</div><div class="arch-empty-msg">진행 중인 퀘스트 없음</div></div>`:rightHtml}</div></div>`;
-}
-function setArchModeFilter(f){A.archModeFilter=f;renderCalGrid();renderArchiveRight();}
-function setArchCatFilter(c){A.archCatFilter=c;renderCalGrid();renderArchiveRight();}
-function setArchPeriodFilter(p){A.archPeriodFilter=p;renderCalGrid();renderArchiveRight();}
-function getArchDateRange(){
-  if(!A.selectedDay) return {start:todayKey(),end:todayKey()};
-  if(A.archPeriodFilter==='daily') return {start:A.selectedDay,end:A.selectedDay};
-  if(A.archPeriodFilter==='weekly'){
-    const d=parseKey(A.selectedDay),dow=d.getDay();
-    const mon=new Date(d);mon.setDate(d.getDate()-(dow===0?6:dow-1));
-    const sun=new Date(mon);sun.setDate(mon.getDate()+6);
-    return {start:dateKey(mon),end:dateKey(sun)};
+  if(!recs.length){recHtml=`<div class="arch-empty"><div class="arch-empty-icon">📖</div><div class="arch-empty-msg">${A.selectedDay?'선택한 날짜의 기록 없음':'아직 집중 기록이 없습니다.'}</div></div>`;}
+  else{const groups={};recs.forEach(x=>{if(!groups[x.date])groups[x.date]=[];groups[x.date].push(x);});recHtml=Object.keys(groups).map(dk=>{const items=groups[dk];const tf=items.filter(x=>x.mode==='timer').reduce((a,x)=>a+x.time,0),ts=items.filter(x=>x.mode==='sw').reduce((a,x)=>a+x.time,0);const tl=[tf?`집중 ${fmt(tf)}`:'',ts?`스톱 ${fmt(ts)}`:''].filter(Boolean).join(' · ');return`<div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin:12px 0 6px;display:flex;gap:8px;">${items[0].dateLong||dk}<span style="color:var(--focus-c)">${tl}</span></div>${items.map(x=>`<div class="record-item"><div class="rec-top"><div class="rec-badges"><span class="rec-badge rb-cat${x.mode==='sw'?' sw':''}">${esc(x.category)}</span><span class="rec-badge rb-mode">${x.mode==='sw'?'Stopwatch':'Focus'}</span></div><div style="display:flex;align-items:center;gap:8px;"><span class="rec-clock">${x.clock}</span><span class="rec-time${x.mode==='sw'?' sw':''}">${fmt(x.time)}</span></div></div>${x.notes?`<div class="rec-notes">${esc(x.notes)}</div>`:`<div class="rec-notes-empty">내용 없음</div>`}</div>`).join('')}`;}).join('');}
+  let todosHtml='';
+  if(A.selectedDay){
+    const dt = parseKey(A.selectedDay);
+    // 선택일에 발생하는 모든 마스터 (단발성은 startDate===dk일 때, 반복은 todoOccursOn 판정)
+    const mastersForDay = A.todos.filter(t => todoOccursOn(t, dt));
+    if(mastersForDay.length){
+      // 각 마스터의 해당 일자 인스턴스 상태
+      const items = mastersForDay.map(m => ({ m, inst: getInstance(m.id, A.selectedDay) }));
+      // 정렬: 단발성 → 반복, 그 내부는 ID asc
+      items.sort((a,b) => {
+        const ar = a.m.recurrence === 'none' ? 0 : 1;
+        const br = b.m.recurrence === 'none' ? 0 : 1;
+        if(ar !== br) return ar - br;
+        return a.m.id.localeCompare(b.m.id);
+      });
+      todosHtml = `<div><div class="sec-label">할 일 (${items.length})</div>${items.map(({m, inst}) => {
+        const done      = inst.done;
+        const suspended = inst.suspended;
+        const status    = instanceStatus(inst);
+        const isOverdue = status === 'overdue';
+        const recTxt = m.recurrence === 'none' ? '단발' : (() => {
+          if(m.recurrence==='daily')   return '매일';
+          if(m.recurrence==='weekly')  return `매주 ${weekdayName(m.startDate).replace('요일','')}`;
+          if(m.recurrence==='monthly') return `매달 ${parseKey(m.startDate).getDate()}일`;
+          return recLabel(m.recurrence);
+        })();
+        const itemCls = `arch-todo-item${done?' done':''}${suspended?' suspended':''}${(isOverdue && !done && !suspended)?' overdue':''}`;
+        return `<div class="${itemCls}" onclick="openTodoDetailFromArchive('${m.id}','${A.selectedDay}')">
+          <div class="arch-todo-chk-disp"></div>
+          <div style="flex:1;min-width:0;">
+            <div class="arch-todo-title">${esc(m.title)}</div>
+            <div class="arch-todo-cat">${esc(m.category)} · ${recTxt}</div>
+          </div>
+        </div>`;
+      }).join('')}</div>`;
+    }
   }
-  if(A.archPeriodFilter==='monthly'){
-    const d=parseKey(A.selectedDay);
-    const mm=String(d.getMonth()+1).padStart(2,'0');
-    const last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
-    return {start:`${d.getFullYear()}.${mm}.01`,end:`${d.getFullYear()}.${mm}.${String(last).padStart(2,'0')}`};
-  }
-  return {start:A.selectedDay,end:A.selectedDay};
+  r.innerHTML=`${filterHtml}${stripHtml}<div><div class="sec-label">집중 기록</div>${recHtml}</div>${todosHtml}`;
 }
-function getDatesInRange(start,end){
-  const dates=[];let cur=parseKey(start);const endD=parseKey(end);
-  while(cur<=endD){dates.push(dateKey(new Date(cur)));cur.setDate(cur.getDate()+1);}
-  return dates;
-}
+function setArchFilter(f){A.archFilter=f;renderCalGrid();renderArchiveRight();}
 function openTodoDetailFromArchive(id, dk){
   A.currentPanel         = 'quests';
   A.questsView           = 'detail';
@@ -3479,42 +2726,14 @@ function openRecModal(mode,normal){
   const v=isSW?A.swElapsed:A.accFocusTime;
   $('rmStatVal').textContent=fmt(v);
   $('rmStatVal').style.color=isSW?'var(--sw-c)':'var(--focus-c)';
-  $('rmNotes').value='';
+  $('rmCatInput').value='';$('rmNotes').value='';
   renderRmCatChips();
   $('recModalWrap').classList.add('open');
 }
-function renderRmCatChips(){
-  const c=$('rmCatChips');if(!c)return;
-  c.innerHTML=A.categories.map((cat,i)=>{
-    const col=A.catColors[cat]||null;
-    const selStyle=col&&A.recSelCat===cat?`background:${col}22;border-color:${col};color:${col};`:'';
-    const dotStyle=col?`display:inline-block;width:8px;height:8px;border-radius:50%;background:${col};margin-right:4px;`:'display:none;';
-    return `<div class="cat-chip${A.recSelCat===cat?' sel':''}" style="${selStyle}" onclick="selectRmCat('${cat.replace(/'/g,"\\'")}')"><span style="${dotStyle}"></span>${esc(cat)}<span class="cat-chip-del" onclick="event.stopPropagation();delRmCat(${i})">×</span></div>`;
-  }).join('');
-}
+function renderRmCatChips(){const c=$('rmCatChips');if(!c)return;c.innerHTML=A.categories.map((cat,i)=>`<div class="cat-chip${A.recSelCat===cat?' sel':''}" onclick="selectRmCat('${cat.replace(/'/g,"\\'")}')"> ${esc(cat)}<span class="cat-chip-del" onclick="event.stopPropagation();delRmCat(${i})">×</span></div>`).join('');}
 function selectRmCat(cat){A.recSelCat=(A.recSelCat===cat)?null:cat;renderRmCatChips();}
-function delRmCat(i){const c=A.categories[i];if(A.recSelCat===c)A.recSelCat=null;delete A.catColors[c];A.categories.splice(i,1);renderRmCatChips();}
-function openCatAddModal(caller){
-  A._catAddCaller=caller||'rec';
-  $('camNameInput').value='';
-  const col='#e8c87c';
-  $('camColorInput').value=col;
-  $('camColorPreview').style.background=col;
-  $('camColorInput').oninput=function(){$('camColorPreview').style.background=this.value;};
-  $('catAddModalWrap').classList.add('open');
-  setTimeout(()=>$('camNameInput').focus(),100);
-}
-function closeCatAddModal(){$('catAddModalWrap').classList.remove('open');}
-function saveCatFromModal(){
-  const v=$('camNameInput').value.trim();
-  if(!v){showToast('이름을 입력해주세요');return;}
-  if(A.categories.includes(v)){showToast('이미 존재하는 카테고리');return;}
-  if(A.categories.length>=12){showToast('최대 12개');return;}
-  A.catColors[v]=$('camColorInput').value;
-  A.categories.push(v);
-  if(A._catAddCaller==='quest'){A.todoSelCat=v;closeCatAddModal();renderQCatChips();}
-  else{A.recSelCat=v;closeCatAddModal();renderRmCatChips();}
-}
+function delRmCat(i){const c=A.categories[i];if(A.recSelCat===c)A.recSelCat=null;A.categories.splice(i,1);renderRmCatChips();}
+function rmAddCat(){const el=$('rmCatInput'),v=el.value.trim();if(!v)return;if(A.categories.includes(v)){showToast('이미 존재');return;}if(A.categories.length>=12){showToast('최대 12개');return;}A.categories.push(v);A.recSelCat=v;el.value='';renderRmCatChips();}
 function saveRecord(){
   if(!A.recSelCat){showToast('카테고리를 선택해주세요');return;}
   const isSW=A.recMode==='sw',time=isSW?A.swElapsed:A.accFocusTime,now=new Date();
@@ -3525,7 +2744,7 @@ function saveRecord(){
 }
 function closeRecModal(){
   $('recModalWrap').classList.remove('open');
-  A.accFocusTime=0;A.cycleIndex=1;A.swElapsed=0;
+  A.accFocusTime=0;A.cycleIndex=1;A.swElapsed=0;A.swLapStart=0;A.swLaps=[];
 }
 
 /* ══════════════════════════════════════════
@@ -3559,1013 +2778,9 @@ document.addEventListener('click',e=>{
   const ab=$('ambientBtn'),ao=$('ambientOverlay');if(ab&&ao&&!ab.contains(e.target)&&!ao.contains(e.target)){ambOpen=false;ao.classList.remove('open');ab.classList.remove('active');}
 });
 
-/* ══════════════════════════════════════════
-   GUILD LEVEL & UNLOCK SYSTEM
-══════════════════════════════════════════ */
-const LEVEL_XP=[0,0,50,100,180,280,400,550,720,900,1100];
-const MAX_LEVEL=10;
-const GUILD_TITLES=['','견습 길드마스터','초보 길드마스터','정식 길드마스터',
-  '숙련 길드마스터','노련한 길드마스터','전략가 길드마스터','원로 길드마스터',
-  '대길드마스터','전설의 길드마스터','만고불변의 길드마스터'];
-const RARITY_BY_LEVEL={1:[25,25,25,25],2:[25,25,25,25],4:[25,25,25,25],6:[25,25,25,25],8:[25,25,25,25]};
-const UNLOCKS=[
-  {id:'cap10',level:3,type:'auto',desc:'길드원 보유 상한 +2',detail:'8명 → 10명'},
-  {id:'cap12',level:7,type:'auto',desc:'길드원 보유 상한 +2',detail:'10명 → 12명'},
-  {id:'stat_xp',level:3,type:'auto',desc:'새 능력치 해금',detail:'경험치 보너스'},
-  {id:'stat_rest',level:6,type:'auto',desc:'새 능력치 해금',detail:'휴식 효율'},
-  {id:'goldcap2500',level:4,type:'auto',desc:'퀘스트 골드 상한 +500',detail:'2,000 → 2,500'},
-  {id:'goldcap3000',level:7,type:'auto',desc:'퀘스트 골드 상한 +500',detail:'2,500 → 3,000'},
-  {id:'preset4',level:4,type:'purchase',cost:3000,desc:'스쿼드 프리셋 +1',detail:'3 → 4'},
-  {id:'preset5',level:8,type:'purchase',cost:5000,desc:'스쿼드 프리셋 +1',detail:'4 → 5'},
-  {id:'squad5',level:5,type:'purchase',cost:5000,desc:'편성 슬롯 +1',detail:'4 → 5'},
-  {id:'squad6',level:9,type:'purchase',cost:8000,desc:'편성 슬롯 +1',detail:'5 → 6'},
-  {id:'amb_thunder',level:2,type:'purchase',cost:1500,desc:'앰비언트 해금',detail:'Thunder ⚡'},
-  {id:'amb_cave',level:5,type:'purchase',cost:2000,desc:'앰비언트 해금',detail:'Cave 🦇'},
-  {id:'amb_tavern',level:8,type:'purchase',cost:3000,desc:'앰비언트 해금',detail:'Tavern 🍺'},
-];
-
-/* ══════════════════════════════════════════
-   GUILD MEMBER HIRE SYSTEM
-══════════════════════════════════════════ */
-const HIRE_COST=1000;
-const RARITY_WEIGHTS=[
-  {rarity:'normal',weight:25,label:'Normal',stars:'★',color:''},
-  {rarity:'rare',weight:25,label:'Rare',stars:'★★',color:'#7cb8e8'},
-  {rarity:'epic',weight:25,label:'Epic',stars:'★★★',color:'#a87ce8'},
-  {rarity:'legendary',weight:25,label:'Legendary',stars:'★★★★',color:'#e8a05c'},
-];
-const STAT_POOL=[
-  {name:'집중 시간',unit:'%'},{name:'골드 획득',unit:'%'},
-  {name:'퀘스트 보상',unit:'%'},{name:'스톱워치 보상',unit:'%'},
-];
-const RARITY_STATS={
-  normal:{count:1,min:3,max:8},
-  rare:{count:1,min:5,max:12},
-  epic:{count:2,min:8,max:15},
-  legendary:{count:2,min:12,max:20},
-};
-const MEMBER_NAMES=[
-  'Aldric','Brenna','Cedric','Dahlia','Erion','Fiora','Gareth','Helena',
-  'Ivran','Jorin','Kael','Lyris','Maren','Nyx','Orin','Petra',
-  'Quinn','Rowan','Selene','Thane','Uriel','Vera','Wynn','Xara','Yoren','Zara',
-];
-
-/* — Gold economy — */
-function goldTick(){
-  A.goldTickCounter++;
-  if(A.goldTickCounter>=6){A.goldTickCounter=0;A.gold+=10;updateGoldDisplay();}
-}
-function updateGoldDisplay(){
-  $('guildGold').textContent='💰 '+A.gold.toLocaleString();
-}
-
-/* — Guild Manage Modal — */
-let gmActiveTab='recruit';
-
-/* — Recruit modal (모집 전용) — */
-function openRecruitModal(){
-  A.hireState='idle';
-  A.hireCandidates=[];
-  renderHireIdle();
-  $('hireModalWrap').classList.add('open');
-}
-function closeRecruitModal(){
-  $('hireModalWrap').classList.remove('open');
-  A.hireState='idle';
-}
-
-/* — Manage modal (길드원 + 편성) — */
-function openGuildManage(tab){
-  switchGmTab(tab||'members');
-  $('manageModalWrap').classList.add('open');
-}
-function closeManageModal(){
-  $('manageModalWrap').classList.remove('open');
-}
-
-function switchGmTab(tab){
-  gmActiveTab=tab;
-  const tabs=$('manageModalWrap').querySelectorAll('.gm-tab');
-  tabs.forEach((t,i)=>{
-    t.classList.toggle('active',['members','formation'][i]===tab);
-  });
-  $('manageModalWrap').querySelectorAll('.gm-tab-content').forEach(c=>c.classList.remove('active'));
-  if(tab==='members'){
-    $('gmTabMembers').classList.add('active');
-    renderMembersList();
-  }else if(tab==='formation'){
-    $('gmTabFormation').classList.add('active');
-    renderFormation();
-  }
-}
-
-/* — Recruit tab — */
-function renderHireIdle(){
-  const oldMsg=document.getElementById('hireResultMsg');
-  if(oldMsg)oldMsg.remove();
-  // Clean up particles
-  document.querySelectorAll('.card-particle').forEach(p=>p.remove());
-  $('hireModalWrap').classList.remove('legendary-flash');
-  const cards=$('hireCards');
-  cards.innerHTML=`
-    <div class="hire-bulletin" id="hireBulletin">
-      <div class="hire-bulletin-paper"><div class="hire-bulletin-pin"></div>RECRUIT<br>QUEST</div>
-      <div class="hire-bulletin-paper"><div class="hire-bulletin-pin"></div>RECRUIT<br>QUEST</div>
-      <div class="hire-bulletin-paper"><div class="hire-bulletin-pin"></div>RECRUIT<br>QUEST</div>
-    </div>`;
-  const canHire=A.gold>=HIRE_COST&&A.guildMembers.length<A.guildMemberCap;
-  $('hireActions').innerHTML=`
-    <button class="btn btn-secondary" onclick="closeRecruitModal()">닫기</button>
-    <button class="btn btn-primary" id="hireBtn" onclick="startHire()" ${canHire?'':'disabled'}>모집하기</button>`;
-  $('hireMemberCount').textContent='보유: '+A.guildMembers.length+'/'+A.guildMemberCap;
-}
-
-function startHire(){
-  if(A.gold<HIRE_COST){showToast('골드가 부족합니다');return;}
-  if(A.guildMembers.length>=A.guildMemberCap){showToast('보유 상한에 도달했습니다');return;}
-  A.gold-=HIRE_COST;
-  updateGoldDisplay();
-  A.hireCandidates=[generateCandidate(),generateCandidate(),generateCandidate()];
-  A.hireState='revealed';
-  const btn=document.getElementById('hireBtn');
-  if(btn)btn.disabled=true;
-  // Hide actions during animation
-  $('hireActions').innerHTML='';
-  $('hireInfo').style.opacity='0';
-
-  // Determine best rarity for burst color
-  const rarityOrder={normal:0,rare:1,epic:2,legendary:3};
-  const rarityTiers=['normal','rare','epic','legendary'];
-  const colors={normal:'rgba(240,237,232,0.3)',rare:'rgba(124,184,232,0.4)',epic:'rgba(168,124,232,0.45)',legendary:'rgba(232,160,92,0.5)'};
-  const solidColors={normal:'#f0ede8',rare:'#7cb8e8',epic:'#a87ce8',legendary:'#e8a05c'};
-  const burstRGB={normal:'153,153,160',rare:'124,184,232',epic:'168,124,232',legendary:'232,160,92'};
-  const best=A.hireCandidates.reduce((a,b)=>rarityOrder[a.rarity]>=rarityOrder[b.rarity]?a:b);
-  // Betrayal gacha: 50% chance when best >= Rare
-  const bestTier=rarityOrder[best.rarity];
-  const betrayal=bestTier>=1&&Math.random()<0.5;
-  const fakeRarity=betrayal?rarityTiers[bestTier-1]:best.rarity;
-  const lightColor=colors[fakeRarity];
-  const burstColor=betrayal?burstRGB[fakeRarity]:burstRGB[best.rarity];
-
-  // Phase 1: Bulletin dismiss
-  const bulletin=$('hireBulletin');
-  if(bulletin) bulletin.classList.add('dismiss');
-
-  // Phase 2: Door + body slam sequence
-  setTimeout(()=>{
-    const cards=$('hireCards');
-    cards.innerHTML=`
-      <div class="hire-door-wrap" id="hireDoorWrap">
-        <div class="hire-door-wall"></div>
-        <div class="hire-door-torch left">
-          <div class="hire-door-torch-flame"></div>
-          <div class="hire-door-torch-bracket"></div>
-          <div class="hire-door-torch-glow"></div>
-        </div>
-        <div class="hire-door-torch right">
-          <div class="hire-door-torch-flame"></div>
-          <div class="hire-door-torch-bracket"></div>
-          <div class="hire-door-torch-glow"></div>
-        </div>
-        <div class="hire-door-frame"></div>
-        <div class="hire-door-keystone"></div>
-        <div class="hire-door-left">
-          <div class="hire-door-band" style="top:12%"></div>
-          <div class="hire-door-band" style="top:45%"></div>
-          <div class="hire-door-band" style="top:82%"></div>
-          <div class="hire-door-hinge" style="top:18%"></div>
-          <div class="hire-door-hinge" style="top:55%"></div>
-          <div class="hire-door-hinge" style="top:85%"></div>
-          <div class="hire-door-knocker">
-            <div class="hire-door-knocker-plate"><div class="hire-door-knocker-ring"></div></div>
-          </div>
-          <div class="hire-door-keyhole"></div>
-          <div class="hire-door-studs">
-            <div class="hire-door-stud" style="top:6%;right:15%"></div>
-            <div class="hire-door-stud" style="top:6%;right:55%"></div>
-            <div class="hire-door-stud" style="top:6%;right:35%"></div>
-            <div class="hire-door-stud" style="top:28%;right:15%"></div>
-            <div class="hire-door-stud" style="top:28%;right:55%"></div>
-            <div class="hire-door-stud" style="top:60%;right:15%"></div>
-            <div class="hire-door-stud" style="top:60%;right:55%"></div>
-            <div class="hire-door-stud" style="top:95%;right:15%"></div>
-            <div class="hire-door-stud" style="top:95%;right:55%"></div>
-          </div>
-        </div>
-        <div class="hire-door-right">
-          <div class="hire-door-band" style="top:12%"></div>
-          <div class="hire-door-band" style="top:45%"></div>
-          <div class="hire-door-band" style="top:82%"></div>
-          <div class="hire-door-hinge" style="top:18%"></div>
-          <div class="hire-door-hinge" style="top:55%"></div>
-          <div class="hire-door-hinge" style="top:85%"></div>
-          <div class="hire-door-knocker">
-            <div class="hire-door-knocker-plate"><div class="hire-door-knocker-ring"></div></div>
-          </div>
-          <div class="hire-door-studs">
-            <div class="hire-door-stud" style="top:6%;left:15%"></div>
-            <div class="hire-door-stud" style="top:6%;left:55%"></div>
-            <div class="hire-door-stud" style="top:6%;left:35%"></div>
-            <div class="hire-door-stud" style="top:28%;left:15%"></div>
-            <div class="hire-door-stud" style="top:28%;left:55%"></div>
-            <div class="hire-door-stud" style="top:60%;left:15%"></div>
-            <div class="hire-door-stud" style="top:60%;left:55%"></div>
-            <div class="hire-door-stud" style="top:95%;left:15%"></div>
-            <div class="hire-door-stud" style="top:95%;left:55%"></div>
-          </div>
-        </div>
-        <div class="hire-door-light" id="hireDoorLight" style="background:radial-gradient(ellipse at center,${lightColor},transparent 70%)"></div>
-        <div class="hire-bash-figure" id="hireBashFigure"></div>
-        <div class="hire-burst-glow" id="hireBurstGlow"></div>
-      </div>`;
-    // Spawn dust particles
-    const dw=$('hireDoorWrap');
-    for(let d=0;d<8;d++){
-      const dust=document.createElement('div');
-      dust.className='hire-door-dust';
-      dust.style.cssText=`left:${15+Math.random()*70}%;top:${60+Math.random()*30}%;animation-duration:${3+Math.random()*4}s;animation-delay:${Math.random()*3}s;width:${1+Math.random()*2}px;height:${1+Math.random()*2}px;`;
-      dw.appendChild(dust);
-    }
-
-    const doorWrap=$('hireDoorWrap');
-    const bashFig=$('hireBashFigure');
-
-    // Show bash figure
-    setTimeout(()=>bashFig.classList.add('show'),200);
-
-    // Body slam 1
-    setTimeout(()=>{
-      bashFig.classList.remove('recoil');bashFig.classList.add('bash');
-      doorWrap.style.animation='doorBashed 0.3s ease';
-      showKnockEffect(doorWrap);
-      doorWrap.parentElement.style.animation='hireShake 0.5s ease';
-      setTimeout(()=>{doorWrap.style.animation='';doorWrap.parentElement.style.animation='';},500);
-    },600);
-    setTimeout(()=>{bashFig.classList.remove('bash');bashFig.classList.add('recoil');},900);
-
-    // Body slam 2
-    setTimeout(()=>{
-      bashFig.classList.remove('recoil');bashFig.classList.add('bash');
-      doorWrap.style.animation='doorBashed 0.3s ease';
-      showKnockEffect(doorWrap);
-      doorWrap.parentElement.style.animation='hireShake 0.5s ease';
-      setTimeout(()=>{doorWrap.style.animation='';doorWrap.parentElement.style.animation='';},500);
-    },1300);
-    setTimeout(()=>{bashFig.classList.remove('bash');bashFig.classList.add('recoil');},1600);
-
-    // Body slam 3 (harder)
-    setTimeout(()=>{
-      bashFig.classList.remove('recoil');bashFig.classList.add('bash');
-      doorWrap.style.animation='doorBashed 0.3s ease';
-      showKnockEffect(doorWrap);
-      doorWrap.parentElement.style.animation='hireShakeHard 0.6s ease';
-      setTimeout(()=>{doorWrap.style.animation='';doorWrap.parentElement.style.animation='';},600);
-    },2000);
-    setTimeout(()=>{bashFig.classList.remove('bash');bashFig.classList.add('recoil');},2350);
-
-    // Phase 3: Burst open + glow + rays
-    setTimeout(()=>{
-      bashFig.classList.remove('show','bash','recoil');
-      doorWrap.querySelector('.hire-door-left').classList.add('burst-open');
-      doorWrap.querySelector('.hire-door-right').classList.add('burst-open');
-      $('hireDoorLight').classList.add('show');
-      // Burst glow with rarity color
-      const glow=$('hireBurstGlow');
-      const rgb=burstColor;
-      glow.style.background=`radial-gradient(circle,rgba(255,235,180,1) 0%,rgba(${rgb},0.85) 20%,rgba(${rgb},0.4) 45%,transparent 70%)`;
-      glow.classList.add('burst');
-      // 8-directional rays
-      const rayAngles=[-90,-60,-30,0,180,210,240,270];
-      rayAngles.forEach((angle,i)=>{
-        const ray=document.createElement('div');
-        ray.className='hire-gate-ray';
-        ray.style.cssText=`transform:translate(0,-50%) rotate(${angle}deg);background:linear-gradient(90deg,rgba(255,235,180,1),rgba(${rgb},1) 30%,transparent);box-shadow:0 0 12px rgba(${rgb},0.8),0 0 24px rgba(${rgb},0.4);`;
-        doorWrap.appendChild(ray);
-        setTimeout(()=>ray.classList.add('shoot'),i*30);
-        setTimeout(()=>ray.remove(),1600);
-      });
-      // Screen shake
-      doorWrap.parentElement.style.animation='hireShake 0.5s ease';
-      setTimeout(()=>{doorWrap.parentElement.style.animation='';},500);
-    },2800);
-
-    if(betrayal){
-      // Phase 3.5: Betrayal — light explodes, color shifts to real rarity
-      setTimeout(()=>{
-        const light=$('hireDoorLight');
-        const realColor=colors[best.rarity];
-        const realSolid=solidColors[best.rarity];
-        const realRGB=burstRGB[best.rarity];
-        // Flash burst
-        const flash=document.createElement('div');
-        flash.className='hire-betrayal-flash';
-        flash.style.background=`radial-gradient(circle,${realSolid},transparent 70%)`;
-        doorWrap.appendChild(flash);
-        // Shake
-        doorWrap.parentElement.style.animation='hireShakeHard 0.6s ease';
-        setTimeout(()=>{doorWrap.parentElement.style.animation='';},600);
-        // Spawn burst particles in real rarity color
-        const burstCount=16+Math.floor(Math.random()*8);
-        for(let i=0;i<burstCount;i++){
-          const p=document.createElement('div');
-          p.className='hire-betrayal-particle';
-          const angle=Math.random()*Math.PI*2;
-          const dist=40+Math.random()*80;
-          const dx=Math.cos(angle)*dist;
-          const dy=Math.sin(angle)*dist;
-          const size=2+Math.random()*4;
-          p.style.cssText=`left:50%;top:50%;width:${size}px;height:${size}px;--dx:${dx}px;--dy:${dy}px;background:${realSolid};box-shadow:0 0 ${4+Math.random()*6}px ${realSolid};animation-delay:${Math.random()*0.1}s;`;
-          doorWrap.appendChild(p);
-          setTimeout(()=>p.remove(),1000);
-        }
-        // Second burst glow in real color
-        const glow2=document.createElement('div');
-        glow2.className='hire-burst-glow burst';
-        glow2.style.background=`radial-gradient(circle,rgba(255,235,180,1) 0%,rgba(${realRGB},0.85) 20%,rgba(${realRGB},0.4) 45%,transparent 70%)`;
-        doorWrap.appendChild(glow2);
-        // Shift light color
-        setTimeout(()=>{
-          light.style.background=`radial-gradient(ellipse at center,${realColor},transparent 70%)`;
-          light.style.width='220px';
-          setTimeout(()=>{light.style.width='180px';},300);
-          flash.remove();
-        },200);
-      },4000);
-      // Phase 4: Render cards (delayed for betrayal)
-      setTimeout(()=>{
-        renderHireRevealed();
-      },5400);
-    }else{
-      // Phase 4: Render cards (normal)
-      setTimeout(()=>{
-        renderHireRevealed();
-      },4200);
-    }
-  },700);
-}
-
-function showKnockEffect(container){
-  // Expanding ring
-  const ring=document.createElement('div');
-  ring.className='hire-door-knock-ring';
-  container.appendChild(ring);
-  setTimeout(()=>ring.remove(),700);
-  // Burst particles
-  const burst=document.createElement('div');
-  burst.className='hire-door-knock-burst';
-  container.appendChild(burst);
-  const count=8+Math.floor(Math.random()*4);
-  for(let i=0;i<count;i++){
-    const p=document.createElement('div');
-    p.className='hire-door-knock-particle';
-    const angle=Math.random()*Math.PI*2;
-    const dist=20+Math.random()*30;
-    const dx=Math.cos(angle)*dist;
-    const dy=Math.sin(angle)*dist;
-    const size=2+Math.random()*3;
-    const brightness=0.4+Math.random()*0.4;
-    p.style.cssText=`width:${size}px;height:${size}px;--dx:${dx}px;--dy:${dy}px;background:rgba(201,169,89,${brightness});box-shadow:0 0 ${3+Math.random()*4}px rgba(201,169,89,${brightness*0.6});animation-delay:${Math.random()*0.08}s;animation-duration:${0.4+Math.random()*0.3}s;`;
-    burst.appendChild(p);
-  }
-  setTimeout(()=>burst.remove(),700);
-}
-
-function generateCandidate(){
-  const total=RARITY_WEIGHTS.reduce((s,r)=>s+r.weight,0);
-  let roll=Math.random()*total, rarity=RARITY_WEIGHTS[0];
-  for(const r of RARITY_WEIGHTS){roll-=r.weight;if(roll<=0){rarity=r;break;}}
-  const rs=RARITY_STATS[rarity.rarity];
-  const pool=[...STAT_POOL].sort(()=>Math.random()-0.5);
-  const stats=[];
-  for(let i=0;i<rs.count;i++){
-    stats.push({name:pool[i].name,value:rs.min+Math.floor(Math.random()*(rs.max-rs.min+1)),unit:pool[i].unit});
-  }
-  const name=MEMBER_NAMES[Math.floor(Math.random()*MEMBER_NAMES.length)];
-  return{rarity:rarity.rarity,label:rarity.label,stars:rarity.stars,color:rarity.color,name,stats};
-}
-
-function renderHireRevealed(){
-  const cards=$('hireCards');
-  cards.innerHTML='';
-  const msg=document.createElement('div');
-  msg.className='hire-result-msg';
-  msg.id='hireResultMsg';
-  msg.textContent='3 Adventurers Applied!';
-  cards.parentNode.insertBefore(msg,cards);
-  setTimeout(()=>msg.classList.add('show'), 200);
-  A.hireCandidates.forEach((cand,i)=>{
-    const wrap=document.createElement('div');
-    wrap.className='hire-card-wrap';
-    const c=document.createElement('div');
-    c.className='hire-card rarity-'+cand.rarity;
-    const extStatsHtml=cand.stats.map(s=>`<div class="hire-card-ext-stat">${esc(s.name)} +${s.value}${s.unit}</div>`).join('');
-    c.innerHTML=`
-      <div class="hire-card-inner">
-        <div class="hire-card-front"><div class="hire-card-front-icon">?</div></div>
-        <div class="hire-card-back">
-          <img class="hire-card-img" src="Character/Test_Card/1 (1).png" alt="${esc(cand.name)}">
-          <div class="hire-card-body">
-            <div class="hire-card-rarity" ${cand.color?`style="color:${cand.color}"`:''}>${cand.stars} ${cand.label}</div>
-            <div class="hire-card-name">${esc(cand.name)}</div>
-          </div>
-        </div>
-      </div>`;
-    wrap.appendChild(c);
-    // External stats (below card)
-    const statsEl=document.createElement('div');
-    statsEl.className='hire-card-ext-stats';
-    statsEl.innerHTML=extStatsHtml;
-    wrap.appendChild(statsEl);
-    // External select button (below stats)
-    const selBtn=document.createElement('button');
-    selBtn.className='hire-card-ext-select';
-    selBtn.textContent='선택';
-    selBtn.onclick=()=>selectCandidate(i);
-    wrap.appendChild(selBtn);
-    cards.appendChild(wrap);
-
-    // Card walk-in animation
-    c.style.animation=`cardWalkIn 0.5s cubic-bezier(0.34,1.56,0.64,1) ${100+i*200}ms both`;
-    // Flip after walk-in
-    setTimeout(()=>{
-      c.classList.add('flipped');
-      setTimeout(()=>spawnCardParticles(c, cand), 600);
-      // Show ext stats + select after flip
-      setTimeout(()=>{
-        statsEl.classList.add('show');
-        selBtn.classList.add('show');
-      },400);
-    }, 600 + i*300);
-  });
-  // Show pass button after all flips
-  setTimeout(()=>{
-    $('hireActions').innerHTML='<button class="hire-pass-btn" onclick="passHire()">패스</button>';
-    $('hireInfo').style.opacity='1';
-  }, 600 + 2*300 + 800);
-  $('hireMemberCount').textContent='보유: '+A.guildMembers.length+'/'+A.guildMemberCap;
-}
-
-function spawnCardParticles(cardEl, cand){
-  const rarity=cand.rarity;
-  if(rarity==='normal'||rarity==='rare')return;
-  const color=cand.color||'#e8c87c';
-  const count=rarity==='legendary'?10:5;
-  const persistent=rarity==='legendary';
-  const container=cardEl;
-  // Legendary flash
-  if(rarity==='legendary'){
-    $('hireModalWrap').classList.add('legendary-flash');
-  }
-  for(let i=0;i<count;i++){
-    const p=document.createElement('div');
-    p.className='card-particle';
-    const size=2+Math.random()*3;
-    const px=(Math.random()-0.5)*60;
-    const py=-(20+Math.random()*40);
-    p.style.cssText=`
-      width:${size}px;height:${size}px;
-      background:${color};box-shadow:0 0 6px ${color};
-      left:${30+Math.random()*40}%;top:${20+Math.random()*60}%;
-      --px:${px}px;--py:${py}px;
-      animation-duration:${1.5+Math.random()*1.5}s;
-      animation-delay:${Math.random()*0.5}s;
-      ${persistent?'animation-iteration-count:infinite;':''}
-    `;
-    container.appendChild(p);
-    if(!persistent)setTimeout(()=>p.remove(),3500);
-  }
-}
-
-function selectCandidate(i){
-  const cand=A.hireCandidates[i];
-  A.guildMembers.push({...cand,level:1,id:Date.now()});
-  A.hireHistory.push({name:cand.name,stars:cand.stars,color:cand.color,rarity:cand.rarity,action:'selected'});
-  showToast(`${cand.name} (${cand.label}) 영입 완료!`);
-  // Micro-animation: selected card scales up, others fade out
-  const wraps=document.querySelectorAll('.hire-card-wrap');
-  wraps.forEach((w,idx)=>{
-    if(idx===i) w.classList.add('selected');
-    else w.classList.add('dismissed');
-  });
-  setTimeout(()=>{
-    A.hireState='idle';
-    renderHireIdle();
-  },600);
-}
-
-function passHire(){
-  const best=A.hireCandidates.reduce((a,b)=>{const o={legendary:4,epic:3,rare:2,normal:1};return o[b.rarity]>o[a.rarity]?b:a;});
-  A.hireHistory.push({name:best.name,stars:best.stars,color:best.color,rarity:best.rarity,action:'passed'});
-  // All cards fade out
-  const wraps=document.querySelectorAll('.hire-card-wrap');
-  wraps.forEach(w=>w.classList.add('dismissed'));
-  setTimeout(()=>{
-    A.hireState='idle';
-    renderHireIdle();
-  },400);
-}
-
-/* — Members tab — */
-let gmFilterRarity='all', gmFilterStat='all', gmSortBy='rarity-desc';
-
-function getFilteredMembers(){
-  let list=[...A.guildMembers];
-  if(gmFilterRarity!=='all') list=list.filter(m=>m.rarity===gmFilterRarity);
-  if(gmFilterStat!=='all') list=list.filter(m=>m.stats.some(s=>s.name===gmFilterStat));
-  const rarityOrder={legendary:4,epic:3,rare:2,normal:1};
-  if(gmSortBy==='rarity-desc') list.sort((a,b)=>rarityOrder[b.rarity]-rarityOrder[a.rarity]);
-  else if(gmSortBy==='rarity-asc') list.sort((a,b)=>rarityOrder[a.rarity]-rarityOrder[b.rarity]);
-  else if(gmSortBy==='name') list.sort((a,b)=>a.name.localeCompare(b.name));
-  else if(gmSortBy==='recent') list.sort((a,b)=>b.id-a.id);
-  return list;
-}
-
-function renderMembersList(){
-  const el=$('gmMembersList');
-  if(A.guildMembers.length===0){
-    el.innerHTML='<div class="gm-members-empty">보유한 길드원이 없습니다.<br>모집 탭에서 길드원을 모집하세요.</div>';
-    return;
-  }
-  const filtered=getFilteredMembers();
-  const filterBar=`<div class="gm-filter-bar">
-    <select class="gm-filter-select" onchange="gmFilterRarity=this.value;renderMembersList()">
-      <option value="all"${gmFilterRarity==='all'?' selected':''}>전체 등급</option>
-      <option value="normal"${gmFilterRarity==='normal'?' selected':''}>★ Normal</option>
-      <option value="rare"${gmFilterRarity==='rare'?' selected':''}>★★ Rare</option>
-      <option value="epic"${gmFilterRarity==='epic'?' selected':''}>★★★ Epic</option>
-      <option value="legendary"${gmFilterRarity==='legendary'?' selected':''}>★★★★ Legendary</option>
-    </select>
-    <select class="gm-filter-select" onchange="gmFilterStat=this.value;renderMembersList()">
-      <option value="all"${gmFilterStat==='all'?' selected':''}>전체 능력</option>
-      ${STAT_POOL.map(s=>`<option value="${s.name}"${gmFilterStat===s.name?' selected':''}>${s.name}</option>`).join('')}
-    </select>
-    <select class="gm-filter-select" onchange="gmSortBy=this.value;renderMembersList()">
-      <option value="rarity-desc"${gmSortBy==='rarity-desc'?' selected':''}>등급 높은순</option>
-      <option value="rarity-asc"${gmSortBy==='rarity-asc'?' selected':''}>등급 낮은순</option>
-      <option value="name"${gmSortBy==='name'?' selected':''}>이름순</option>
-      <option value="recent"${gmSortBy==='recent'?' selected':''}>최근 획득순</option>
-    </select>
-  </div>`;
-  const grid=filtered.map(m=>{
-    const statsHtml=m.stats.map(s=>`<div class="gm-member-stat"><span>${esc(s.name)}</span><span class="gm-member-stat-val">+${s.value}${s.unit}</span></div>`).join('');
-    const inSquad=A.squad.includes(m.id);
-    const squadBadge=inSquad?'<div class="gm-member-squad-badge">편성중</div>':'';
-    return`<div class="gm-member-card rarity-${m.rarity}${inSquad?' in-squad':''}" onclick="renderMemberDetail(${m.id})">
-      <img class="gm-member-img" src="character/Test_Card/1 (1).png" alt="${esc(m.name)}">
-      <div class="gm-member-info">
-        <div class="gm-member-name">${esc(m.name)}</div>
-        <div class="gm-member-rarity" ${m.color?`style="color:${m.color}"`:''}>${m.stars} ${m.label}</div>
-        <div class="gm-member-stats">${statsHtml}</div>
-        ${squadBadge}
-      </div>
-    </div>`;
-  }).join('');
-  const footer=`<div class="gm-members-footer">
-    <span>보유: ${A.guildMembers.length}/${A.guildMemberCap}</span>
-  </div>`;
-  el.innerHTML=filterBar+'<div class="gm-members-grid">'+grid+'</div>'+footer;
-}
-
-function renderMemberDetail(id){
-  const m=A.guildMembers.find(x=>x.id===id);
-  if(!m)return;
-  const el=$('gmMembersList');
-  const inSquad=A.squad.includes(m.id);
-  const statsHtml=m.stats.map(s=>`<div class="gm-detail-stat"><span class="gm-detail-stat-name">${esc(s.name)}</span><span class="gm-detail-stat-val">+${s.value}${s.unit}</span></div>`).join('');
-  const acquiredDate=new Date(m.id).toLocaleDateString('ko-KR');
-  const squadBtn=inSquad
-    ?`<button class="gm-unsquad-btn" onclick="removeFromSquad(${m.id});renderMemberDetail(${m.id})">스쿼드에서 제거</button>`
-    :(getActiveSquad().length<SQUAD_SLOTS
-      ?`<button class="gm-squad-btn" onclick="addToSquad(${m.id});renderMemberDetail(${m.id})">스쿼드에 편성</button>`
-      :'');
-
-  // Story content (placeholder for future system)
-  const storyData=m.story||null;
-  let storyHtml;
-  if(storyData){
-    storyHtml=`<div class="gm-detail-story">
-      <div class="gm-detail-story-label">Story</div>
-      <div class="gm-detail-story-text">${esc(storyData)}</div>
-    </div>`;
-  }else{
-    storyHtml=`<div class="gm-detail-story">
-      <div class="gm-detail-story-label">Story</div>
-      <div class="gm-detail-story-locked">이 길드원의 이야기는 아직 밝혀지지 않았습니다...</div>
-    </div>`;
-  }
-
-  el.innerHTML=`
-    <button class="gm-back-btn" onclick="renderMembersList()">← 뒤로</button>
-    <div class="gm-detail">
-      <div class="gm-detail-card rarity-${m.rarity}" style="border-color:${m.color||'var(--glass-b)'}">
-        <img src="character/Test_Card/1 (1).png" alt="${esc(m.name)}">
-      </div>
-      <div class="gm-detail-info">
-        <div class="gm-detail-header">
-          <div class="gm-detail-title">Guild Member</div>
-        </div>
-        <div class="gm-detail-rarity" ${m.color?`style="color:${m.color}"`:''}>${m.stars} ${m.label}</div>
-        <div class="gm-detail-name">${esc(m.name)}</div>
-        <div class="gm-detail-level">Lv.${m.level||1}</div>
-        <div class="gm-detail-section-label">능력치</div>
-        ${statsHtml}
-        ${storyHtml}
-        <div class="gm-detail-section-label">상태</div>
-        ${inSquad?'<div class="gm-detail-meta">편성: <span>✦ 스쿼드</span></div>':''}
-        <div class="gm-detail-meta">획득일: ${acquiredDate}</div>
-      </div>
-    </div>
-    <div class="gm-detail-actions">
-      ${squadBtn}
-      <button class="gm-dismiss-btn" onclick="dismissMember(${m.id})">길드에서 방출</button>
-    </div>`;
-}
-
-function dismissMember(id){
-  const m=A.guildMembers.find(x=>x.id===id);
-  if(!m)return;
-  if(!confirm(`${m.name} (${m.label})을(를) 방출하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`))return;
-  A.squad=A.squad.filter(sid=>sid!==id);
-  A.guildMembers=A.guildMembers.filter(x=>x.id!==id);
-  showToast(`${m.name} 방출 완료`);
-  renderMembersList();
-}
-
-/* — Formation tab — */
-let SQUAD_SLOTS=4;
-let PRESET_COUNT=3;
-// Migrate A.squad to preset system
-if(!A.squadPresets){
-  A.squadPresets=[[...A.squad],[],[]];
-  A.activePreset=0;
-}
-
-function getActiveSquad(){return A.squadPresets[A.activePreset];}
-function setActiveSquad(arr){A.squadPresets[A.activePreset]=arr; A.squad=arr;}
-
-function switchPreset(idx){
-  A.activePreset=idx;
-  A.squad=A.squadPresets[idx];
-  renderFormation();
-}
-
-function calcSquadStats(memberIds){
-  const summary={};
-  STAT_POOL.forEach(s=>{summary[s.name]=0;});
-  memberIds.forEach(id=>{
-    const m=A.guildMembers.find(x=>x.id===id);
-    if(!m)return;
-    m.stats.forEach(s=>{summary[s.name]=(summary[s.name]||0)+s.value;});
-  });
-  return summary;
-}
-
-function renderFormation(){
-  const el=$('gmFormation');
-  const squad=getActiveSquad();
-  const squadMembers=squad.map(id=>A.guildMembers.find(m=>m.id===id)).filter(Boolean);
-  const bench=A.guildMembers.filter(m=>!squad.includes(m.id));
-  const isFull=squadMembers.length>=SQUAD_SLOTS;
-
-  // Preset bar
-  let presetHtml='<div class="gm-preset-bar">';
-  for(let p=0;p<PRESET_COUNT;p++){
-    const active=p===A.activePreset?' active':'';
-    const count=(A.squadPresets[p]||[]).filter(id=>A.guildMembers.find(m=>m.id===id)).length;
-    const dotClass=count>0?'filled':'empty';
-    presetHtml+=`<button class="gm-preset-btn${active}" onclick="switchPreset(${p})"><span class="gm-preset-dot ${dotClass}"></span>스쿼드 ${p+1} <span style="opacity:0.5;font-size:8px">(${count}/${SQUAD_SLOTS})</span></button>`;
-  }
-  presetHtml+='</div>';
-
-  // Squad slots — with clearer remove UX
-  let slotsHtml='';
-  for(let i=0;i<SQUAD_SLOTS;i++){
-    const m=squadMembers[i];
-    if(m){
-      slotsHtml+=`<div class="gm-slot filled rarity-${m.rarity}">
-        <img class="gm-slot-img" src="character/Test_Card/1 (1).png" alt="${esc(m.name)}">
-        <div class="gm-slot-name">${esc(m.name)}</div>
-        <div class="gm-slot-rarity" ${m.color?`style="color:${m.color}"`:''}>${m.stars}</div>
-        <div class="gm-slot-remove" onclick="removeFromSquad(${m.id})" title="슬롯에서 제거">✕</div>
-      </div>`;
-    }else{
-      slotsHtml+=`<div class="gm-slot drop-target" onclick="highlightBench()">
-        <div class="gm-slot-empty-icon">+</div>
-        <div class="gm-slot-empty-text">탭하여 추가</div>
-      </div>`;
-    }
-  }
-
-  // Stats summary
-  const stats=calcSquadStats(squad);
-  let summaryHtml='<div class="gm-squad-summary">';
-  STAT_POOL.forEach(s=>{
-    const val=stats[s.name]||0;
-    const zeroClass=val===0?' zero':'';
-    summaryHtml+=`<div class="gm-summary-item"><span class="gm-summary-label">${s.name}</span><span class="gm-summary-value${zeroClass}">+${val}%</span></div>`;
-  });
-  summaryHtml+='</div>';
-
-  // Bench — with add overlay + stat hint
-  let benchHtml='';
-  if(bench.length>0){
-    benchHtml=bench.map(m=>{
-      const statHint=m.stats.map(s=>`${s.name.slice(0,2)}+${s.value}`).join(' ');
-      return`<div class="gm-bench-card rarity-${m.rarity}" onclick="addToSquad(${m.id})"${isFull?' style="opacity:0.5;pointer-events:none"':''}>
-        <img class="gm-bench-img" src="character/Test_Card/1 (1).png" alt="${esc(m.name)}">
-        <div class="gm-bench-add">+</div>
-        <div class="gm-bench-name">${esc(m.name)}</div>
-        <div class="gm-bench-stat-hint">${statHint}</div>
-      </div>`;
-    }).join('');
-  }else if(A.guildMembers.length===0){
-    benchHtml='<div class="gm-members-empty">보유한 길드원이 없습니다.<br>모집 탭에서 길드원을 모집하세요.</div>';
-  }else{
-    benchHtml='<div class="gm-formation-hint">모든 길드원이 편성되었습니다</div>';
-  }
-
-  // Hint text
-  const hintText=isFull
-    ?'슬롯의 ✕를 눌러 길드원을 제거할 수 있습니다'
-    :'아래 대기 길드원을 클릭하면 빈 슬롯에 편성됩니다';
-
-  el.innerHTML=`
-    ${presetHtml}
-    <div class="gm-squad-label">Squad (${squadMembers.length}/${SQUAD_SLOTS})</div>
-    <div class="gm-squad-slots">${slotsHtml}</div>
-    ${summaryHtml}
-    <div class="gm-formation-hint">${hintText}</div>
-    ${A.guildMembers.length>0?`<div class="gm-bench-label">대기 길드원 (${bench.length})</div>
-    <div class="gm-bench" id="gmBench">${benchHtml}</div>`:''}`;
-}
-
-function addToSquad(id){
-  const squad=getActiveSquad();
-  if(squad.length>=SQUAD_SLOTS){showToast('스쿼드가 가득 찼습니다');return;}
-  if(squad.includes(id))return;
-  squad.push(id);
-  setActiveSquad(squad);
-  renderFormation();
-  // Animate the newly filled slot
-  const slots=document.querySelectorAll('.gm-slot.filled');
-  const last=slots[slots.length-1];
-  if(last){last.classList.add('filling');last.addEventListener('animationend',()=>last.classList.remove('filling'),{once:true});}
-}
-
-function removeFromSquad(id){
-  const squad=getActiveSquad().filter(sid=>sid!==id);
-  setActiveSquad(squad);
-  renderFormation();
-}
-
-function highlightBench(){
-  const bench=document.getElementById('gmBench');
-  if(!bench)return;
-  bench.classList.add('highlight-mode');
-  bench.scrollIntoView({behavior:'smooth',block:'nearest'});
-  setTimeout(()=>bench.classList.remove('highlight-mode'),2000);
-}
-
-/* ══════════════════════════════════════════
-   GUILD LEVEL — XP ENGINE
-══════════════════════════════════════════ */
-function gainXp(amount){
-  if(A.guildLevel>=MAX_LEVEL)return;
-  A.guildXp+=amount;
-  A.guildTotalXp+=amount;
-  showToast(`+${amount} XP`);
-  while(A.guildLevel<MAX_LEVEL&&A.guildXp>=LEVEL_XP[A.guildLevel+1]){
-    A.guildXp-=LEVEL_XP[A.guildLevel+1];
-    A.guildLevel++;
-    onLevelUp(A.guildLevel);
-  }
-  updateGuildLevelDisplay();
-}
-
-function onLevelUp(newLevel){
-  showToast(`길드 레벨 ${newLevel} 달성! — ${GUILD_TITLES[newLevel]}`);
-  UNLOCKS.filter(u=>u.type==='auto'&&u.level===newLevel&&!A.unlockedIds.includes(u.id))
-    .forEach(u=>{applyUnlock(u);A.unlockedIds.push(u.id);});
-  applyRarityWeights(newLevel);
-  triggerLevelUpAnimation();
-}
-
-function applyRarityWeights(level){
-  const brackets=Object.keys(RARITY_BY_LEVEL).map(Number).sort((a,b)=>b-a);
-  const bracket=brackets.find(b=>level>=b)||1;
-  const w=RARITY_BY_LEVEL[bracket];
-  RARITY_WEIGHTS[0].weight=w[0];
-  RARITY_WEIGHTS[1].weight=w[1];
-  RARITY_WEIGHTS[2].weight=w[2];
-  RARITY_WEIGHTS[3].weight=w[3];
-}
-
-function applyUnlock(u){
-  switch(u.id){
-    case 'cap10': A.guildMemberCap=10; break;
-    case 'cap12': A.guildMemberCap=12; break;
-    case 'stat_xp': addStatIfMissing('경험치 보너스','%'); break;
-    case 'stat_rest': addStatIfMissing('휴식 효율','%'); break;
-    case 'goldcap2500': A.questGoldDailyCap=2500; break;
-    case 'goldcap3000': A.questGoldDailyCap=3000; break;
-    case 'preset4': expandPresets(4); break;
-    case 'preset5': expandPresets(5); break;
-    case 'squad5': SQUAD_SLOTS=5; break;
-    case 'squad6': SQUAD_SLOTS=6; break;
-    case 'amb_thunder': addAmbientSound('thunder','Thunder','⚡'); break;
-    case 'amb_cave': addAmbientSound('cave','Cave','🦇'); break;
-    case 'amb_tavern': addAmbientSound('tavern','Tavern','🍺'); break;
-  }
-}
-
-function addStatIfMissing(name,unit){
-  if(!STAT_POOL.find(s=>s.name===name)){
-    STAT_POOL.push({name,unit});
-  }
-}
-
-function expandPresets(newCount){
-  PRESET_COUNT=newCount;
-  if(A.squadPresets){
-    while(A.squadPresets.length<newCount) A.squadPresets.push([]);
-  }
-}
-
-function addAmbientSound(id,name,icon){
-  const container=$('ambientSounds');
-  if(!container||container.querySelector(`[data-amb="${id}"]`))return;
-  const div=document.createElement('div');
-  div.className='amb-track';
-  div.setAttribute('data-amb',id);
-  div.innerHTML=`<span class="amb-icon">${icon}</span><span class="amb-name">${name}</span><div class="amb-bar" onclick="setAmb(event,'${id}')"><div class="amb-fill" id="ambFill_${id}" style="width:0%"></div></div>`;
-  container.appendChild(div);
-}
-
-/* — Unlock Shop Modal — */
-let unlockActiveTab='tree';
-function openUnlockShop(){
-  $('unlockModalWrap').classList.add('open');
-  unlockActiveTab='tree';
-  renderUnlockShop();
-}
-function closeUnlockShop(){
-  $('unlockModalWrap').classList.remove('open');
-}
-function switchUnlockTab(tab){
-  unlockActiveTab=tab;
-  const wrap=$('unlockModalWrap');
-  const tabs=wrap.querySelectorAll('.gm-tab');
-  tabs.forEach((t,i)=>t.classList.toggle('active',['tree','shop'][i]===tab));
-  wrap.querySelectorAll('.gm-tab-content').forEach(c=>c.classList.remove('active'));
-  if(tab==='tree') $('unlockTabTree').classList.add('active');
-  else $('unlockTabShop').classList.add('active');
-  renderUnlockShop();
-}
-function renderUnlockShop(){
-  renderUnlockHeader();
-  if(unlockActiveTab==='tree') renderUnlockTree();
-  else renderUnlockStore();
-}
-function renderUnlockHeader(){
-  const h=$('unlockLevelHeader');
-  if(!h)return;
-  const isMax=A.guildLevel>=MAX_LEVEL;
-  const need=isMax?1:LEVEL_XP[A.guildLevel+1];
-  const pct=isMax?100:(need>0?Math.min(100,A.guildXp/need*100):0);
-  h.innerHTML=`
-    <div class="unlock-lvl-title">Lv.${A.guildLevel} ${GUILD_TITLES[A.guildLevel]}</div>
-    <div class="unlock-xp-bar-wrap"><div class="unlock-xp-bar" style="width:${pct}%"></div></div>
-    <div class="unlock-xp-label">${isMax?'MAX LEVEL':`XP: ${A.guildXp} / ${need}`}</div>`;
-}
-function renderUnlockTree(){
-  const el=$('unlockTree');
-  if(!el)return;
-  // Group unlocks by level, also include rarity & title auto-unlocks
-  const levels=[];
-  for(let lv=2;lv<=MAX_LEVEL;lv++){
-    const items=[];
-    // Rarity boost at 2,4,6,8
-    if(RARITY_BY_LEVEL[lv]){
-      const w=RARITY_BY_LEVEL[lv];
-      const idx=Object.keys(RARITY_BY_LEVEL).filter(k=>Number(k)<=lv).length;
-      items.push({type:'auto',desc:`모집 확률 보정 ${['I','II','III','IV','V'][idx-1]||idx}`,detail:`Normal ${w[0]} / Rare ${w[1]} / Epic ${w[2]} / Legendary ${w[3]}`,unlocked:A.guildLevel>=lv});
-    }
-    // Regular unlocks
-    UNLOCKS.filter(u=>u.level===lv).forEach(u=>{
-      const owned=A.unlockedIds.includes(u.id);
-      items.push({...u,unlocked:u.type==='auto'?A.guildLevel>=lv:owned,owned});
-    });
-    // Title
-    items.push({type:'auto',desc:'길드 칭호',detail:GUILD_TITLES[lv],unlocked:A.guildLevel>=lv});
-    levels.push({lv,items});
-  }
-  let html='';
-  for(const{lv,items}of levels){
-    const isCurrent=A.guildLevel===lv;
-    const isCompleted=A.guildLevel>lv;
-    const isLocked=A.guildLevel<lv;
-    const cls=isCurrent?'current':isCompleted?'completed':'locked';
-    const badge=isCurrent?'<span class="badge badge-current">CURRENT</span>':isCompleted?'<span class="badge badge-done">✓</span>':'';
-    html+=`<div class="unlock-level-block ${cls}">
-      <div class="unlock-level-label">Lv.${lv} ${badge}</div>`;
-    for(const item of items){
-      const icon=item.unlocked?'✅':'🔒';
-      let tag='';
-      if(item.type==='auto'){
-        tag=`<span class="unlock-item-tag tag-auto">AUTO</span>`;
-      }else if(item.owned){
-        tag=`<span class="unlock-item-tag tag-purchased">구매완료</span>`;
-      }else if(A.guildLevel>=item.level){
-        tag=`<button class="unlock-item-tag tag-buy" onclick="purchaseUnlock('${item.id}')">${item.cost.toLocaleString()}G</button>`;
-      }else{
-        tag=`<span class="unlock-item-tag tag-locked">${item.cost.toLocaleString()}G</span>`;
-      }
-      html+=`<div class="unlock-item">
-        <div class="unlock-item-info">
-          <div class="unlock-item-name">${icon} ${esc(item.desc)}</div>
-          <div class="unlock-item-detail">${esc(item.detail)}</div>
-        </div>
-        ${tag}
-      </div>`;
-    }
-    html+=`</div>`;
-  }
-  el.innerHTML=`<div class="unlock-tree">${html}</div>`;
-}
-function renderUnlockStore(){
-  const el=$('unlockStore');
-  if(!el)return;
-  const purchasable=UNLOCKS.filter(u=>u.type==='purchase');
-  const icons={preset4:'📋',preset5:'📋',squad5:'⚔️',squad6:'⚔️',amb_thunder:'⚡',amb_cave:'🦇',amb_tavern:'🍺'};
-  let html='';
-  for(const u of purchasable){
-    const owned=A.unlockedIds.includes(u.id);
-    const levelMet=A.guildLevel>=u.level;
-    const cls=owned?'purchased':levelMet?'available':'level-locked';
-    let btn='';
-    if(owned){
-      btn=`<div class="unlock-store-btn bought">구매 완료</div>`;
-    }else if(levelMet){
-      btn=`<button class="unlock-store-btn buyable" onclick="purchaseUnlock('${u.id}')">💰 ${u.cost.toLocaleString()}</button>`;
-    }else{
-      btn=`<div class="unlock-store-btn locked">🔒 Lv.${u.level}</div>`;
-    }
-    html+=`<div class="unlock-store-card ${cls}">
-      <div class="unlock-store-icon">${icons[u.id]||'🔓'}</div>
-      <div class="unlock-store-name">${esc(u.desc)}</div>
-      <div class="unlock-store-req">${esc(u.detail)} · Lv.${u.level}</div>
-      ${btn}
-    </div>`;
-  }
-  el.innerHTML=`<div class="unlock-store-grid">${html}</div>`;
-}
-
-function purchaseUnlock(unlockId){
-  const u=UNLOCKS.find(x=>x.id===unlockId);
-  if(!u||u.type!=='purchase')return;
-  if(A.guildLevel<u.level){showToast('레벨이 부족합니다');return;}
-  if(A.unlockedIds.includes(u.id)){showToast('이미 해금되었습니다');return;}
-  if(A.gold<u.cost){showToast('골드가 부족합니다');return;}
-  A.gold-=u.cost;
-  applyUnlock(u);
-  A.unlockedIds.push(u.id);
-  updateGoldDisplay();
-  showToast('해금 완료!');
-  if(typeof renderUnlockShop==='function') renderUnlockShop();
-}
-
-function updateGuildLevelDisplay(){
-  const lvEl=$('guildLvl');
-  if(lvEl) lvEl.textContent=`Lv.${A.guildLevel}`;
-  const subEl=$('guildSub');
-  if(subEl) subEl.textContent=GUILD_TITLES[A.guildLevel];
-  const xpBar=$('guildXpBar');
-  const xpText=$('guildXpText');
-  if(A.guildLevel>=MAX_LEVEL){
-    if(xpBar) xpBar.style.width='100%';
-    if(xpText) xpText.textContent='MAX LEVEL';
-  }else{
-    const need=LEVEL_XP[A.guildLevel+1];
-    const pct=need>0?(A.guildXp/need*100):0;
-    if(xpBar) xpBar.style.width=pct+'%';
-    if(xpText) xpText.textContent=`XP: ${A.guildXp} / ${need}`;
-  }
-}
-
-function triggerLevelUpAnimation(){
-  const sigil=document.querySelector('.sigil-letter');
-  if(sigil){
-    sigil.classList.add('level-up-flash');
-    setTimeout(()=>sigil.classList.remove('level-up-flash'),1500);
-  }
-}
-
 /* Init */
 renderTrackInfo();renderTrackList();renderTlTodos();
 initMidnightRollover();
-updateGoldDisplay();
-applyRarityWeights(A.guildLevel);
-updateGuildLevelDisplay();
 </script>
 </body>
 </html>

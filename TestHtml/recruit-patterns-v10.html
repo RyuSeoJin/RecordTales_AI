@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>길드원 모집 연출 패턴 v8 — RecordTales</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=DM+Mono:wght@300;400;500&family=DM+Serif+Display&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-deep: #08080c; --bg-mid: #14141c; --bg-light: #1c1c26;
+  --gold-soft: #c9a959; --gold-bright: #e8c87c;
+  --gold-glow: rgba(232, 200, 124, 0.4);
+  --text-primary: #e8e8ee; --text-secondary: #a0a0a8; --text-muted: #606068;
+  --border: rgba(201, 169, 89, 0.15);
+  --border-strong: rgba(201, 169, 89, 0.4);
+  --glass: rgba(28, 28, 38, 0.6);
+  --tr: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --normal: #999; --rare: #7cb8e8; --epic: #a87ce8; --legendary: #e8a05c;
+  --door: #e87c7c; --paper: #e8c87c;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: radial-gradient(ellipse at center, #14141c 0%, #08080c 100%);
+  color: var(--text-primary); min-height: 100vh; overflow-x: hidden;
+}
+
+.app-header { padding: 24px 36px 12px; border-bottom: 1px solid var(--border); }
+.app-title { font-family: 'DM Serif Display', serif; font-size: 22px; }
+.app-sub { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.25em; text-transform: uppercase; margin-top: 4px; }
+
+.category-bar {
+  padding: 8px 36px; display: flex; gap: 20px; border-bottom: 1px solid var(--border);
+  font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted);
+  letter-spacing: 0.2em; text-transform: uppercase; flex-wrap: wrap;
+}
+.cat-label { display: flex; align-items: center; gap: 8px; }
+.cat-dot { width: 6px; height: 6px; border-radius: 50%; }
+.cat-dot.classic { background: var(--gold-soft); }
+.cat-dot.door { background: var(--door); }
+.cat-dot.paper { background: var(--paper); }
+
+.tabs { display: flex; gap: 2px; padding: 0 36px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.tab {
+  padding: 14px 16px; background: transparent; border: none; border-bottom: 2px solid transparent;
+  color: var(--text-muted); font-family: 'Noto Sans KR', sans-serif; font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: all var(--tr); white-space: nowrap;
+}
+.tab:hover { color: var(--text-secondary); }
+.tab.active { color: var(--gold-bright); border-bottom-color: var(--gold-bright); }
+.tab.door.active { color: var(--door); border-bottom-color: var(--door); }
+.tab.paper.active { color: var(--paper); border-bottom-color: var(--paper); }
+.tab-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold-soft); margin-right: 6px; letter-spacing: 0.1em; }
+.tab.door .tab-num { color: var(--door); }
+.tab.paper .tab-num { color: var(--paper); }
+.tab-divider {
+  width: 1px; align-self: center; height: 16px;
+  background: var(--border); margin: 0 4px;
+}
+
+.workspace { padding: 20px 36px 60px; max-width: 1280px; margin: 0 auto; }
+.pattern-info {
+  margin-bottom: 16px; padding: 14px 18px; background: var(--glass);
+  border-left: 3px solid var(--gold-soft); border-radius: 4px;
+}
+.pattern-info.door { border-left-color: var(--door); }
+.pattern-info.paper { border-left-color: var(--paper); }
+.pattern-info-title { font-family: 'DM Serif Display', serif; font-size: 16px; margin-bottom: 4px; color: var(--gold-bright); }
+.pattern-info.door .pattern-info-title { color: var(--door); }
+.pattern-info.paper .pattern-info-title { color: var(--paper); }
+.pattern-info-inspiration {
+  font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted);
+  letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 8px;
+}
+.pattern-info-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+
+.controls { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+.btn {
+  padding: 10px 22px; background: var(--glass); border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text-primary); font-family: 'DM Mono', monospace; font-size: 11px;
+  letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: all var(--tr);
+}
+.btn:hover { border-color: var(--border-strong); background: rgba(201, 169, 89, 0.08); color: var(--gold-bright); }
+.btn-primary {
+  background: linear-gradient(180deg, rgba(201, 169, 89, 0.25), rgba(201, 169, 89, 0.08));
+  border-color: var(--border-strong); color: var(--gold-bright);
+}
+.stage-status { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; margin-left: auto; }
+
+.stage {
+  position: relative; width: 100%; height: 580px;
+  background: linear-gradient(180deg, #0c0c14 0%, #1a1a26 60%, #0a0a14 100%);
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+}
+.stage.shake { animation: stageShake 0.5s ease; }
+.stage.shake-hard { animation: stageShakeHard 0.6s ease; }
+.stage.shake-mega { animation: stageShakeMega 0.8s ease; }
+@keyframes stageShake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-3px, 2px); } 40% { transform: translate(3px, -2px); }
+  60% { transform: translate(-2px, -3px); } 80% { transform: translate(2px, 3px); }
+}
+@keyframes stageShakeHard {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-8px, 4px); } 20% { transform: translate(8px, -4px); }
+  30% { transform: translate(-6px, -6px); } 40% { transform: translate(6px, 6px); }
+  50% { transform: translate(-4px, 4px); } 60% { transform: translate(4px, -4px); }
+  70% { transform: translate(-2px, -2px); } 80% { transform: translate(2px, 2px); }
+}
+@keyframes stageShakeMega {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-14px, 8px); } 20% { transform: translate(14px, -8px); }
+  30% { transform: translate(-12px, -10px); } 40% { transform: translate(12px, 10px); }
+  50% { transform: translate(-8px, 6px); } 60% { transform: translate(8px, -6px); }
+  70% { transform: translate(-4px, -4px); } 80% { transform: translate(4px, 4px); }
+}
+
+/* === 시길 === */
+.sigil {
+  position: absolute; left: 50%; top: 38%; transform: translate(-50%, -50%);
+  width: 200px; height: 200px; border: 1px solid rgba(201, 169, 89, 0.2);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  pointer-events: none; animation: sigilSpin 60s linear infinite;
+  transition: filter 0.4s ease, opacity 0.5s ease; z-index: 2;
+}
+.sigil::before { content: ''; position: absolute; inset: 24px; border: 1px dashed rgba(201, 169, 89, 0.15); border-radius: 50%; }
+.sigil::after { content: ''; position: absolute; inset: 48px; border: 1px solid rgba(201, 169, 89, 0.1); border-radius: 50%; }
+.sigil-letter { font-family: 'Cinzel', serif; font-weight: 700; font-size: 64px; color: var(--gold-bright); text-shadow: 0 0 30px rgba(232, 200, 124, 0.3); }
+.sigil.hidden { opacity: 0; }
+@keyframes sigilSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.sigil.pulse { animation: sigilSpin 60s linear infinite, sigilPulse 0.8s ease; }
+@keyframes sigilPulse { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.8) drop-shadow(0 0 50px var(--gold-glow)); } }
+
+/* === 정문 (상세 중세 문) === */
+.gate {
+  position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%);
+  width: 220px; height: 280px;
+  z-index: 5; transition: all 0.5s ease; overflow: hidden;
+}
+.gate-wall {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 34px,rgba(0,0,0,0.2) 34px,rgba(0,0,0,0.2) 35px),
+    repeating-linear-gradient(90deg,transparent,transparent 52px,rgba(0,0,0,0.15) 52px,rgba(0,0,0,0.15) 53px),
+    linear-gradient(180deg,#1a1612,#12100c);
+  box-shadow: inset 0 0 60px rgba(0,0,0,0.5);
+}
+.gate-frame {
+  position: absolute; top: -2px; bottom: -2px; left: 12%; right: 12%; z-index: 3; pointer-events: none;
+  border: 6px solid #4a3e2a; border-radius: 50% 50% 0 0 / 18% 18% 0 0;
+  background: transparent;
+  box-shadow: 0 0 0 2px rgba(40,34,26,0.6), inset 0 0 20px rgba(0,0,0,0.5), inset 0 0 0 2px #3a3228;
+}
+.gate-keystone {
+  position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+  width: 30px; height: 18px; z-index: 8; pointer-events: none;
+  background: linear-gradient(180deg,#5a4e3a,#4a4030);
+  clip-path: polygon(20% 0%,80% 0%,100% 100%,0% 100%);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+.gate-door {
+  position: absolute; top: 2%; bottom: 0; width: 38%; z-index: 5;
+  transition: transform 1.4s cubic-bezier(0.4,0,0.2,1);
+  background:
+    repeating-linear-gradient(180deg,rgba(50,38,22,0) 0px,rgba(50,38,22,0.03) 3px,rgba(30,22,12,0.06) 6px,rgba(50,38,22,0) 8px,rgba(40,30,18,0.04) 12px,rgba(50,38,22,0) 16px),
+    repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(0,0,0,0.18) 30px,rgba(0,0,0,0.18) 31.5px),
+    linear-gradient(180deg,#32281a 0%,#2a2015 20%,#221a10 50%,#1a140c 80%,#16120c 100%);
+  border: 1px solid rgba(201,169,89,0.08);
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.3), inset 0 -20px 40px rgba(0,0,0,0.2);
+}
+.gate-door.left { left: 12%; border-right: 2px solid rgba(10,8,5,0.9); transform-origin: left center; border-radius: 24% 0 0 0 / 8% 0 0 0; }
+.gate-door.right { right: 12%; border-left: 2px solid rgba(10,8,5,0.9); transform-origin: right center; border-radius: 0 24% 0 0 / 0 8% 0 0; }
+.gate-door-band {
+  position: absolute; left: 0; right: 0; height: 8px; z-index: 7; pointer-events: none;
+  background: linear-gradient(180deg,#5a5040 0%,#3a3228 40%,#2a2620 60%,#4a4438 100%);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.5); border-top: 1px solid rgba(120,105,80,0.15); border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+.gate-door-band::before,.gate-door-band::after {
+  content: ''; position: absolute; top: 50%; width: 5px; height: 5px; border-radius: 50%; transform: translateY(-50%);
+  background: radial-gradient(circle at 35% 35%,#8a7e68,#4a4030); box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+.gate-door-band::before { left: 6px; } .gate-door-band::after { right: 6px; }
+.gate-door-hinge {
+  position: absolute; height: 5px; z-index: 8; pointer-events: none;
+  background: linear-gradient(180deg,#5a5040,#3a3228,#4a4438); border-radius: 0 3px 3px 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+.gate-door-hinge::before {
+  content: ''; position: absolute; top: -3px; width: 10px; height: 11px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%,#7a6e58,#4a4030); box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.gate-door.left .gate-door-hinge { left: 0; width: 45%; }
+.gate-door.left .gate-door-hinge::before { left: -2px; }
+.gate-door.right .gate-door-hinge { right: 0; width: 45%; border-radius: 3px 0 0 3px; }
+.gate-door.right .gate-door-hinge::before { right: -2px; }
+.gate-door-knocker { position: absolute; top: 48%; z-index: 8; transform: translateY(-50%); }
+.gate-door-knocker-plate {
+  width: 14px; height: 20px; border-radius: 3px 3px 2px 2px;
+  background: linear-gradient(180deg,#6a5e48,#4a4030,#5a5040); box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  display: flex; align-items: flex-start; justify-content: center; padding-top: 2px;
+}
+.gate-door-knocker-ring {
+  width: 11px; height: 11px; border: 2px solid #8a7e60; border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+.gate-door.left .gate-door-knocker { right: 10px; }
+.gate-door.right .gate-door-knocker { left: 10px; }
+.gate-door-stud {
+  position: absolute; width: 5px; height: 5px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,#8a7e68,#4a4030);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+.gate-door-studs { position: absolute; inset: 0; pointer-events: none; z-index: 7; }
+.gate-light {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 0; transform: translateX(-50%);
+  z-index: 4; transition: width 1.2s ease, opacity 1s ease; opacity: 0; pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(232, 200, 124, 0.5), transparent 70%);
+}
+.gate.open .gate-light { width: 140px; opacity: 1; }
+.gate.open .gate-door.left { transform: perspective(800px) rotateY(-75deg); }
+.gate.open .gate-door.right { transform: perspective(800px) rotateY(75deg); }
+.gate.pound { animation: gatePound 0.4s ease; }
+@keyframes gatePound {
+  0%, 100% { transform: translateX(-50%); }
+  50% { transform: translateX(-50%) scale(1.04); box-shadow: 0 0 30px rgba(232, 124, 124, 0.4); }
+}
+.gate.burst-open .gate-door.left { transform: perspective(800px) rotateY(-90deg) translateX(-10%); transition: transform 0.35s cubic-bezier(0.5, 0, 0.5, 1.5); }
+.gate.burst-open .gate-door.right { transform: perspective(800px) rotateY(90deg) translateX(10%); transition: transform 0.35s cubic-bezier(0.5, 0, 0.5, 1.5); }
+.gate.bashed { animation: gateBashed 0.3s ease; }
+@keyframes gateBashed {
+  0%, 100% { transform: translateX(-50%); }
+  50% { transform: translateX(-50%) translateY(-4px) scale(1.03, 0.97); }
+}
+/* Gate torch */
+.gate-torch {
+  position: absolute; top: 25%; z-index: 3; width: 10px; display: flex; flex-direction: column; align-items: center;
+}
+.gate-torch-bracket { width: 10px; height: 22px; background: linear-gradient(180deg,#5a5040,#3a3228); border-radius: 2px; box-shadow: 0 2px 3px rgba(0,0,0,0.4); }
+.gate-torch-flame {
+  width: 8px; height: 14px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; margin-top: -3px;
+  background: radial-gradient(ellipse at 50% 60%,#ffd080,#e8a040 50%,#c06820 80%,transparent);
+  box-shadow: 0 0 10px rgba(232,160,64,0.5), 0 0 20px rgba(232,128,40,0.3);
+  animation: gateTorchFlicker 1.5s ease-in-out infinite alternate;
+}
+.gate-torch-glow {
+  position: absolute; top: 15%; width: 60px; height: 60px; border-radius: 50%;
+  background: radial-gradient(circle,rgba(232,160,64,0.1),transparent 70%); pointer-events: none;
+}
+.gate-torch.left { left: 2%; } .gate-torch.right { right: 2%; }
+.gate-torch.left .gate-torch-glow { left: -25px; } .gate-torch.right .gate-torch-glow { right: -25px; }
+@keyframes gateTorchFlicker {
+  0% { transform: scaleY(1) scaleX(1); opacity: 0.9; }
+  25% { transform: scaleY(1.1) scaleX(0.95); opacity: 1; }
+  50% { transform: scaleY(0.95) scaleX(1.05); opacity: 0.85; }
+  75% { transform: scaleY(1.05) scaleX(0.9); opacity: 1; }
+  100% { transform: scaleY(0.9) scaleX(1.1); opacity: 0.9; }
+}
+
+/* === 횃불 (gate에 내장, 레거시 호환) === */
+.torches { position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%); width: 220px; height: 280px; pointer-events: none; z-index: 6; opacity: 0; }
+.torch { display: none; }
+
+/* === 코너 === */
+.corner { position: absolute; width: 56px; height: 56px; border: 1px solid var(--border); border-radius: 8px; background: var(--glass); z-index: 3; }
+.corner.tl { top: 16px; left: 16px; } .corner.tr { top: 16px; right: 16px; }
+.corner.bl { bottom: 16px; left: 16px; } .corner.br { bottom: 16px; right: 16px; }
+
+/* === 모집 공고 === */
+.notice {
+  position: absolute; left: 50%; top: 70%; transform: translate(-50%, -50%) rotate(-2deg);
+  width: 70px; height: 90px; background: linear-gradient(180deg, #d4c4a0 0%, #b0a080 100%);
+  border-radius: 2px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 8px; color: #3a2818;
+  letter-spacing: 0.1em; padding: 6px; text-align: center;
+  animation: noticeIdle 3s ease-in-out infinite; z-index: 8;
+}
+.notice::before { content: '⚜'; font-size: 14px; margin-bottom: 4px; color: #6a4828; }
+@keyframes noticeIdle {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-2deg); } 50% { transform: translate(-50%, -50%) rotate(2deg); }
+}
+.notice.absorb { animation: noticeAbsorb 0.8s cubic-bezier(0.5, 0, 0.7, 0.3) forwards; }
+@keyframes noticeAbsorb {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -180%) rotate(540deg) scale(0); opacity: 0; }
+}
+
+/* === 모집 시작 버튼 === */
+.recruit-btn {
+  position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%);
+  padding: 14px 32px; background: linear-gradient(180deg, rgba(201, 169, 89, 0.3), rgba(201, 169, 89, 0.1));
+  border: 1px solid var(--border-strong); border-radius: 12px;
+  color: var(--gold-bright); font-family: 'Cinzel', serif; font-size: 13px; font-weight: 500;
+  letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; transition: all var(--tr); z-index: 25;
+}
+.recruit-btn:hover {
+  background: linear-gradient(180deg, rgba(201, 169, 89, 0.5), rgba(201, 169, 89, 0.2));
+  box-shadow: 0 8px 24px var(--gold-glow); transform: translateX(-50%) translateY(-2px);
+}
+.recruit-btn.hidden { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(20px); }
+
+/* === 후보 카드 === */
+.cards-area {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  display: flex; gap: 24px; opacity: 0; pointer-events: none; z-index: 30; transition: opacity 0.4s ease;
+}
+.cards-area.show { opacity: 1; pointer-events: auto; }
+.candidate-card {
+  width: 150px; height: 230px;
+  background: linear-gradient(180deg, rgba(28, 28, 38, 0.95), rgba(18, 18, 28, 0.95));
+  border: 2px solid var(--border-strong); border-radius: 12px;
+  display: flex; flex-direction: column; align-items: center; padding: 16px 12px;
+  cursor: pointer; transition: all var(--tr); position: relative;
+  opacity: 0; transform: translateY(20px);
+}
+.candidate-card.appear { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease; }
+.candidate-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px var(--gold-glow); }
+.candidate-card.normal { border-color: rgba(201, 169, 89, 0.3); }
+.candidate-card.rare { border-color: var(--rare); box-shadow: 0 0 16px rgba(124, 184, 232, 0.3); }
+.candidate-card.epic { border-color: var(--epic); box-shadow: 0 0 18px rgba(168, 124, 232, 0.4); }
+.candidate-card.legendary { border-color: var(--legendary); box-shadow: 0 0 24px rgba(232, 160, 92, 0.5); }
+.candidate-card.fade-out { opacity: 0; transform: scale(0.85) translateY(10px); pointer-events: none; }
+.candidate-card.selected { transform: scale(1.05); box-shadow: 0 0 40px var(--gold-glow); border-color: var(--gold-bright); }
+.cand-portrait {
+  width: 64px; height: 64px; background: linear-gradient(180deg, #3a3a48 0%, #1a1a24 100%);
+  border-radius: 50%; border: 2px solid var(--border-strong);
+  display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 4px 0 8px;
+}
+.cand-name { font-family: 'DM Serif Display', serif; font-size: 14px; color: var(--text-primary); margin-bottom: 4px; }
+.cand-rarity { font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.25em; margin-bottom: 10px; }
+.cand-rarity.normal { color: var(--text-muted); } .cand-rarity.rare { color: var(--rare); } .cand-rarity.epic { color: var(--epic); } .cand-rarity.legendary { color: var(--legendary); }
+.cand-stats { display: flex; flex-direction: column; gap: 3px; width: 100%; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-secondary); margin-top: auto; }
+.cand-stat { display: flex; justify-content: space-between; padding: 2px 6px; }
+.cand-stat-val { color: var(--gold-bright); }
+
+.pass-btn {
+  position: absolute; left: 50%; bottom: 30px; transform: translateX(-50%);
+  padding: 8px 20px; background: transparent; border: 1px solid var(--text-muted); border-radius: 6px;
+  color: var(--text-muted); font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: all var(--tr);
+  opacity: 0; pointer-events: none; z-index: 31;
+}
+.pass-btn.show { opacity: 1; pointer-events: auto; }
+.pass-btn:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+
+/* === 패턴 1: 실루엣 === */
+.silhouettes {
+  position: absolute; left: 50%; bottom: 345px; transform: translateX(-50%);
+  display: flex; gap: 6px; z-index: 4; pointer-events: none;
+}
+.silhouette {
+  width: 22px; height: 50px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.6) 100%);
+  border-radius: 50% 50% 30% 30% / 40% 40% 30% 30%;
+  filter: blur(2px); opacity: 0.35; animation: silhouetteIdle 4s ease-in-out infinite;
+  transition: all 1s ease; position: relative;
+}
+.silhouette::before {
+  content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  width: 12px; height: 12px; background: rgba(0, 0, 0, 0.85); border-radius: 50%;
+}
+.silhouette:nth-child(2) { animation-delay: -1.3s; }
+.silhouette:nth-child(3) { animation-delay: -2.6s; }
+@keyframes silhouetteIdle { 0%, 100% { transform: translateX(-3px); } 50% { transform: translateX(3px); } }
+.silhouettes.approach .silhouette { filter: blur(0.8px); opacity: 0.65; animation: silhouetteApproach 1.5s ease forwards; }
+.silhouettes.approach .silhouette:nth-child(1) { animation-delay: 0s; }
+.silhouettes.approach .silhouette:nth-child(2) { animation-delay: 0.15s; }
+.silhouettes.approach .silhouette:nth-child(3) { animation-delay: 0.3s; }
+@keyframes silhouetteApproach { to { transform: translateY(20px) scale(1.1); opacity: 0; } }
+
+/* === 패턴 2/5: 노크 텍스트 (kick에서 재사용) === */
+.knock-overlay { position: absolute; inset: 0; background: rgba(0, 0, 0, 0); pointer-events: none; transition: background 0.4s ease; z-index: 9; }
+.knock-overlay.active { background: rgba(0, 0, 0, 0.35); }
+.knock-text {
+  position: absolute; left: 50%; top: 25%; transform: translate(-50%, -50%);
+  font-family: 'DM Serif Display', serif; font-size: 24px; color: var(--gold-bright);
+  letter-spacing: 0.4em; opacity: 0; pointer-events: none; z-index: 12;
+  text-shadow: 0 0 20px var(--gold-glow);
+}
+.knock-text.show { animation: knockAppear 1.8s ease forwards; }
+@keyframes knockAppear {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+  20%, 70% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* === 공통: 먼지 + 폭발 플래시 === */
+.dust-particles { position: absolute; inset: 0; pointer-events: none; z-index: 9; }
+.dust { position: absolute; width: 4px; height: 4px; background: rgba(180, 160, 130, 0.7); border-radius: 50%; opacity: 0; pointer-events: none; }
+.dust.fall { animation: dustFall 1.8s ease-in forwards; }
+@keyframes dustFall {
+  0% { opacity: 0; transform: translateY(0) scale(0.5); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(180px) scale(1.2); }
+}
+.pound-flash {
+  position: absolute; left: 50%; bottom: 60px; transform: translate(-50%, 0);
+  width: 220px; height: 280px; border-radius: 50% 50% 0 0 / 18% 18% 0 0;
+  background: radial-gradient(ellipse at center, rgba(232, 124, 124, 0.5), transparent 70%);
+  opacity: 0; pointer-events: none; z-index: 5;
+}
+.pound-flash.flash { animation: poundFlash 0.4s ease; }
+@keyframes poundFlash { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+/* === 패턴 3: 박치기 === */
+.bash-figure {
+  position: absolute; left: 50%; bottom: 120px; transform: translateX(-50%) translateY(20px);
+  width: 50px; height: 100px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.7));
+  border-radius: 50% 50% 30% 30%; filter: blur(2px);
+  opacity: 0; pointer-events: none; z-index: 4;
+  transition: transform 0.25s cubic-bezier(0.5, 0, 0.7, 1.5), opacity 0.3s ease;
+}
+.bash-figure::before { content: ''; position: absolute; top: -16px; left: 50%; transform: translateX(-50%); width: 26px; height: 26px; background: rgba(0,0,0,0.95); border-radius: 50%; }
+.bash-figure.show { opacity: 0.85; }
+.bash-figure.bash { transform: translateX(-50%) translateY(-10px); }
+.bash-figure.recoil { transform: translateX(-50%) translateY(20px); }
+
+/* === 패턴 4: 번개 === */
+.lightning {
+  position: absolute; left: 50%; top: 0; transform: translateX(-50%);
+  width: 8px; height: 0;
+  background: linear-gradient(180deg, #fff, #c0d8ff 50%, #fff);
+  box-shadow: 0 0 24px #fff, 0 0 48px var(--rare);
+  opacity: 0; pointer-events: none; z-index: 13;
+  transition: height 0.05s linear, opacity 0.05s ease;
+  clip-path: polygon(40% 0, 60% 0, 70% 30%, 50% 50%, 70% 70%, 30% 100%, 50% 50%, 30% 30%);
+}
+.lightning.strike { height: 280px; opacity: 1; }
+.lightning-flash {
+  position: absolute; inset: 0; background: rgba(255, 255, 255, 0);
+  pointer-events: none; z-index: 14; transition: background 0.1s ease;
+}
+.lightning-flash.flash { animation: whiteFlash 0.3s ease; }
+@keyframes whiteFlash {
+  0%, 100% { background: rgba(255, 255, 255, 0); }
+  20% { background: rgba(255, 255, 255, 0.85); }
+  40% { background: rgba(255, 255, 255, 0); }
+  60% { background: rgba(255, 255, 255, 0.5); }
+}
+
+/* === 패턴 5: 반전 발차기 === */
+.kick-impact {
+  position: absolute; left: 50%; bottom: 200px; transform: translate(-50%, 0) scale(0);
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(232, 124, 124, 0.9), rgba(232, 200, 124, 0.5) 40%, transparent 70%);
+  border-radius: 50%; opacity: 0; pointer-events: none; z-index: 11;
+}
+.kick-impact.kick { animation: kickImpactBoom 0.5s ease forwards; }
+@keyframes kickImpactBoom {
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0); }
+  40% { opacity: 1; transform: translate(-50%, 0) scale(2); }
+  100% { opacity: 0; transform: translate(-50%, 0) scale(3); }
+}
+
+/* === 패턴 6: 게시판 === */
+.bulletin-board {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0);
+  width: 480px; height: 340px; opacity: 0; pointer-events: none; z-index: 13;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(80, 50, 30, 0.4), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(60, 40, 20, 0.4), transparent 50%),
+    linear-gradient(135deg, #8a6a4a 0%, #6a4a2a 100%);
+  border: 8px solid #3a2818; border-radius: 4px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 0 60px rgba(60, 40, 20, 0.5);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+}
+.bulletin-board.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+.pin-paper {
+  position: absolute; width: 100px; height: 130px;
+  background: linear-gradient(180deg, #f0e5c8 0%, #d4c4a0 100%);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+  opacity: 0; transform: translateY(-200px) rotate(0deg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 9px; color: #3a2818;
+  text-align: center; padding: 10px;
+}
+.pin-paper::before { content: '⚜'; font-size: 18px; color: #6a4828; margin-bottom: 6px; }
+.pin-paper.p1 { left: 50px; top: 90px; }
+.pin-paper.p2 { left: 190px; top: 100px; }
+.pin-paper.p3 { left: 330px; top: 90px; }
+.pin-paper.slam.p1 { animation: paperSlam 0.5s cubic-bezier(0.4, 1.8, 0.6, 1) forwards; --rot: -5deg; }
+.pin-paper.slam.p2 { animation: paperSlam 0.5s cubic-bezier(0.4, 1.8, 0.6, 1) forwards; --rot: 3deg; }
+.pin-paper.slam.p3 { animation: paperSlam 0.5s cubic-bezier(0.4, 1.8, 0.6, 1) forwards; --rot: -2deg; }
+@keyframes paperSlam {
+  0% { opacity: 0; transform: translateY(-300px) rotate(20deg); }
+  60% { opacity: 1; transform: translateY(10px) rotate(var(--rot)); }
+  80% { transform: translateY(-4px) rotate(var(--rot)); }
+  100% { transform: translateY(0) rotate(var(--rot)); }
+}
+.pin-head {
+  position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  width: 12px; height: 12px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff6060, #a02020);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  opacity: 0; transform: translateX(-50%) scale(0);
+}
+.pin-paper.slam .pin-head { animation: pinAppear 0.3s ease forwards 0.4s; }
+@keyframes pinAppear {
+  0% { opacity: 0; transform: translateX(-50%) scale(0); }
+  60% { opacity: 1; transform: translateX(-50%) scale(1.4); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
+/* === 패턴 7: 현상수배 도배 === */
+.brick-wall {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(0);
+  width: 540px; height: 380px; border-radius: 4px;
+  background: 
+    repeating-linear-gradient(0deg, transparent 0px, transparent 28px, rgba(60, 40, 28, 0.6) 28px, rgba(60, 40, 28, 0.6) 30px),
+    repeating-linear-gradient(90deg, transparent 0px, transparent 60px, rgba(60, 40, 28, 0.5) 60px, rgba(60, 40, 28, 0.5) 62px),
+    linear-gradient(135deg, #5a4a3a 0%, #3a2a1a 100%);
+  border: 4px solid #2a1a0a;
+  opacity: 0; pointer-events: none; z-index: 12;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+}
+.brick-wall.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+.wanted-paper {
+  position: absolute; width: 80px; height: 100px;
+  background: linear-gradient(180deg, #e8d8b0 0%, #c8b890 100%);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  opacity: 0; transform: translateY(-300px) rotate(0deg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 7px; color: #3a2818;
+  text-align: center; padding: 6px;
+}
+.wanted-paper::before {
+  content: 'WANTED'; font-size: 9px; font-weight: 700; margin-bottom: 4px;
+  letter-spacing: 0.2em;
+}
+.wanted-paper.flutter { animation: paperFlutter 1s cubic-bezier(0.4, 1.4, 0.6, 1) forwards; }
+@keyframes paperFlutter {
+  0% { opacity: 0; transform: translateY(-400px) translateX(var(--start-x, 0)) rotate(var(--start-rot, 30deg)); }
+  40% { opacity: 1; }
+  70% { transform: translateY(20px) translateX(0) rotate(var(--end-rot, -3deg)); }
+  100% { opacity: 1; transform: translateY(0) rotate(var(--end-rot, -3deg)); }
+}
+
+.steps {
+  display: flex; gap: 8px; margin-top: 16px;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;
+}
+
+/* === COMBO 시나리오: idle 게시판 모드 + dim/lit === */
+.bulletin-board.idle {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.7s cubic-bezier(0.5, 0, 0.7, 0.4), opacity 0.5s ease;
+  animation: bulletinFloat 4s ease-in-out infinite;
+}
+.bulletin-board.idle.dismiss {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.4) translateY(-200px);
+  animation: none;
+}
+@keyframes bulletinFloat {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-0.3deg); }
+  50% { transform: translate(-50%, -51%) rotate(0.3deg); }
+}
+.bulletin-board.idle .pin-paper {
+  opacity: 1;
+}
+.bulletin-board.idle .pin-paper.p1 { animation: paperWiggle1 5s ease-in-out infinite; }
+.bulletin-board.idle .pin-paper.p2 { animation: paperWiggle2 6s ease-in-out infinite; }
+.bulletin-board.idle .pin-paper.p3 { animation: paperWiggle3 5.5s ease-in-out infinite; }
+@keyframes paperWiggle1 { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(-3deg); } }
+@keyframes paperWiggle2 { 0%, 100% { transform: rotate(3deg); } 50% { transform: rotate(5deg); } }
+@keyframes paperWiggle3 { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(0deg); } }
+.bulletin-board.idle .pin-head {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.sigil.dim { opacity: 0; transition: opacity 0.6s ease; }
+.gate.dim { opacity: 0; transition: opacity 0.6s ease; }
+.torches.dim { opacity: 0; transition: opacity 0.6s ease; }
+.corner.dim { opacity: 0; transition: opacity 0.6s ease; }
+
+/* COMBO 모드에서 모집 공고 종이 강제 숨김 */
+.notice.force-hide {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* 정문 폭발 시 등급 색상 빛 퍼짐 */
+.gate-burst-glow {
+  position: absolute;
+  left: 50%; bottom: 200px;
+  transform: translate(-50%, 50%) scale(0);
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, 
+    rgba(255, 235, 180, 1) 0%,
+    var(--burst-color, var(--legendary)) 20%,
+    var(--burst-color-mid, rgba(232, 160, 92, 0.85)) 45%,
+    var(--burst-color-edge, rgba(232, 160, 92, 0.4)) 65%,
+    transparent 85%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 14;
+  filter: blur(3px);
+}
+.gate-burst-glow.burst {
+  animation: gateBurstGlow 1.8s cubic-bezier(0.15, 0.6, 0.4, 1) forwards;
+}
+@keyframes gateBurstGlow {
+  0% { opacity: 0; transform: translate(-50%, 50%) scale(0); }
+  15% { opacity: 1; transform: translate(-50%, 50%) scale(0.6); }
+  55% { opacity: 1; transform: translate(-50%, 50%) scale(2.5); }
+  100% { opacity: 0; transform: translate(-50%, 50%) scale(3.5); }
+}
+
+/* 광선 8방향 */
+.gate-ray {
+  position: absolute;
+  left: 50%; bottom: 200px;
+  width: 0; height: 5px;
+  background: linear-gradient(90deg, 
+    rgba(255, 235, 180, 1), 
+    var(--burst-color, var(--legendary)) 30%, 
+    transparent);
+  box-shadow: 0 0 14px var(--burst-color, var(--legendary)), 
+              0 0 28px var(--burst-color-shadow, rgba(232, 160, 92, 0.6));
+  opacity: 0;
+  transform-origin: left center;
+  pointer-events: none;
+  z-index: 13;
+}
+.gate-ray.r1 { transform: translate(0, 50%) rotate(-90deg); }
+.gate-ray.r2 { transform: translate(0, 50%) rotate(-60deg); }
+.gate-ray.r3 { transform: translate(0, 50%) rotate(-30deg); }
+.gate-ray.r4 { transform: translate(0, 50%) rotate(0deg); }
+.gate-ray.r5 { transform: translate(0, 50%) rotate(180deg); }
+.gate-ray.r6 { transform: translate(0, 50%) rotate(210deg); }
+.gate-ray.r7 { transform: translate(0, 50%) rotate(240deg); }
+.gate-ray.r8 { transform: translate(0, 50%) rotate(270deg); }
+.gate-ray.shoot { animation: gateRayShoot 1.4s cubic-bezier(0.2, 0.6, 0.5, 1) forwards; }
+@keyframes gateRayShoot {
+  0% { width: 0; opacity: 0; }
+  20% { opacity: 1; }
+  100% { width: 320px; opacity: 0; }
+}
+
+.steps {
+  display: flex; gap: 8px; margin-top: 16px;
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase;
+}
+.step { padding: 10px 14px; background: var(--glass); border: 1px solid var(--border); border-radius: 6px; flex: 1; text-align: center; transition: all var(--tr); }
+.step.active { border-color: var(--border-strong); color: var(--gold-bright); background: rgba(201, 169, 89, 0.1); }
+.step.done { color: var(--text-secondary); }
+
+.toast {
+  position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%);
+  background: var(--glass); backdrop-filter: blur(10px);
+  border: 1px solid rgba(124, 232, 168, 0.3); color: var(--gold-bright);
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
+  padding: 10px 18px; border-radius: 18px;
+  opacity: 0; pointer-events: none; z-index: 100;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(-10px); }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-title">길드원 모집 — 핵심 7개 연출</div>
+  <div class="app-sub">RecordTales · Curated Recruit Patterns</div>
+</header>
+
+<div class="category-bar">
+  <div class="cat-label"><span class="cat-dot classic"></span>CLASSIC</div>
+  <div class="cat-label"><span class="cat-dot door"></span>DOOR — 입구 충격</div>
+  <div class="cat-label"><span class="cat-dot paper"></span>PAPER — 문서 부착</div>
+</div>
+
+<nav class="tabs" id="tabs">
+  <button class="tab active" data-tab="silhouette"><span class="tab-num">01</span>실루엣</button>
+  <span class="tab-divider"></span>
+  <button class="tab door" data-tab="pound"><span class="tab-num">02</span>문 쾅쾅</button>
+  <button class="tab door" data-tab="bash"><span class="tab-num">03</span>몸통 박치기</button>
+  <button class="tab door" data-tab="thunder"><span class="tab-num">04</span>번개 충격</button>
+  <button class="tab door" data-tab="kick"><span class="tab-num">05</span>반전 발차기</button>
+  <span class="tab-divider"></span>
+  <button class="tab paper" data-tab="bulletin"><span class="tab-num">06</span>게시판</button>
+  <button class="tab paper" data-tab="wanted"><span class="tab-num">07</span>현상수배 도배</button>
+  <span class="tab-divider"></span>
+  <button class="tab" data-tab="combo"><span class="tab-num">08</span>★ 통합 시나리오</button>
+</nav>
+
+<main class="workspace">
+  <div class="pattern-info" id="patternInfo">
+    <div class="pattern-info-title" id="patternTitle">대기 실루엣</div>
+    <div class="pattern-info-inspiration" id="patternInspo">— Inspired by Evil Hunter Tycoon —</div>
+    <div class="pattern-info-desc" id="patternDesc">
+      정문 너머에 흐릿한 인영들이 어슬렁거리고, 모집 시 그 중 3명이 안으로 들어온다.
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-primary" id="startBtn">▶ 모집 시작</button>
+    <button class="btn" id="resetBtn">↺ 다시 보기</button>
+    <div class="stage-status" id="stageStatus">STAGE 1 — 대기</div>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+    
+    <div class="sigil" id="sigil"><div class="sigil-letter">G</div></div>
+    
+    <!-- 박치기 -->
+    <div class="bash-figure" id="bashFigure"></div>
+    
+    <div class="gate" id="gate">
+      <div class="gate-wall"></div>
+      <div class="gate-torch left">
+        <div class="gate-torch-flame"></div>
+        <div class="gate-torch-bracket"></div>
+        <div class="gate-torch-glow"></div>
+      </div>
+      <div class="gate-torch right">
+        <div class="gate-torch-flame"></div>
+        <div class="gate-torch-bracket"></div>
+        <div class="gate-torch-glow"></div>
+      </div>
+      <div class="gate-frame"></div>
+      <div class="gate-keystone"></div>
+      <div class="gate-door left">
+        <div class="gate-door-band" style="top:12%"></div>
+        <div class="gate-door-band" style="top:45%"></div>
+        <div class="gate-door-band" style="top:82%"></div>
+        <div class="gate-door-hinge" style="top:18%"></div>
+        <div class="gate-door-hinge" style="top:55%"></div>
+        <div class="gate-door-hinge" style="top:85%"></div>
+        <div class="gate-door-knocker">
+          <div class="gate-door-knocker-plate"><div class="gate-door-knocker-ring"></div></div>
+        </div>
+        <div class="gate-door-studs">
+          <div class="gate-door-stud" style="top:6%;right:15%"></div>
+          <div class="gate-door-stud" style="top:6%;right:50%"></div>
+          <div class="gate-door-stud" style="top:28%;right:15%"></div>
+          <div class="gate-door-stud" style="top:28%;right:50%"></div>
+          <div class="gate-door-stud" style="top:60%;right:15%"></div>
+          <div class="gate-door-stud" style="top:60%;right:50%"></div>
+          <div class="gate-door-stud" style="top:90%;right:15%"></div>
+          <div class="gate-door-stud" style="top:90%;right:50%"></div>
+        </div>
+      </div>
+      <div class="gate-door right">
+        <div class="gate-door-band" style="top:12%"></div>
+        <div class="gate-door-band" style="top:45%"></div>
+        <div class="gate-door-band" style="top:82%"></div>
+        <div class="gate-door-hinge" style="top:18%"></div>
+        <div class="gate-door-hinge" style="top:55%"></div>
+        <div class="gate-door-hinge" style="top:85%"></div>
+        <div class="gate-door-knocker">
+          <div class="gate-door-knocker-plate"><div class="gate-door-knocker-ring"></div></div>
+        </div>
+        <div class="gate-door-studs">
+          <div class="gate-door-stud" style="top:6%;left:15%"></div>
+          <div class="gate-door-stud" style="top:6%;left:50%"></div>
+          <div class="gate-door-stud" style="top:28%;left:15%"></div>
+          <div class="gate-door-stud" style="top:28%;left:50%"></div>
+          <div class="gate-door-stud" style="top:60%;left:15%"></div>
+          <div class="gate-door-stud" style="top:60%;left:50%"></div>
+          <div class="gate-door-stud" style="top:90%;left:15%"></div>
+          <div class="gate-door-stud" style="top:90%;left:50%"></div>
+        </div>
+      </div>
+      <div class="gate-light"></div>
+    </div>
+
+    <div class="torches">
+      <div class="torch left"></div>
+      <div class="torch right"></div>
+    </div>
+    
+    <!-- 실루엣 -->
+    <div class="silhouettes" id="silhouettes" style="display:none">
+      <div class="silhouette"></div><div class="silhouette"></div><div class="silhouette"></div>
+    </div>
+    
+    <div class="notice" id="notice">RECRUIT</div>
+    <button class="recruit-btn" id="recruitBtnInner">⚜ 길드원 모집</button>
+    
+    <!-- 문 쾅쾅 -->
+    <div class="pound-flash" id="poundFlash"></div>
+    <div class="dust-particles" id="dustParticles"></div>
+    
+    <!-- 정문 폭발 시 legendary 빛 (combo 시나리오) -->
+    <div class="gate-burst-glow" id="gateBurstGlow"></div>
+    <div class="gate-ray r1" id="gateRay1"></div>
+    <div class="gate-ray r2" id="gateRay2"></div>
+    <div class="gate-ray r3" id="gateRay3"></div>
+    <div class="gate-ray r4" id="gateRay4"></div>
+    <div class="gate-ray r5" id="gateRay5"></div>
+    <div class="gate-ray r6" id="gateRay6"></div>
+    <div class="gate-ray r7" id="gateRay7"></div>
+    <div class="gate-ray r8" id="gateRay8"></div>
+    
+    <!-- 노크 (kick에서 재사용) -->
+    <div class="knock-overlay" id="knockOverlay"></div>
+    <div class="knock-text" id="knockText">— 똑 똑 똑 —</div>
+    
+    <!-- 번개 -->
+    <div class="lightning" id="lightning"></div>
+    <div class="lightning-flash" id="lightningFlash"></div>
+    
+    <!-- 발차기 -->
+    <div class="kick-impact" id="kickImpact"></div>
+    
+    <!-- 게시판 -->
+    <div class="bulletin-board" id="bulletinBoard">
+      <div class="pin-paper p1" id="paper1">RECRUIT<br>QUEST</div>
+      <div class="pin-paper p2" id="paper2">RECRUIT<br>QUEST</div>
+      <div class="pin-paper p3" id="paper3">RECRUIT<br>QUEST</div>
+    </div>
+    
+    <!-- 현상수배 -->
+    <div class="brick-wall" id="brickWall"></div>
+    
+    <!-- 후보 카드 (동적 생성) -->
+    <div class="cards-area" id="cardsArea"></div>
+    
+    <button class="pass-btn" id="passBtn">패스</button>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <div class="steps">
+    <div class="step active" id="step1">STAGE 1 — 대기 / 모집 클릭</div>
+    <div class="step" id="step2">STAGE 2 — 연출 진행</div>
+    <div class="step" id="step3">STAGE 3 — 후보 선택</div>
+  </div>
+</main>
+
+<script>
+const PATTERNS = {
+  silhouette: {
+    title: '대기 실루엣', inspo: '— Inspired by Evil Hunter Tycoon —', category: 'classic',
+    desc: '정문 너머에 흐릿한 인영들이 어슬렁거리고, 모집 시 그 중 3명이 안으로 들어온다. 모집 전부터 세계관이 살아있다는 인상.',
+    setup: 'showSilhouettes',
+    sequence: [
+      { delay: 0, action: 'noticeAbsorb' }, { delay: 600, action: 'sigilPulse' },
+      { delay: 1200, action: 'silhouetteApproach' }, { delay: 2000, action: 'gateOpen' },
+      { delay: 3500, action: 'showCards' }
+    ]
+  },
+  pound: {
+    title: '문 쾅쾅', inspo: '— Door Variation: Pounding —', category: 'door',
+    desc: '문이 강하게 두드려지며 화면 진동 + 먼지 낙하. 3번의 두드림 후 4번째 충격으로 폭발적으로 열린다.',
+    sequence: [
+      { delay: 0, action: 'noticeAbsorb' },
+      { delay: 500, action: 'gatePound' }, { delay: 600, action: 'stageShake' }, { delay: 700, action: 'dustBurst' },
+      { delay: 1300, action: 'gatePound' }, { delay: 1400, action: 'stageShake' }, { delay: 1500, action: 'dustBurst' },
+      { delay: 2100, action: 'gatePound' }, { delay: 2200, action: 'stageShakeHard' }, { delay: 2300, action: 'dustBurst' },
+      { delay: 3000, action: 'poundFlashAction' }, { delay: 3050, action: 'gateBurst' },
+      { delay: 3100, action: 'stageShakeHard' }, { delay: 4400, action: 'showCards' }
+    ]
+  },
+  bash: {
+    title: '몸통 박치기', inspo: '— Door Variation: Body Slam —', category: 'door',
+    desc: '문 안쪽에서 검은 형체가 3번 강하게 부딪힘 → 매번 문 흔들림 + 화면 셰이크 → 4번째 충격에 문이 폭발적으로 열림. 무지한 야만전사 결.',
+    sequence: [
+      { delay: 0, action: 'noticeAbsorb' }, { delay: 500, action: 'bashShow' },
+      { delay: 800, action: 'bashStrike' }, { delay: 850, action: 'gateBashed' }, { delay: 900, action: 'stageShake' }, { delay: 1100, action: 'bashRecoil' },
+      { delay: 1500, action: 'bashStrike' }, { delay: 1550, action: 'gateBashed' }, { delay: 1600, action: 'stageShake' }, { delay: 1800, action: 'bashRecoil' },
+      { delay: 2200, action: 'bashStrike' }, { delay: 2250, action: 'gateBashed' }, { delay: 2300, action: 'stageShakeHard' }, { delay: 2500, action: 'bashRecoil' },
+      { delay: 3000, action: 'gateBurst' }, { delay: 3050, action: 'stageShakeHard' }, { delay: 3100, action: 'dustBurst' },
+      { delay: 4400, action: 'showCards' }
+    ]
+  },
+  thunder: {
+    title: '번개 충격', inspo: '— Door Variation: Thunder Strike —', category: 'door',
+    desc: '잠시 어두워짐 → 갑자기 번개가 위에서 내려와 문에 충돌 → 흰 화면 플래시 + 메가 셰이크 → 문이 부서지며 열림. 천공/뇌신 결.',
+    sequence: [
+      { delay: 0, action: 'noticeAbsorb' }, { delay: 800, action: 'lightningStrike' },
+      { delay: 850, action: 'lightningFlash' }, { delay: 900, action: 'stageShakeMega' },
+      { delay: 1100, action: 'gateBurst' }, { delay: 1150, action: 'dustBurst' },
+      { delay: 2400, action: 'showCards' }
+    ]
+  },
+  kick: {
+    title: '반전 발차기', inspo: '— Door Variation: Polite then Kick —', category: 'door',
+    desc: '"똑똑똑" 정중한 노크 → 정적 → 갑자기 강한 발차기 한방으로 문이 폭발하듯 열림. 텐션-릴리스 갭이 큰 코미디 결.',
+    sequence: [
+      { delay: 0, action: 'noticeAbsorb' }, { delay: 600, action: 'sigilPulse' },
+      { delay: 1000, action: 'knockText' },
+      { delay: 2800, action: 'knockOverlayClear' },
+      { delay: 3300, action: 'kickImpactBoom' }, { delay: 3320, action: 'gateBurst' },
+      { delay: 3350, action: 'stageShakeMega' }, { delay: 3400, action: 'dustBurst' },
+      { delay: 4700, action: 'showCards' }
+    ]
+  },
+  bulletin: {
+    title: '게시판 부착', inspo: '— Paper Variation: Quest Board —', category: 'paper',
+    desc: '코르크 게시판이 등장 → 종이 3장이 위에서 휘날리며 슬램 → 빨간 핀이 박힘. 술집 퀘스트보드 결.',
+    sequence: [
+      { delay: 0, action: 'noticeAbsorb' }, { delay: 400, action: 'hideSigil' },
+      { delay: 600, action: 'bulletinShow' },
+      { delay: 1400, action: 'paperSlam1' }, { delay: 1700, action: 'stageShake' },
+      { delay: 2000, action: 'paperSlam2' }, { delay: 2300, action: 'stageShake' },
+      { delay: 2600, action: 'paperSlam3' }, { delay: 2900, action: 'stageShake' },
+      { delay: 3800, action: 'bulletinHide' }, { delay: 4200, action: 'showCards' }
+    ]
+  },
+  wanted: {
+    title: '현상수배 도배', inspo: '— Paper Variation: Wanted Wall —', category: 'paper',
+    desc: '벽돌 벽이 등장하고 6장의 현상수배 종이가 사방에서 휘날려 들어와 차례로 벽에 도배된다.',
+    sequence: [
+      { delay: 0, action: 'noticeAbsorb' }, { delay: 400, action: 'hideSigil' },
+      { delay: 600, action: 'wallShow' }, { delay: 1300, action: 'wantedFlutter' },
+      { delay: 4000, action: 'wallHide' }, { delay: 4400, action: 'showCards' }
+    ]
+  },
+  combo: {
+    title: '통합 시나리오 — 게시판 + 몸통 박치기',
+    inspo: '— Composed: Idle Board → Body Bash → Cards —',
+    category: 'classic',
+    desc: 'STAGE 1 (대기): 게시판에 RECRUIT 종이 3장이 핀으로 꽂혀 있는 idle. 정문/시길/횃불은 완전히 숨겨진 상태. STAGE 2 (연출): 모집 클릭 시 게시판이 사라지며 무대가 드러나고, 정문 안쪽에서 검은 형체가 3번 강하게 부딪힘 → 4번째 충격에 문이 폭발적으로 열리며 등급 색상 빛이 사방으로 퍼짐. STAGE 3 (선택): 후보 카드 등장.',
+    setup: 'showBulletinIdle',
+    sequence: [
+      { delay: 0, action: 'noticeAbsorb' },
+      { delay: 0, action: 'bulletinDismiss' },
+      { delay: 700, action: 'allLit' },
+      { delay: 1100, action: 'sigilPulse' },
+      { delay: 1300, action: 'bashShow' },
+      
+      // 1번 박치기
+      { delay: 1700, action: 'bashStrike' },
+      { delay: 1750, action: 'gateBashed' },
+      { delay: 1800, action: 'stageShake' },
+      { delay: 2000, action: 'bashRecoil' },
+      
+      // 2번 박치기
+      { delay: 2400, action: 'bashStrike' },
+      { delay: 2450, action: 'gateBashed' },
+      { delay: 2500, action: 'stageShake' },
+      { delay: 2700, action: 'bashRecoil' },
+      
+      // 3번 박치기 (강하게)
+      { delay: 3100, action: 'bashStrike' },
+      { delay: 3150, action: 'gateBashed' },
+      { delay: 3200, action: 'stageShakeHard' },
+      { delay: 3450, action: 'bashRecoil' },
+      
+      // 4번째 충격 → 문 폭발 + 빛 폭발 (문 주변)
+      { delay: 3900, action: 'bashHide' },
+      { delay: 3950, action: 'poundFlashAction' },
+      { delay: 4000, action: 'gateBurst' },
+      { delay: 4030, action: 'gateBurstGlow' },
+      { delay: 4030, action: 'gateRays' },
+      { delay: 4050, action: 'stageShake' },
+      
+      { delay: 5400, action: 'showCards' }
+    ]
+  }
+};
+
+let currentTab = 'silhouette';
+let timeouts = [];
+let isRunning = false;
+let currentRolls = null;
+const $ = id => document.getElementById(id);
+
+// === 가챠 시스템 ===
+const POOL = {
+  normal: [
+    { name: 'Cael', portrait: '🏹', stats: [{label: '퀘스트 보상', val: '+4%'}] },
+    { name: 'Brom', portrait: '🪓', stats: [{label: '집중 시간', val: '+3%'}] },
+    { name: 'Jora', portrait: '🛡️', stats: [{label: '골드 획득', val: '+3%'}] },
+  ],
+  rare: [
+    { name: 'Aldric', portrait: '🛡️', stats: [{label: '집중 시간', val: '+8%'}, {label: '퀘스트 보상', val: '+5%'}] },
+    { name: 'Mira',   portrait: '🏹', stats: [{label: '명중 보너스', val: '+8%'}, {label: '골드 획득', val: '+5%'}] },
+    { name: 'Vex',    portrait: '⚡', stats: [{label: '연속 보상', val: '+8%'}, {label: '집중 시간', val: '+5%'}] },
+  ],
+  epic: [
+    { name: 'Lyra',   portrait: '⚔️', stats: [{label: '골드 획득', val: '+12%'}, {label: '스톱워치 보상', val: '+10%'}] },
+    { name: 'Korin',  portrait: '🔮', stats: [{label: '집중 시간', val: '+12%'}, {label: '경험치 보너스', val: '+10%'}] },
+    { name: 'Saron',  portrait: '🗡️', stats: [{label: '퀘스트 보상', val: '+12%'}, {label: '연속 보상', val: '+10%'}] },
+  ],
+  legendary: [
+    { name: 'Astaroth',   portrait: '👑', stats: [{label: '모든 보상', val: '+18%'}, {label: '집중 시간', val: '+15%'}] },
+    { name: 'Seraphine',  portrait: '✨', stats: [{label: '경험치 부스트', val: '+18%'}, {label: '골드 획득', val: '+15%'}] },
+    { name: 'Drakthus',   portrait: '🔥', stats: [{label: '연속 보상', val: '+18%'}, {label: '스톱워치 보상', val: '+15%'}] },
+  ]
+};
+
+const RARITY_ORDER = ['normal', 'rare', 'epic', 'legendary'];
+const RARITY_STARS = { normal: 1, rare: 2, epic: 3, legendary: 4 };
+
+// 등급별 25% 균등 확률
+function rollOne() {
+  const r = Math.random();
+  let rarity;
+  if (r < 0.25) rarity = 'normal';
+  else if (r < 0.50) rarity = 'rare';
+  else if (r < 0.75) rarity = 'epic';
+  else rarity = 'legendary';
+  
+  const pool = POOL[rarity];
+  const char = pool[Math.floor(Math.random() * pool.length)];
+  return { ...char, rarity };
+}
+
+function rollThree() { return [rollOne(), rollOne(), rollOne()]; }
+
+function getMaxRarity(rolls) {
+  return rolls.reduce((max, r) => 
+    RARITY_ORDER.indexOf(r.rarity) > RARITY_ORDER.indexOf(max) ? r.rarity : max
+  , 'normal');
+}
+
+// 등급별 빛 색상 (RGB 기반)
+const BURST_COLORS = {
+  normal:    { r: 153, g: 153, b: 160 },
+  rare:      { r: 124, g: 184, b: 232 },
+  epic:      { r: 168, g: 124, b: 232 },
+  legendary: { r: 232, g: 160, b:  92 },
+};
+
+function applyBurstColor(rarity) {
+  const c = BURST_COLORS[rarity];
+  const stage = $('stage');
+  stage.style.setProperty('--burst-color',        `rgb(${c.r}, ${c.g}, ${c.b})`);
+  stage.style.setProperty('--burst-color-mid',    `rgba(${c.r}, ${c.g}, ${c.b}, 0.85)`);
+  stage.style.setProperty('--burst-color-edge',   `rgba(${c.r}, ${c.g}, ${c.b}, 0.4)`);
+  stage.style.setProperty('--burst-color-shadow', `rgba(${c.r}, ${c.g}, ${c.b}, 0.6)`);
+}
+
+function clearBurstColor() {
+  const stage = $('stage');
+  ['--burst-color', '--burst-color-mid', '--burst-color-edge', '--burst-color-shadow']
+    .forEach(p => stage.style.removeProperty(p));
+}
+
+function renderCards(rolls) {
+  const area = $('cardsArea');
+  area.innerHTML = '';
+  rolls.forEach(roll => {
+    const card = document.createElement('div');
+    card.className = `candidate-card ${roll.rarity}`;
+    card.dataset.rarity = roll.rarity;
+    const stars = Array(RARITY_STARS[roll.rarity]).fill('★').join(' ');
+    const statsHtml = roll.stats.map(s => 
+      `<div class="cand-stat"><span>${s.label}</span><span class="cand-stat-val">${s.val}</span></div>`
+    ).join('');
+    card.innerHTML = `
+      <div class="cand-portrait">${roll.portrait}</div>
+      <div class="cand-name">${roll.name}</div>
+      <div class="cand-rarity ${roll.rarity}">${stars}</div>
+      <div class="cand-stats">${statsHtml}</div>
+    `;
+    card.addEventListener('click', handleCardClick);
+    area.appendChild(card);
+  });
+}
+
+function handleCardClick(e) {
+  const card = e.currentTarget;
+  if (!$('cardsArea').classList.contains('show')) return;
+  document.querySelectorAll('.candidate-card').forEach(c => {
+    if (c !== card) c.classList.add('fade-out');
+  });
+  card.classList.add('selected');
+  $('passBtn').classList.remove('show');
+  const name = card.querySelector('.cand-name').textContent;
+  const rarity = card.dataset.rarity;
+  showToast(`${name} (${rarity.toUpperCase()}) 영입 완료!`);
+  setTimeout(resetStage, 2200);
+}
+
+const ACTIONS = {
+  noticeAbsorb: () => $('notice').classList.add('absorb'),
+  hideSigil: () => $('sigil').classList.add('hidden'),
+  sigilPulse: () => { $('sigil').classList.remove('pulse'); void $('sigil').offsetWidth; $('sigil').classList.add('pulse'); },
+  knockText: () => { $('knockOverlay').classList.add('active'); $('knockText').classList.add('show'); },
+  knockOverlayClear: () => $('knockOverlay').classList.remove('active'),
+  silhouetteApproach: () => $('silhouettes').classList.add('approach'),
+  gateOpen: () => $('gate').classList.add('open'),
+  
+  // 셰이크 + 먼지
+  stageShake: () => { $('stage').classList.remove('shake', 'shake-hard', 'shake-mega'); void $('stage').offsetWidth; $('stage').classList.add('shake'); },
+  stageShakeHard: () => { $('stage').classList.remove('shake', 'shake-hard', 'shake-mega'); void $('stage').offsetWidth; $('stage').classList.add('shake-hard'); },
+  stageShakeMega: () => { $('stage').classList.remove('shake', 'shake-hard', 'shake-mega'); void $('stage').offsetWidth; $('stage').classList.add('shake-mega'); },
+  dustBurst: () => spawnDust(8),
+  
+  // 문 쾅쾅
+  gatePound: () => { $('gate').classList.remove('pound'); void $('gate').offsetWidth; $('gate').classList.add('pound'); },
+  poundFlashAction: () => { $('poundFlash').classList.remove('flash'); void $('poundFlash').offsetWidth; $('poundFlash').classList.add('flash'); },
+  gateBurst: () => $('gate').classList.add('burst-open'),
+  
+  // 박치기
+  bashShow: () => $('bashFigure').classList.add('show'),
+  bashStrike: () => { $('bashFigure').classList.remove('recoil'); $('bashFigure').classList.add('bash'); },
+  bashRecoil: () => { $('bashFigure').classList.remove('bash'); $('bashFigure').classList.add('recoil'); },
+  bashHide: () => $('bashFigure').classList.remove('show', 'bash', 'recoil'),
+  gateBashed: () => { $('gate').classList.remove('bashed'); void $('gate').offsetWidth; $('gate').classList.add('bashed'); },
+  
+  // 번개
+  lightningStrike: () => $('lightning').classList.add('strike'),
+  lightningFlash: () => $('lightningFlash').classList.add('flash'),
+  
+  // 발차기
+  kickImpactBoom: () => { $('kickImpact').classList.remove('kick'); void $('kickImpact').offsetWidth; $('kickImpact').classList.add('kick'); },
+  
+  // 게시판
+  bulletinShow: () => $('bulletinBoard').classList.add('show'),
+  bulletinHide: () => $('bulletinBoard').classList.remove('show'),
+  paperSlam1: () => $('paper1').classList.add('slam'),
+  paperSlam2: () => $('paper2').classList.add('slam'),
+  paperSlam3: () => $('paper3').classList.add('slam'),
+  
+  // 현상수배
+  wallShow: () => $('brickWall').classList.add('show'),
+  wallHide: () => $('brickWall').classList.remove('show'),
+  wantedFlutter: () => spawnWantedPapers(),
+  
+  // === COMBO 액션 ===
+  bulletinDismiss: () => $('bulletinBoard').classList.add('dismiss'),
+  allLit: () => {
+    $('sigil').classList.remove('dim');
+    $('gate').classList.remove('dim');
+    $('torches').classList.remove('dim');
+    document.querySelectorAll('.corner').forEach(c => c.classList.remove('dim'));
+  },
+  gateBurstGlow: () => {
+    $('gateBurstGlow').classList.remove('burst');
+    void $('gateBurstGlow').offsetWidth;
+    $('gateBurstGlow').classList.add('burst');
+  },
+  gateRays: () => {
+    for (let i = 1; i <= 8; i++) {
+      const r = $('gateRay' + i);
+      r.classList.remove('shoot');
+      void r.offsetWidth;
+      setTimeout(() => r.classList.add('shoot'), i * 30);
+    }
+  },
+  
+  showCards: () => {
+    setStage(3);
+    if (currentRolls) renderCards(currentRolls);
+    $('cardsArea').classList.add('show');
+    document.querySelectorAll('.candidate-card').forEach((card, i) => {
+      setTimeout(() => card.classList.add('appear'), i * 200);
+    });
+    setTimeout(() => $('passBtn').classList.add('show'), 800);
+  }
+};
+
+function spawnDust(count) {
+  const field = $('dustParticles');
+  for (let i = 0; i < count; i++) {
+    const d = document.createElement('div');
+    d.className = 'dust';
+    d.style.left = (40 + Math.random() * 20) + '%';
+    d.style.top = (15 + Math.random() * 10) + '%';
+    d.style.animationDelay = (Math.random() * 0.3) + 's';
+    field.appendChild(d);
+    requestAnimationFrame(() => d.classList.add('fall'));
+    setTimeout(() => d.remove(), 2200);
+  }
+}
+
+function spawnWantedPapers() {
+  const wall = $('brickWall');
+  const positions = [
+    { left: 60, top: 50, rot: -4, startX: -200, startRot: 30 },
+    { left: 380, top: 70, rot: 3, startX: 300, startRot: -25 },
+    { left: 220, top: 30, rot: -2, startX: 0, startRot: 45 },
+    { left: 80, top: 220, rot: 5, startX: -300, startRot: 20 },
+    { left: 360, top: 240, rot: -3, startX: 200, startRot: -30 },
+    { left: 220, top: 250, rot: 2, startX: 0, startRot: 15 }
+  ];
+  positions.forEach((p, i) => {
+    setTimeout(() => {
+      const paper = document.createElement('div');
+      paper.className = 'wanted-paper';
+      paper.style.left = p.left + 'px';
+      paper.style.top = p.top + 'px';
+      paper.style.setProperty('--end-rot', p.rot + 'deg');
+      paper.style.setProperty('--start-x', p.startX + 'px');
+      paper.style.setProperty('--start-rot', p.startRot + 'deg');
+      paper.innerHTML = '⚜<br><br>RECRUIT';
+      wall.appendChild(paper);
+      requestAnimationFrame(() => paper.classList.add('flutter'));
+      $('stage').classList.remove('shake'); void $('stage').offsetWidth;
+      $('stage').classList.add('shake');
+    }, i * 350);
+  });
+}
+
+function setStage(n) {
+  $('step1').classList.toggle('active', n === 1);
+  $('step1').classList.toggle('done', n > 1);
+  $('step2').classList.toggle('active', n === 2);
+  $('step2').classList.toggle('done', n > 2);
+  $('step3').classList.toggle('active', n === 3);
+  $('stageStatus').textContent = `STAGE ${n} — ${['대기', '연출 진행', '후보 선택'][n-1]}`;
+}
+
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function clearTimeouts() { timeouts.forEach(clearTimeout); timeouts = []; }
+
+function resetStage() {
+  clearTimeouts();
+  isRunning = false;
+  
+  ['notice', 'sigil', 'knockOverlay', 'knockText', 'gate', 'silhouettes',
+   'cardsArea', 'passBtn', 'stage', 'poundFlash', 'bashFigure',
+   'lightning', 'lightningFlash', 'kickImpact',
+   'bulletinBoard', 'paper1', 'paper2', 'paper3', 'brickWall',
+   'gateBurstGlow', 'gateRay1', 'gateRay2', 'gateRay3', 'gateRay4',
+   'gateRay5', 'gateRay6', 'gateRay7', 'gateRay8']
+    .forEach(id => {
+      const el = $(id);
+      if (el) el.className = el.className.split(' ').filter(c => 
+        !['absorb', 'pulse', 'active', 'show', 'open', 'slam', 'fall', 'burst',
+          'shake', 'shake-hard', 'shake-mega', 'pound', 'burst-open', 'flash',
+          'approach', 'hidden', 'appear', 'strike', 'bash', 'recoil', 'bashed',
+          'kick', 'idle', 'dismiss', 'dim', 'shoot'].includes(c)
+      ).join(' ');
+    });
+  
+  // 코너/횃불 dim 클래스 정리
+  document.querySelectorAll('.corner').forEach(c => c.classList.remove('dim'));
+  $('torches')?.classList?.remove('dim');
+  
+  $('dustParticles').innerHTML = '';
+  document.querySelectorAll('.wanted-paper').forEach(el => el.remove());
+  
+  // 카드 영역 비우기 (다음 모집을 위해)
+  $('cardsArea').innerHTML = '';
+  $('cardsArea').classList.remove('show');
+  
+  // burst 색상 초기화
+  clearBurstColor();
+  currentRolls = null;
+  
+  $('sigil').className = 'sigil';
+  $('recruitBtnInner').classList.remove('hidden');
+  
+  const pattern = PATTERNS[currentTab];
+  if (pattern.setup === 'showSilhouettes') $('silhouettes').style.display = 'flex';
+  else $('silhouettes').style.display = 'none';
+  
+  // 통합 시나리오: 게시판 idle + 다른 요소 dim
+  if (pattern.setup === 'showBulletinIdle') {
+    $('bulletinBoard').classList.add('idle');
+    $('sigil').classList.add('dim');
+    $('gate').classList.add('dim');
+    $('torches').classList.add('dim');
+    document.querySelectorAll('.corner').forEach(c => c.classList.add('dim'));
+    $('notice').classList.add('force-hide');
+  } else {
+    $('notice').classList.remove('force-hide');
+    $('notice').style.display = '';
+    $('notice').style.visibility = '';
+  }
+  
+  setStage(1);
+}
+
+function runSequence() {
+  if (isRunning) return;
+  isRunning = true;
+  $('recruitBtnInner').classList.add('hidden');
+  setStage(2);
+  
+  // 카드 미리 뽑기 (모든 탭)
+  currentRolls = rollThree();
+  console.log('🎲 Rolled:', currentRolls.map(r => `${r.name}(${r.rarity})`).join(', '));
+  
+  // 통합 시나리오: 최고 등급에 맞춰 빛 색상 적용
+  if (currentTab === 'combo') {
+    const maxRarity = getMaxRarity(currentRolls);
+    applyBurstColor(maxRarity);
+    console.log('✨ Burst color applied:', maxRarity);
+  }
+  
+  const pattern = PATTERNS[currentTab];
+  pattern.sequence.forEach(step => {
+    const t = setTimeout(() => {
+      const fn = ACTIONS[step.action];
+      if (fn) fn();
+    }, step.delay);
+    timeouts.push(t);
+  });
+}
+
+function switchTab(tabName) {
+  currentTab = tabName;
+  document.querySelectorAll('.tab').forEach(t => 
+    t.classList.toggle('active', t.dataset.tab === tabName));
+  
+  const pattern = PATTERNS[tabName];
+  $('patternTitle').textContent = pattern.title;
+  $('patternInspo').textContent = pattern.inspo;
+  $('patternDesc').textContent = pattern.desc;
+  
+  $('patternInfo').className = 'pattern-info';
+  if (pattern.category !== 'classic') {
+    $('patternInfo').classList.add(pattern.category);
+  }
+  
+  resetStage();
+}
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+});
+
+$('startBtn').addEventListener('click', runSequence);
+$('recruitBtnInner').addEventListener('click', runSequence);
+$('resetBtn').addEventListener('click', resetStage);
+
+$('passBtn').addEventListener('click', () => {
+  document.querySelectorAll('.candidate-card').forEach(c => c.classList.add('fade-out'));
+  $('passBtn').classList.remove('show');
+  showToast('모집을 패스했습니다');
+  setTimeout(resetStage, 1800);
+});
+
+resetStage();
+</script>
+
+</body>
+</html>

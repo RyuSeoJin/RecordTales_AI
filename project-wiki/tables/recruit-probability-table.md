@@ -6,25 +6,26 @@
 
 ---
 
-## 1. 현재 적용 확률 (길드 레벨 1 기준)
+## 1. 현재 적용 확률 (개발/테스트 기준)
 
 | 등급 | weight | 확률 | 색상 |
 |------|--------|------|------|
-| Normal ★ | 60 | 60% | — |
+| Normal ★ | 25 | 25% | — |
 | Rare ★★ | 25 | 25% | #7cb8e8 |
-| Epic ★★★ | 12 | 12% | #a87ce8 |
-| Legendary ★★★★ | 3 | 3% | #e8a05c |
+| Epic ★★★ | 25 | 25% | #a87ce8 |
+| Legendary ★★★★ | 25 | 25% | #e8a05c |
 
 > **합계**: 100 (weight 합산)
+> ⚠️ 현재는 **균등 확률 (테스트용)**으로 설정. 정식 빌드에서 아래 §2 테이블로 교체 예정.
 
-### 1.1. 1회 모집(3명 후보) 기대치
+### 1.1. 1회 모집(3명 후보) 기대치 (균등 확률 기준)
 
 | 조건 | 확률 |
 |------|------|
-| 3명 모두 Normal | 21.6% |
-| Rare 이상 최소 1명 | 78.4% |
-| Epic 이상 최소 1명 | 31.4% |
-| Legendary 최소 1명 | 8.7% |
+| 3명 모두 Normal | 1.6% |
+| Rare 이상 최소 1명 | 98.4% |
+| Epic 이상 최소 1명 | 57.8% |
+| Legendary 최소 1명 | 57.8% |
 
 ---
 
@@ -71,12 +72,12 @@
 ## 4. 코드 매핑
 
 ```javascript
-// guild-master-desktop.html 내 RARITY_WEIGHTS 배열
+// guild-master-desktop.html 내 RARITY_WEIGHTS 배열 (현재: 테스트용 균등 확률)
 const RARITY_WEIGHTS=[
-  {rarity:'normal',   weight:60, label:'Normal',    stars:'★',    color:''},
+  {rarity:'normal',   weight:25, label:'Normal',    stars:'★',    color:''},
   {rarity:'rare',     weight:25, label:'Rare',      stars:'★★',   color:'#7cb8e8'},
-  {rarity:'epic',     weight:12, label:'Epic',      stars:'��★★',  color:'#a87ce8'},
-  {rarity:'legendary',weight:3,  label:'Legendary', stars:'★★★★', color:'#e8a05c'},
+  {rarity:'epic',     weight:25, label:'Epic',      stars:'��★★',  color:'#a87ce8'},
+  {rarity:'legendary',weight:25, label:'Legendary', stars:'★★★★', color:'#e8a05c'},
 ];
 ```
 
@@ -98,3 +99,4 @@ const RARITY_WEIGHTS=[
 | 날짜 | 변경 내용 |
 |------|----------|
 | 2026-04-26 | 초안 작성. Lv.1 기준 확률(60/25/12/3) 및 기대치 산출. |
+| 2026-04-29 | 코드 기준 현재 확률을 균등 확률(25/25/25/25, 테스트용)로 반영. 기대치 재산출. |
