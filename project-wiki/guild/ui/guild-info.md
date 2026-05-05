@@ -34,9 +34,10 @@
 │ │ ┌──────────┐  ┌─ .guild-info ───────────────┐ │ │
 │ │ │          │  │ .guild-name: "Grimhollow"    │ │ │
 │ │ │  G       │  │ ┌──────────┐ ┌────────────┐ │ │ │
-│ │ │ (crest)  │  │ │ Lv.1     │ │ 견습 모험가│ │ │ │
-│ │ │ 46x46    │  │ └──────────┘ └────────────┘ │ │ │
-│ │ └──────────┘  │ 💰 5,000                    │ │ │
+│ │ │ (crest)  │  │ │ Lv.1     │ │ 견습       │ │ │ │
+│ │ │ 46x46    │  │ │          │ │ 길드마스터 │ │ │ │
+│ │ └──────────┘  │ └──────────┘ └────────────┘ │ │ │
+│ │               │ 💰 5,000                    │ │ │
 │ │               └─────────────────────────────┘ │ │
 │ │ ┌─ .guild-xp-wrap ─────────────────────────┐  │ │
 │ │ │ ██████░░░░░░░░░░░░  XP: 0 / 100          │  │ │
@@ -88,7 +89,7 @@
 
 | 변수 | 타입 | 기본값 | 설명 |
 |------|------|--------|------|
-| `A.guildLevel` | `number` | `1` | 길드 레벨 (1~10) |
+| `A.guildLevel` | `number` | `1` | 길드 레벨 (1~99, 디자인 캡 20) |
 | `A.guildXp` | `number` | `0` | 현재 레벨 내 누적 XP |
 | `A.gold` | `number` | `5000` | 보유 골드 |
 
@@ -96,18 +97,41 @@
 
 | 상수 | 설명 |
 |------|------|
-| `GUILD_TITLES[level]` | 레벨별 칭호 맵 (예: 1 = "견습 모험가", …) |
-| `XP_TABLE[level]` | 레벨별 필요 XP 테이블 |
+| `GUILD_TITLES_V2[level]` | 레벨별 칭호 배열 (0~20, `getGuildTitle(level)` 함수로 접근) |
+| `MAX_LEVEL` | 99 (시스템 상한) |
+| `MAX_DESIGN_LEVEL` | 20 (디자인 캡 — 해금/효과 종료) |
 
-### 3.3. DOM 바인딩
+#### GUILD_TITLES_V2 칭호 목록
+
+| 레벨 범위 | 칭호 |
+|-----------|------|
+| Lv.1 | 견습 길드마스터 |
+| Lv.2 | 초보 길드마스터 |
+| Lv.3~4 | 초보 길드마스터 |
+| Lv.5~6 | 정식 길드마스터 |
+| Lv.7~8 | 숙련 길드마스터 |
+| Lv.9~10 | 노련한 길드마스터 |
+| Lv.11~12 | 전략가 길드마스터 |
+| Lv.13~14 | 원로 길드마스터 |
+| Lv.15~17 | 대길드마스터 |
+| Lv.18~19 | 전설의 길드마스터 |
+| Lv.20+ | 만고불변의 길드마스터 |
+
+### 3.3. XP 계산
+
+- 필요 XP: `Math.floor(100 × 1.4^(level-1))`
+- 레벨업 골드 비용: `500 × level`
+- 레벨업 방식: **수동 클릭** (`tryGuildLevelUp`) — XP + 골드 충족 시 버튼 활성화
+
+### 3.4. DOM 바인딩
 
 | DOM id | 표시 내용 |
 |--------|-----------|
 | `#guildLvl` | `Lv.${A.guildLevel}` |
-| `#guildSub` | `GUILD_TITLES[A.guildLevel]` |
+| `#guildSub` | `getGuildTitle(A.guildLevel)` |
 | `#guildGold` | `💰 ${A.gold.toLocaleString()}` |
 | `#guildXpBar` | `width: ${percentage}%` |
-| `#guildXpText` | `XP: ${A.guildXp} / ${needed}` |
+| `#guildXpText` | `XP: ${A.guildXp.toLocaleString()} / ${needed.toLocaleString()}` |
 
 #### 정적 하드코딩 값 (변경 없음)
 
@@ -140,7 +164,7 @@ Display()              │
 
 ### 4.2. 핵심 로직
 
-- **`updateGuildLevelDisplay()`**: `A.guildLevel`과 `A.guildXp` 기반으로 `#guildLvl` 텍스트, `#guildSub` 칭호, `#guildXpBar` width 퍼센트, `#guildXpText` 수치를 갱신
+- **`updateGuildLevelDisplay()`**: `A.guildLevel`과 `A.guildXp` 기반으로 `#guildLvl` 텍스트, `#guildSub` 칭호(`getGuildTitle`), `#guildXpBar` width 퍼센트, `#guildXpText` 수치(`toLocaleString` 포맷)를 갱신
 - **`updateGoldDisplay()`**: `A.gold` 값을 `toLocaleString()` 포맷하여 `#guildGold` 텍스트 갱신
 - **`triggerLevelUpAnimation()`**: `.sigil-letter`에 `level-up-flash` 클래스를 추가하여 레벨업 시각 효과 발동, 애니메이션 종료 후 클래스 제거
 - `.glass` 클래스로 글래스모피즘 배경 효과 적용
@@ -152,6 +176,7 @@ Display()              │
 | `updateGuildLevelDisplay()` | 페이지 로드, XP 변동 시 | 레벨·칭호·XP bar·XP 텍스트 일괄 갱신 |
 | `updateGoldDisplay()` | 페이지 로드, 골드 변동 시 | 골드 텍스트 갱신 |
 | `triggerLevelUpAnimation()` | 레벨업 발생 시 | sigil-letter에 flash 애니메이션 |
+| `getGuildTitle(level)` | 칭호 조회 시 | GUILD_TITLES_V2에서 해당 레벨 칭호 반환 |
 
 ---
 
@@ -175,7 +200,7 @@ Display()              │
 
 | 시스템 | 관계 |
 |--------|------|
-| [experience-system](../../experience/draft/experience-system.md) | XP 획득·레벨업 로직 제공 → Guild Plate에 반영 |
+| [experience-system](../../experience/experience-system.md) | XP 획득·레벨업 로직 제공 → Guild Plate에 반영 |
 | [gold-economy](../../economy/) | 골드 변동 시 `updateGoldDisplay()` 호출 |
 | unlock-shop | 골드 소비 → 골드 표시 갱신 연동 |
 | [Todo Overlay](../../quests/ui/today-todo-overlay.md) | 동일 `.tl-block` 컨테이너 내 하위에 위치 |
@@ -187,8 +212,5 @@ Display()              │
 | 날짜 | 내용 |
 |------|------|
 | 2026-04-25 | 초안 작성 (정적 하드코딩 상태) |
-| 2026-04-27 | 동적 데이터 바인딩 반영 — A.guildLevel/A.guildXp/A.gold 전역 상태, XP bar, 골드 표시, 레벨업 애니메이션 문서화. 하드코딩 Lv.7 → 동적 Lv.${A.guildLevel} 변경 |
-
----
-
-> **최종 수정**: 2026-04-27
+| 2026-04-27 | 동적 데이터 바인딩 반영 — A.guildLevel/A.guildXp/A.gold 전역 상태, XP bar, 골드 표시, 레벨업 애니메이션 문서화. |
+| 2026-05-06 | v2 스펙 반영. guildLevel 범위 1~99 (디자인 캡 20), GUILD_TITLES → GUILD_TITLES_V2 (21개 칭호), getGuildTitle() 함수, XP toLocaleString 포맷, XP 공식·레벨업 골드 비용·수동 레벨업 정보 추가. |

@@ -33,8 +33,8 @@
 
 ### 2.2. 모집 비용
 
-- **1회 모집 비용**: 1,000골드
-- 골드 획득 경로(집중 세션 적립, 퀘스트 보상)와 상세 경제 규칙은 `gold-economy` (approved) 참조
+- **1회 모집 비용**: 1,000골드 (`HIRE_COST = 1000`)
+- 골드 획득 경로(집중 세션 적립, 퀘스트 보상)와 상세 경제 규칙은 `gold-economy` 참조
 
 ### 2.3. 모집 흐름
 
@@ -63,13 +63,30 @@
 
 - **선택**: 3명 중 1명을 선택하면 즉시 획득
 - **패스**: 3명 모두 마음에 안 들면 패스 가능. **골드 환불 없음** — 이미 소모된 1,000골드는 돌아오지 않음
-- 보유 상한 도달 시 모집 버튼 비활성화 (상한은 `guild.md`에서 정의)
+- **보유 상한**: `A.guildMemberCap = 8` (v2에서 고정값)
+- 보유 상한 도달 시 모집 버튼 비활성화 + `showToast('보유 상한에 도달했습니다')` 표시
 
 ### 2.6. 등급 체계
 
 - 4단계: Normal(★) / Rare(★★) / Epic(★★★) / Legendary(★★★★)
-- 등급별 속성(능력치 개수·수치 범위)은 `guild-member` (approved) 참조
-- **출현 확률**: 현재 균등 확률(각 25%, 테스트용). 정식 빌드에서 길드 레벨에 비례하여 가중치 변동 예정 (`recruit-probability-table` 참조)
+- 등급별 속성(능력치 개수·수치 범위)은 `guild-member` 참조
+- **출현 확률**: 길드 레벨에 따라 **동적으로 변동** (`getRarityWeights(level)` + `RARITY_BY_LEVEL_V2`)
+  - Lv.1: Normal 80% / Rare 20% / Epic 0% / Legendary 0%
+  - Lv.20: Normal 0% / Rare 15% / Epic 45% / Legendary 40%
+  - 상세 확률은 `recruit-probability-table` 참조
+
+### 2.6.1. Idle 화면 확률표 표시
+
+모집 대기(Idle) 화면 상단에 현재 길드 레벨에 해당하는 모집 확률표가 표시된다.
+
+```
+┌──────────────────────────────────────┐
+│ 길드원 모집 확률              Lv.5   │
+│ [Normal 45%] [Rare 40%] [Epic 13%] [Legendary 2%] │
+└──────────────────────────────────────┘
+```
+
+CSS 클래스: `.hire-rarity-rates`, `.hire-rarity-rates-label`, `.hire-rarity-rates-title`, `.hire-rarity-rates-lvl`, `.hire-rarity-rates-bars`, `.hire-rar-bar`
 
 ### 2.7. 모집 연출
 
@@ -83,6 +100,7 @@
   게시판(코르크보드)에 RECRUIT 종이 3장이 핀으로 꽂혀 idle 상태
   종이들은 미세하게 흔들림 (wiggle 애니메이션)
   정문·시길·횃불은 완전히 숨겨진 상태 (dim)
+  상단에 모집 확률표 표시 (hire-rarity-rates)
   하단에 [길드원 모집] 버튼 표시
 ```
 
@@ -108,22 +126,32 @@ T+3500ms  형체 사라짐 → 문 burst-open (perspective rotateY ±90°)
           빛 색상 = 후보 3명 중 최고 등급 색 (배반 시 속임 등급)
           화면 셰이크
 
-[배반 가챠 발동 시]
+[1단계 배반 발동 시]
 T+4700ms  빛 폭발(betrayalFlash) + shake-hard
           진짜 등급 색 파티클 16~24개 방사
-          빛 색상 전환 (속임 → 진짜), 빛 크기 순간 확장 후 수축
+          빛 색상 전환 (속임 → 진짜), 빛 크기 순간 확장(220px) 후 수축(180px)
+
+[2단계 배반(Mega) 발동 시 — 2회 연속 폭발]
+T+4700ms  1차 폭발 (가짜 → 중간 등급, normal detonate)
+          파티클 16~24개, shake-hard, 빛 색상 중간 등급으로 전환
+T+6300ms  2차 폭발 (중간 → 진짜 등급, mega detonate)
+          화이트 플래시(betrayalWhiteFlash) + hireShakeMega (0.9s)
+          확장 파티클 32~44개, 빛 크기 280px → 180px
+          "✨✨ 2단계 반전!" 토스트 표시
 
 T+4900ms  STAGE 3 진입 (일반)
-T+6100ms  STAGE 3 진입 (배반 발동 시)
+T+6100ms  STAGE 3 진입 (1단계 배반 시)
+T+7900ms  STAGE 3 진입 (2단계 배반 시, 2차 폭발 후 1.6초 대기)
 ```
 
 **STAGE 3 — 선택 (Selection)**
 ```
+액션바(패스·정보확인·선택 버튼) 즉시 생성 (disabled 상태)
 카드 3장 순차 등장 (200ms 간격, 아래→위 슬라이드 + bounce easing)
-순차 플립 시작 (300ms 간격, perspective rotateY 180°)
+순차 플립 시작 (600ms + i×300ms, perspective rotateY 180°)
 등급별 이펙트 (glow, 파티클, flash)
-외부 스탯 + 선택 버튼 표시 (플립 후 400ms)
-패스 버튼 표시 (마지막 플립 후 800ms)
+외부 스탯 표시 (플립 후 400ms)
+카드 클릭 가능 전환 (플립 후 800ms) → preselect로 선택/정보확인 활성화
 ```
 
 #### 2.7.1.1. 등급별 빛 폭발 색상
@@ -172,19 +200,30 @@ T+6100ms  STAGE 3 진입 (배반 발동 시)
 
 ### 2.8. 배반 가챠 (Betrayal Gacha)
 
-모집 연출 중 "기대를 뒤집는" 도파민 연출. 처음에 한 단계 낮은 등급으로 보여주다가 빛이 폭발하며 진짜 등급이 드러난다.
+모집 연출 중 "기대를 뒤집는" 도파민 연출. 처음에 낮은 등급으로 보여주다가 빛이 폭발하며 진짜 등급이 드러난다.
 
-#### 2.8.1. 발동 조건
+#### 2.8.1. 발동 조건 및 확률
 
 | 조건 | 값 |
 |------|-----|
-| 대상 | 후보 3명 중 **최고 등급**이 Rare 이상일 때 |
-| 확률 | **50%** |
+| 대상 | 후보 3명 중 **최고 등급**이 Rare 이상일 때 (`bestTier >= 1`) |
+| 분배 | **1/3 균등** (배반 없음 / 1단계 / 2단계) |
 | 제외 | Normal (아래 등급이 없으므로 발동 불가) |
+| 2단계 제한 | `bestTier >= 2` (Epic 이상)일 때만 가능. Rare 베스트는 2단계 불가 → 1단계로 대체 |
 
 > 확률은 기존 모집 확률과 **독립**. 등급 결정은 이미 완료된 상태에서 **연출만** 변경.
 
-#### 2.8.2. 배반 조합
+#### 2.8.2. 배반 단계
+
+| jumpSteps | 유형 | 설명 |
+|-----------|------|------|
+| 0 | 배반 없음 | 일반 연출 |
+| 1 | 1단계 배반 | 한 단계 낮은 등급으로 속임 |
+| 2 | 2단계 배반 (Mega) | 두 단계 낮은 등급으로 속임 (화이트 플래시 + 강화 셰이크) |
+
+#### 2.8.3. 배반 조합
+
+**1단계 배반** (jumpSteps=1):
 
 | 실제 등급 | 처음 보여주는 등급 (속임) | 전환 연출 |
 |-----------|------------------------|----------|
@@ -192,54 +231,58 @@ T+6100ms  STAGE 3 진입 (배반 발동 시)
 | Epic ★★★ | Rare 파란빛 | → 폭발 → 보라빛 |
 | Legendary ★★★★ | Epic 보라빛 | → 폭발 → 주황빛 |
 
-#### 2.8.3. 연출 타임라인
+**2단계 배반 — Mega** (jumpSteps=2):
 
-```
-일반 연출과 동일하게 진행 (게시판 dismiss → 박치기 3회 → burst-open)
-
-T+3500ms  문 burst-open → 속임 등급 색상 빛 폭발 + 광선
-          (예: Legendary인데 Epic 보라빛으로 burst)
-
-T+4700ms  빛 폭발(betrayalFlash) + shake-hard
-          16~24개 방사형 파티클 (진짜 등급 색)
-          빛 색상 전환 (속임 → 진짜)
-          2차 burst-glow (진짜 등급 색)
-          빛 크기 순간 확장 (180px → 220px) 후 수축
-
-T+6100ms  카드 등장 (일반보다 ~1200ms 지연)
-          이후 일반 연출과 동일
-```
+| 실제 등급 | 처음 보여주는 등급 (속임) | 전환 연출 |
+|-----------|------------------------|----------|
+| Epic ★★★ | Normal 흰빛 | → 화이트 플래시 → 보라빛 |
+| Legendary ★★★★ | Rare 파란빛 | → 화이트 플래시 → 주황빛 |
 
 #### 2.8.4. 코드 매핑
 
 ```javascript
-// startHire() 내 배반 판정
-const bestTier = rarityOrder[best.rarity];       // 최고 등급 티어 (0~3)
-const betrayal = bestTier >= 1 && Math.random() < 0.5;  // 50% 확률
-const fakeRarity = betrayal ? rarityTiers[bestTier - 1] : best.rarity;
-const lightColor = colors[fakeRarity];            // 문빛에 속임 색 적용
-const burstColor = burstRGB[fakeRarity];          // burst-glow + rays 에 속임 색 적용
+// startHire() 내 배반 판정 — 1/3 균등 분배
+const bestTier = rarityOrder[best.rarity];
+let jumpSteps = 0; // 0=배반없음, 1=1단계, 2=2단계(Mega)
+if (bestTier >= 1) {
+  const r = Math.random();
+  if (r < 1/3) jumpSteps = 0;
+  else if (r < 2/3) jumpSteps = 1;
+  else jumpSteps = (bestTier >= 2) ? 2 : 1; // Rare 베스트는 2단계 불가 → 1단계 대체
+}
+const betrayal = jumpSteps > 0;
+const isMegaBetrayal = jumpSteps >= 2;
+const fakeRarity = betrayal ? rarityTiers[bestTier - jumpSteps] : best.rarity;
+const lightColor = colors[fakeRarity];
+const burstColor = betrayal ? burstRGB[fakeRarity] : burstRGB[best.rarity];
 ```
 
 | 함수/변수 | 역할 |
 |-----------|------|
-| `betrayal` (boolean) | 배반 가챠 발동 여부 |
+| `betrayal` (boolean) | 배반 가챠 발동 여부 (1단계 이상) |
+| `isMegaBetrayal` (boolean) | 2단계 배반 발동 여부 |
+| `jumpSteps` (0/1/2) | 등급 점프 단계 수 |
 | `fakeRarity` | 처음 보여줄 속임 등급 |
 | `burstRGB` | 등급별 RGB 문자열 (빛 폭발 + 광선 색상용) |
 | `.hire-betrayal-flash` | 빛 폭발 전체 화면 플래시 |
+| `.hire-betrayal-flash.mega` | 2단계 확장 플래시 (inset:-80px) |
+| `.hire-betrayal-whiteflash` | 2단계 전용 화이트 플래시 |
 | `.hire-betrayal-particle` | 방사형 파티클 (진짜 등급 색) |
 | `.hire-burst-glow` | 등급 색상 원형 빛 폭발 (burst-open 시) |
 | `.hire-gate-ray` | 8방향 광선 (burst-open 시) |
 | `@keyframes betrayalFlash` | 플래시 확장 → 페이드아웃 |
+| `@keyframes betrayalFlashMega` | Mega 전용 플래시 (0.8s) |
+| `@keyframes betrayalWhiteFlash` | 화이트 플래시 (0.6s) |
 | `@keyframes betrayalBurst` | 파티클 방사 → 페이드아웃 |
 | `@keyframes hireBurstGlow` | 원형 빛 폭발 scale 0→3.5 |
 | `@keyframes hireRayShoot` | 광선 width 0→260px |
+| `@keyframes hireShakeMega` | 2단계 강화 셰이크 (0.9s) |
 
 #### 2.8.5. 설계 원칙
 
 - **확률 독립**: 등급 확률 시스템에 영향 없음. 순수 연출 레이어.
 - **하위 호환**: 배반 미발동 시 기존 연출 그대로 진행.
-- **도파민 설계**: "아 Rare인가…" → "Epic이었어!" 반전 쾌감. 발동 빈도 50%로 빈번한 서프라이즈 제공.
+- **도파민 설계**: "아 Normal인가…" → "Epic이었어!" 2단계 반전 쾌감. 1/3 균등 분배로 배반/비배반 비율 자연스러움.
 
 ## 3. 예상 UI (대략적)
 
@@ -252,6 +295,11 @@ Command Post (우측 하단) 내 **[길드원 모집]** 버튼
 ```
 ┌──────────────────────────────────────────────────┐
 │                  길드원 모집                        │
+│                                                    │
+│  ┌──────────────────────────────────────────────┐ │
+│  │ 길드원 모집 확률                      Lv.5   │ │
+│  │ [Normal 45%] [Rare 40%] [Epic 13%] [Lgd 2%] │ │
+│  └──────────────────────────────────────────────┘ │
 │                                                    │
 │       ┌───────────────────────────────────┐       │
 │       │ ░░░░░░ 코르크 게시판 ░░░░░░░░░░░░ │       │
@@ -298,15 +346,15 @@ Command Post (우측 하단) 내 **[길드원 모집]** 버튼
 ### 3.4. 퀘스트 보상 골드 설정 UI
 
 - 퀘스트 생성 폼에 추가되는 보상 골드 설정 필드
-- 상세 와이어프레임 및 규칙은 `gold-economy` (approved) §3.3. 참조
+- 상세 와이어프레임 및 규칙은 `gold-economy` §3.3. 참조
 
 ## 4. 열린 질문
 
-- [x] ~~**등급별 출현 확률 테이블**~~ → `recruit-probability-table.md`에 확정
-- [x] ~~**보유 상한**~~ → `guild-level-table.md`에서 레벨별 관리 (Lv.1: 8명, Lv.3: 10명, Lv.7: 12명)
+- [x] ~~**등급별 출현 확률 테이블**~~ → `recruit-probability-table.md`에 확정 (레벨별 동적 7단계 bracket)
+- [x] ~~**보유 상한**~~ → `guildMemberCap = 8` (v2에서 고정값)
 - [x] ~~**모집 연출 상세**~~ → 2.7.에 확정 (문 두드리기 + 순차 플립)
 - [x] ~~**후보 카드 정보량 레이아웃**~~ → 2.7.3.에 확정 (카드 외부 스탯)
-- [ ] **배반 가챠 발동 확률 밸런스**: 50%가 적절한지 체감 테스트 필요
+- [x] ~~**배반 가챠 발동 확률**~~ → 1/3 균등 분배 (배반 없음/1단계/2단계)
 - [ ] **배반 가챠 사운드**: 폭발 전환 시 효과음 추가 여부
 
 ## 5. 참고/영감
@@ -317,12 +365,13 @@ Command Post (우측 하단) 내 **[길드원 모집]** 버튼
 
 | 시스템 | 관계 |
 |--------|------|
-| `gold-economy` (approved) | 골드 획득·소모 규칙. 모집 비용 1,000골드 |
-| `experience-system` (draft) | 길드 레벨이 보유 상한 및 고등급 출현 확률에 영향 |
-| `guild-info` (approved) | 길드 정보 표시 |
-| `command-post` (approved) | [길드원 모집] 버튼 진입점 |
-| `guild-member` (approved) | 길드원 개체 속성 (등급·능력치·시각 에셋) 정의 |
-| `squad-formation` (draft) | 최대 4인 스쿼드 편성 |
+| `gold-economy` | 골드 획득·소모 규칙. 모집 비용 1,000골드 |
+| `experience-system` | 길드 레벨이 모집 등급 확률에 영향 (RARITY_BY_LEVEL_V2) |
+| `guild-info` | 길드 정보 표시 |
+| `command-post` | [길드원 모집] 버튼 진입점 |
+| `guild-member` | 길드원 개체 속성 (등급·능력치·시각 에셋) 정의 |
+| `squad-formation` | 최대 2~4인 스쿼드 편성 (해금으로 확장) |
+| `recruit-probability-table` | 레벨별 동적 확률 데이터 시트 |
 
 ---
 
@@ -331,10 +380,8 @@ Command Post (우측 하단) 내 **[길드원 모집]** 버튼
 | 날짜 | 변경 내용 |
 |------|----------|
 | 2026-04-25 | 초안 작성. |
-| 2026-04-26 | 골드 경제 확정 (6초/10골드, 뽑기 1,000골드). 퀘스트 보상 골드 (100단위 자유 입력 + 프리셋 칩, 일일 2,000 상한). 등급 4단계 (Normal/Rare/Epic/Legendary). 후보 정보 전체 공개. 패스 가능(환불 없음). 등급별 차등 연출 확정. |
-| 2026-04-26 | 골드 경제 규칙을 `gold-economy`로 분리. 등급 속성을 `guild-member`로 분리. 본 문서는 모집 행위에 집중하도록 정리. |
-| 2026-04-26 | 승인 상태로 승격. |
-| 2026-04-27 | 모집 연출 확정 (2.7.): 문 두드리기 타임라인, 등급별 연출, 카드 외부 스탯 레이아웃, 선택/패스 마이크로 애니메이션. |
-| 2026-04-27 | 배반 가챠 시스템 추가 (2.8.): 한 단계 낮은 등급 속임 → 빛 폭발 전환 연출. |
-| 2026-04-27 | 배반 가챠 확률 10% → 50%로 상향. |
-| 2026-04-29 | 모집 연출을 통합 시나리오(게시판 idle → 몸통 박치기 → 등급 빛 폭발)로 개편. 3-Stage 구조 확정. 문 비주얼을 상세 중세 문(아치 프레임 + 3D rotateY)으로 교체. 확률을 코드 기준(균등 25%)으로 동기화. |
+| 2026-04-26 | 골드 경제 확정, 등급 4단계, 후보 정보 전체 공개, 패스 가능. |
+| 2026-04-26 | 골드 경제 규칙을 `gold-economy`로 분리. 승인 상태로 승격. |
+| 2026-04-27 | 모집 연출 확정 (2.7.), 배반 가챠 시스템 추가 (2.8.). |
+| 2026-04-29 | 모집 연출을 통합 시나리오(게시판 idle → 몸통 박치기 → 등급 빛 폭발)로 개편. 3-Stage 구조 확정. |
+| 2026-05-06 | v2 스펙 반영. 확률: 균등 25% → 레벨별 동적 (RARITY_BY_LEVEL_V2). Idle 확률표 표시 추가. 배반 가챠: 50% → 1/3 균등 분배, 2단계 배반(Mega) 추가 (화이트 플래시, hireShakeMega). guildMemberCap 고정 8. |
