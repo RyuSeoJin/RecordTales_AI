@@ -37,6 +37,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
   transform-origin:center center;will-change:transform;overflow:hidden;
   background:radial-gradient(ellipse 60% 50% at 50% 44%,rgba(201,169,89,0.07) 0%,transparent 60%),
              linear-gradient(180deg,#0d0d16 0%,#0a0a12 55%,#050508 100%);
+  transition:background 0.6s ease;
 }
 .stage::before{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 85% 65% at 50% 50%,transparent 42%,rgba(0,0,0,0.6) 100%);}
 .particles{position:absolute;inset:0;z-index:2;pointer-events:none;}
@@ -781,6 +782,20 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 .gm-modal-footer{display:flex;justify-content:center;padding:16px 0 0;margin-top:16px;border-top:1px solid var(--border);}
 .gm-modal-footer .btn{min-width:120px;}
 
+/* DEV tools — 임시 테스트 데이터 추가/초기화 (관리 모달 footer 전용) */
+.gm-modal-footer-with-dev{justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.gm-dev-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.gm-dev-label{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.22em;font-weight:700;color:var(--text-muted);padding:2px 7px;border:1px dashed var(--text-muted);border-radius:4px;opacity:0.6;}
+.gm-dev-btn{padding:6px 12px;background:rgba(124,184,232,0.06);border:1px solid rgba(124,184,232,0.25);border-radius:7px;color:var(--rest-c);font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.08em;cursor:pointer;transition:var(--tr);}
+.gm-dev-btn:hover{background:rgba(124,184,232,0.14);border-color:rgba(124,184,232,0.45);}
+.gm-dev-btn.danger{color:var(--danger);border-color:rgba(232,124,124,0.28);background:rgba(232,124,124,0.05);}
+.gm-dev-btn.danger:hover{background:rgba(232,124,124,0.12);border-color:rgba(232,124,124,0.5);}
+
+/* 잠긴 트랙 표시 (음악 플레이어 리스트) */
+.tl-item.locked{opacity:0.55;cursor:pointer;}
+.tl-item.locked:hover{opacity:0.75;}
+.tl-item.locked .tl-track-title{color:var(--text-muted);}
+
 /* Rarity border accents for member cards */
 .gm-member-card.rarity-rare{border-color:rgba(124,184,232,0.25);}
 .gm-member-card.rarity-epic{border-color:rgba(168,124,232,0.3);}
@@ -834,49 +849,347 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 .gm-slot.drop-target{border-color:rgba(124,184,232,0.5);background:rgba(124,184,232,0.05);animation:slotPulse 1.5s ease-in-out infinite;}
 @keyframes slotPulse{0%,100%{border-color:rgba(124,184,232,0.3);}50%{border-color:rgba(124,184,232,0.6);box-shadow:0 0 12px rgba(124,184,232,0.15);}}
 
-/* Unlock Shop */
-.unlock-modal{max-width:640px;}
-.unlock-level-header{text-align:center;margin-bottom:20px;}
-.unlock-lvl-title{font-family:'Cinzel',serif;font-size:18px;font-weight:600;color:var(--gold-soft);margin-bottom:4px;}
-.unlock-lvl-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.1em;margin-bottom:8px;}
-.unlock-xp-bar-wrap{width:100%;max-width:320px;height:6px;background:rgba(201,169,89,0.1);border-radius:3px;margin:0 auto 4px;overflow:hidden;}
-.unlock-xp-bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));border-radius:3px;transition:width 0.6s ease;box-shadow:0 0 8px rgba(201,169,89,0.3);}
-.unlock-xp-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:0.08em;}
-.unlock-tree{display:flex;flex-direction:column;gap:12px;max-height:420px;overflow-y:auto;padding:4px;}
-.unlock-level-block{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;transition:var(--tr);}
-.unlock-level-block.current{border-color:rgba(201,169,89,0.3);box-shadow:0 0 12px rgba(201,169,89,0.08);}
-.unlock-level-block.locked{opacity:0.5;}
-.unlock-level-block.completed{opacity:0.8;}
-.unlock-level-label{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--gold-soft);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
-.unlock-level-label .badge{font-family:'DM Mono',monospace;font-size:8px;padding:2px 6px;border-radius:4px;letter-spacing:0.1em;}
-.unlock-level-label .badge-current{background:rgba(201,169,89,0.15);color:var(--gold-soft);border:1px solid rgba(201,169,89,0.3);}
-.unlock-level-label .badge-done{background:rgba(124,232,168,0.1);color:var(--success);border:1px solid rgba(124,232,168,0.2);}
-.unlock-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid rgba(255,255,255,0.04);}
-.unlock-item:first-child{border-top:none;}
-.unlock-item-info{display:flex;flex-direction:column;gap:2px;}
-.unlock-item-name{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-primary);letter-spacing:0.05em;}
-.unlock-item-detail{font-family:'DM Mono',monospace;font-size:8px;color:var(--text-muted);letter-spacing:0.05em;}
-.unlock-item-tag{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;padding:3px 8px;border-radius:5px;}
-.tag-auto{background:rgba(124,184,232,0.1);color:var(--rest-c);border:1px solid rgba(124,184,232,0.2);}
-.tag-purchased{background:rgba(124,232,168,0.1);color:var(--success);border:1px solid rgba(124,232,168,0.2);}
-.tag-locked{background:var(--surface3);color:var(--text-muted);border:1px solid var(--border);}
-.tag-buy{background:rgba(201,169,89,0.12);color:var(--gold-soft);border:1px solid rgba(201,169,89,0.3);cursor:pointer;transition:var(--tr);}
-.tag-buy:hover{background:rgba(201,169,89,0.25);transform:translateY(-1px);}
-.tag-buy:disabled,.tag-buy[disabled]{opacity:0.4;cursor:not-allowed;transform:none;}
-.unlock-store-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-height:420px;overflow-y:auto;padding:4px;}
-.unlock-store-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;transition:var(--tr);}
-.unlock-store-card.available{border-color:rgba(201,169,89,0.25);}
-.unlock-store-card.available:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.3);}
-.unlock-store-card.purchased{opacity:0.5;}
-.unlock-store-card.level-locked{opacity:0.4;}
-.unlock-store-icon{font-size:24px;margin-bottom:8px;}
-.unlock-store-name{font-family:'DM Mono',monospace;font-size:10px;color:var(--text-primary);letter-spacing:0.05em;margin-bottom:4px;}
-.unlock-store-req{font-family:'DM Mono',monospace;font-size:8px;color:var(--text-muted);margin-bottom:8px;}
-.unlock-store-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.1em;padding:6px 14px;border-radius:8px;border:none;cursor:pointer;transition:var(--tr);}
-.unlock-store-btn.buyable{background:linear-gradient(135deg,rgba(201,169,89,0.2),rgba(201,169,89,0.1));color:var(--gold-soft);border:1px solid rgba(201,169,89,0.3);}
-.unlock-store-btn.buyable:hover{background:rgba(201,169,89,0.3);}
-.unlock-store-btn.bought{background:rgba(124,232,168,0.1);color:var(--success);border:1px solid rgba(124,232,168,0.2);cursor:default;}
-.unlock-store-btn.locked{background:var(--surface3);color:var(--text-muted);border:1px solid var(--border);cursor:not-allowed;}
+/* ══════════════════════════════════════════════
+   MANAGE MODAL — 2-column layout (v14 기반)
+══════════════════════════════════════════════ */
+.hire-modal.manage-modal{max-width:1100px;width:95vw;}
+.manage-screen{display:flex;gap:14px;align-items:stretch;margin-bottom:8px;}
+.manage-col{flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;min-height:520px;max-height:64vh;overflow:hidden;}
+.manage-col-left{flex:1.15;}
+.manage-col-right{flex:1;}
+.manage-col-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid rgba(201,169,89,0.12);margin-bottom:12px;flex-shrink:0;}
+.manage-col-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;letter-spacing:0.12em;color:var(--gold-soft);}
+.manage-col-meta{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);}
+.manage-col > div:not(.manage-col-header){flex:1;overflow-y:auto;overflow-x:hidden;padding-right:4px;}
+.manage-col > div::-webkit-scrollbar{width:5px;}
+.manage-col > div::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+@media (max-width:900px){
+  .hire-modal.manage-modal{max-width:96vw;}
+  .manage-screen{flex-direction:column;}
+  .manage-col{min-height:auto;max-height:none;}
+  .manage-col-left{min-height:280px;}
+}
+
+/* 좌측 그리드 컨테이너 — 기존 gm-members-grid를 슬림하게 재정의 */
+.manage-col-left .gm-members-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));max-height:none;}
+.manage-col-left .gm-filter-bar{margin-bottom:10px;flex-wrap:wrap;}
+.manage-col-left .gm-filter-select{font-size:8.5px;padding:5px 22px 5px 8px;}
+.manage-col-left .gm-members-footer{padding-top:10px;margin-top:auto;}
+
+/* 우측 편성 — 프리셋 탭 (gm-preset-bar 재활용 + 약간의 보정) */
+.manage-col-right .gm-preset-bar{margin-bottom:14px;}
+.manage-col-right .gm-squad-slots{gap:8px;justify-content:space-between;}
+.manage-col-right .gm-slot{width:auto;flex:1;min-width:0;max-width:none;}
+.manage-col-right .gm-squad-summary{margin:6px 0 12px;}
+
+/* === PICKER MODAL === */
+.hire-modal.picker-modal-panel{max-width:640px;padding:24px 26px;display:flex;flex-direction:column;}
+.picker-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.picker-header .hire-title{margin-bottom:0;}
+.picker-close-btn{width:30px;height:30px;border-radius:50%;background:transparent;border:1px solid var(--border);color:var(--text-muted);cursor:pointer;font-size:14px;transition:var(--tr);display:flex;align-items:center;justify-content:center;}
+.picker-close-btn:hover{color:var(--text-primary);border-color:var(--text-secondary);}
+
+.picker-current{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;margin-bottom:14px;background:rgba(201,169,89,0.06);border:1px solid rgba(201,169,89,0.22);border-radius:10px;}
+.picker-current-info{display:flex;align-items:center;gap:10px;min-width:0;}
+.picker-current-img{width:34px;height:50px;border-radius:6px;object-fit:cover;object-position:center top;border:1px solid var(--border);flex-shrink:0;}
+.picker-current-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:2px;}
+.picker-current-name{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--text-primary);}
+.picker-clear-btn{padding:6px 14px;background:rgba(232,124,124,0.08);border:1px solid rgba(232,124,124,0.3);border-radius:6px;cursor:pointer;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--danger);transition:var(--tr);flex-shrink:0;}
+.picker-clear-btn:hover{background:rgba(232,124,124,0.16);border-color:var(--danger);}
+
+#pickerSections{max-height:62vh;overflow-y:auto;padding-right:4px;}
+#pickerSections::-webkit-scrollbar{width:5px;}
+#pickerSections::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+.picker-section-label{display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;}
+.picker-section-label-count{margin-left:auto;padding:1px 7px;border-radius:8px;background:rgba(255,255,255,0.05);font-size:8px;letter-spacing:0.08em;color:var(--text-muted);}
+.picker-section-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;}
+.picker-empty{padding:30px 20px;text-align:center;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.08em;line-height:1.8;border:1px dashed var(--border);border-radius:8px;}
+
+/* 픽커 카드 - 기본 gm-member-card 재활용하되 상태 오버레이 추가 */
+.picker-card{position:relative;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:var(--tr);display:flex;flex-direction:column;}
+.picker-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.3);}
+.picker-card.rarity-rare{border-color:rgba(124,184,232,0.35);}
+.picker-card.rarity-epic{border-color:rgba(168,124,232,0.4);}
+.picker-card.rarity-legendary{border-color:rgba(232,160,92,0.45);}
+.picker-card.in-current-slot{border-color:var(--gold-soft) !important;background:rgba(201,169,89,0.1);box-shadow:0 0 14px rgba(201,169,89,0.25);}
+.picker-card.in-other-slot{border-style:dashed !important;border-color:rgba(124,184,232,0.5) !important;background:rgba(124,184,232,0.04);opacity:0.92;}
+.picker-card-img{width:100%;aspect-ratio:1160/1760;object-fit:cover;object-position:center top;border-bottom:1px solid var(--border);}
+.picker-card-info{padding:6px 8px 8px;}
+.picker-card-name{font-family:'Cinzel',serif;font-size:10.5px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.picker-card-rarity{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.1em;}
+.picker-card-badge{position:absolute;top:5px;right:5px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,0.75);font-family:'DM Mono',monospace;font-size:7px;letter-spacing:0.1em;text-transform:uppercase;z-index:2;}
+.picker-card-badge.current{color:var(--gold-soft);border:1px solid rgba(201,169,89,0.4);}
+.picker-card-badge.other{color:var(--rest-c);border:1px solid rgba(124,184,232,0.4);}
+.picker-card-footer{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:0.06em;padding:3px 6px;text-align:center;}
+.picker-card-footer.current{color:var(--gold-soft);background:rgba(201,169,89,0.12);}
+.picker-card-footer.other{color:var(--rest-c);background:rgba(124,184,232,0.1);}
+
+/* === CONFIRM POPUP === */
+.hire-modal.confirm-panel{max-width:440px;padding:24px 26px;}
+#pickerModalWrap{z-index:210;}
+#confirmModalWrap{z-index:220;}
+.confirm-title{font-family:'Cinzel',serif;font-size:16px;font-weight:600;letter-spacing:0.1em;color:var(--gold-soft);margin-bottom:12px;}
+.confirm-msg{font-family:'Noto Sans KR',sans-serif;font-size:13px;line-height:1.7;color:var(--text-secondary);margin-bottom:20px;}
+.confirm-msg strong{color:var(--text-primary);font-weight:600;}
+.confirm-msg .hl-rare{color:var(--rest-c);font-weight:600;}
+.confirm-msg .hl-warn{color:var(--danger);}
+.confirm-actions{display:flex;gap:10px;justify-content:flex-end;}
+.confirm-actions .btn{min-width:90px;}
+
+/* === SYNERGY PANEL === */
+.gm-synergy-panel{margin-top:14px;padding:12px 14px;background:rgba(168,124,232,0.05);border:1px solid rgba(168,124,232,0.22);border-radius:10px;}
+.gm-synergy-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.gm-synergy-title{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--lrest-c);}
+.gm-synergy-count{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.08em;color:var(--text-muted);}
+.gm-synergy-list{display:flex;flex-direction:column;gap:6px;}
+.gm-synergy-item{background:rgba(0,0,0,0.25);border:1px solid transparent;border-radius:8px;padding:8px 10px;transition:var(--tr);}
+.gm-synergy-item.active{background:rgba(168,124,232,0.12);border-color:rgba(168,124,232,0.35);box-shadow:0 0 10px rgba(168,124,232,0.12);}
+.gm-synergy-item.inactive{opacity:0.65;}
+.gm-synergy-item-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:3px;}
+.gm-synergy-item-name{font-family:'Cinzel',serif;font-size:11.5px;font-weight:600;color:var(--text-primary);}
+.gm-synergy-item.active .gm-synergy-item-name{color:var(--lrest-c);}
+.gm-synergy-item-bonus{font-family:'DM Mono',monospace;font-size:9.5px;font-weight:600;color:var(--gold-soft);}
+.gm-synergy-item.inactive .gm-synergy-item-bonus{color:var(--text-muted);}
+.gm-synergy-item-desc{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.05em;color:var(--text-muted);display:flex;align-items:center;gap:6px;}
+.gm-synergy-remaining{display:inline-block;padding:1px 6px;border-radius:6px;background:rgba(232,200,124,0.1);border:1px solid rgba(232,200,124,0.22);color:var(--gold-soft);font-size:8px;font-weight:500;letter-spacing:0.05em;}
+.gm-synergy-empty{padding:14px;text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:0.08em;}
+
+/* 시너지 멤버 칩 — 시너지에 포함된 캐릭터들 표시
+   등급(rarity-*)이 베이스 색상을 결정 → 어떤 컨텍스트에서든 일관되게 적용
+   상태(present/owned/missing)는 같은 색의 채도/투명도로 표현 */
+.gm-synergy-item-mems{display:flex;flex-wrap:wrap;gap:5px;margin:5px 0 6px;}
+.gm-synergy-mem{padding:2px 8px;border-radius:10px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.06em;font-weight:500;transition:var(--tr);border:1px solid transparent;}
+
+/* 등급별 베이스 컬러 변수 */
+.gm-synergy-mem.rarity-normal    { --chip-c: 200,200,210; }
+.gm-synergy-mem.rarity-rare      { --chip-c: 124,184,232; }
+.gm-synergy-mem.rarity-epic      { --chip-c: 168,124,232; }
+.gm-synergy-mem.rarity-legendary { --chip-c: 232,160,92; }
+
+/* present: 활성 스쿼드 또는 정보 모달의 본인 — 가장 밝음 + 글로우 */
+.gm-synergy-mem.present{
+  background:rgba(var(--chip-c),0.22);
+  border-color:rgba(var(--chip-c),0.65);
+  color:rgb(var(--chip-c));
+  box-shadow:0 0 8px rgba(var(--chip-c),0.28);
+}
+/* owned: 보유 중이지만 활성 스쿼드 밖 — 중간 채도 */
+.gm-synergy-mem.owned{
+  background:rgba(var(--chip-c),0.10);
+  border-color:rgba(var(--chip-c),0.4);
+  color:rgba(var(--chip-c),0.92);
+}
+/* missing: 미보유 — 어두움 + 취소선 */
+.gm-synergy-mem.missing{
+  background:rgba(var(--chip-c),0.04);
+  border-color:rgba(var(--chip-c),0.2);
+  color:rgba(var(--chip-c),0.5);
+  text-decoration:line-through;
+  text-decoration-color:rgba(var(--chip-c),0.3);
+}
+
+/* === Unlock Shop (v2) === */
+.unlock-modal{max-width:780px;width:95vw;}
+
+/* === Settings Modal === */
+.settings-modal{max-width:820px;width:95vw;}
+.settings-modal .gm-tab-content{max-height:65vh;overflow-y:auto;padding:4px;}
+.settings-modal .gm-tab-content::-webkit-scrollbar{width:5px;}
+.settings-modal .gm-tab-content::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+.bg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;}
+.bg-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;transition:var(--tr);position:relative;display:flex;flex-direction:column;}
+.bg-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,0.4);}
+.bg-card.applied{border-color:rgba(201,169,89,0.6);box-shadow:0 0 18px rgba(201,169,89,0.25);}
+.bg-card.locked{opacity:0.55;cursor:default;}
+.bg-card.locked:hover{transform:none;box-shadow:none;}
+.bg-card-preview{width:100%;aspect-ratio:16/9;position:relative;display:flex;align-items:center;justify-content:center;}
+.bg-card-preview-default{background:radial-gradient(ellipse 60% 50% at 50% 44%,rgba(201,169,89,0.07) 0%,transparent 60%),linear-gradient(180deg,#0d0d16 0%,#0a0a12 55%,#050508 100%);}
+.bg-card-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.55);}
+.bg-card-overlay-icon{font-size:28px;opacity:0.7;}
+.bg-card-applied-badge{position:absolute;top:8px;right:8px;padding:3px 9px;background:var(--gold-soft);color:#1a0a02;font-family:'DM Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:0.16em;border-radius:5px;box-shadow:0 2px 6px rgba(0,0,0,0.4);}
+.bg-card-info{padding:9px 12px 11px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;}
+.bg-card-name{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--text-primary);letter-spacing:0.04em;}
+.bg-card-hint{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.05em;color:var(--text-muted);}
+.bg-card-btn{padding:6px 10px;border-radius:6px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;font-weight:600;border:none;cursor:pointer;transition:var(--tr);text-align:center;}
+.bg-card-btn.apply{background:linear-gradient(135deg,rgba(201,169,89,0.22),rgba(201,169,89,0.1));color:var(--gold-soft);border:1px solid rgba(201,169,89,0.35);}
+.bg-card-btn.apply:hover{background:rgba(201,169,89,0.32);}
+.bg-card-btn.applied{background:rgba(124,232,168,0.12);color:var(--success);border:1px solid rgba(124,232,168,0.25);cursor:default;}
+.bg-card-btn.buy{background:linear-gradient(135deg,rgba(201,169,89,0.22),rgba(201,169,89,0.1));color:var(--gold-soft);border:1px solid rgba(201,169,89,0.35);}
+.bg-card-btn.buy:hover{background:rgba(201,169,89,0.32);}
+.bg-card-btn.poor{background:rgba(232,124,124,0.06);color:var(--danger);border:1px solid rgba(232,124,124,0.22);cursor:help;}
+.bg-card-btn.locked-tag{background:rgba(255,255,255,0.03);color:var(--text-muted);border:1px solid var(--border);cursor:default;}
+
+.bg-empty-msg{padding:30px;text-align:center;font-family:'DM Mono',monospace;font-size:10px;color:var(--text-muted);letter-spacing:0.08em;line-height:1.8;border:1px dashed var(--border);border-radius:10px;}
+.bg-empty-msg b{color:var(--gold-soft);font-weight:600;}
+
+/* === Music Library Modal === */
+.music-library-modal{max-width:820px;width:95vw;}
+.music-library-modal #musicLibraryBody{max-height:65vh;overflow-y:auto;padding:4px;}
+.music-library-modal #musicLibraryBody::-webkit-scrollbar{width:5px;}
+.music-library-modal #musicLibraryBody::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+.music-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.music-card{background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;overflow:hidden;transition:var(--tr);position:relative;display:flex;flex-direction:column;}
+.music-card.owned{border-color:rgba(124,184,232,0.25);}
+.music-card.playing{border-color:rgba(201,169,89,0.55);box-shadow:0 0 18px rgba(201,169,89,0.22);}
+.music-card-art{aspect-ratio:16/10;display:flex;align-items:center;justify-content:center;font-size:36px;position:relative;}
+/* 장르별 카드 아트 그라데이션 */
+.music-card-art.medieval{background:radial-gradient(ellipse at 50% 40%,rgba(201,169,89,0.28),transparent 65%),linear-gradient(180deg,#1f1610 0%,#0d0805 100%);color:#e8c87c;}
+.music-card-art.lofi{background:radial-gradient(ellipse at 50% 40%,rgba(124,184,232,0.25),transparent 65%),linear-gradient(180deg,#0e1622 0%,#070b12 100%);color:#7cb8e8;}
+.music-card-art.ambient{background:radial-gradient(ellipse at 50% 40%,rgba(168,124,232,0.25),transparent 65%),linear-gradient(180deg,#160e22 0%,#0a0612 100%);color:#a87ce8;}
+.music-card-art.orchestral{background:radial-gradient(ellipse at 50% 40%,rgba(232,160,92,0.28),transparent 65%),linear-gradient(180deg,#1a0a08 0%,#0a0303 100%);color:#e8a05c;}
+.music-card-art.locked{filter:grayscale(0.7) brightness(0.5);}
+.music-card-art .music-card-lock{position:absolute;font-size:24px;color:#fff;text-shadow:0 0 8px rgba(0,0,0,0.6);}
+.music-card-art .music-card-playing-mark{position:absolute;top:8px;right:8px;padding:3px 9px;background:var(--gold-soft);color:#1a0a02;font-family:'DM Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:0.16em;border-radius:5px;}
+.music-card-info{padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px;flex:1;}
+.music-card-meta-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.music-card-name{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--text-primary);letter-spacing:0.04em;line-height:1.3;}
+.music-card-genre{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.05em;color:var(--text-muted);margin-top:2px;}
+.music-card-dur{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:0.04em;flex-shrink:0;}
+.music-card-btn{padding:7px 10px;border-radius:6px;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.12em;font-weight:600;border:none;cursor:pointer;transition:var(--tr);text-align:center;}
+.music-card-btn.play{background:linear-gradient(135deg,rgba(124,184,232,0.2),rgba(124,184,232,0.08));color:var(--rest-c);border:1px solid rgba(124,184,232,0.3);}
+.music-card-btn.play:hover{background:rgba(124,184,232,0.3);}
+.music-card-btn.playing{background:rgba(201,169,89,0.15);color:var(--gold-soft);border:1px solid rgba(201,169,89,0.35);cursor:default;}
+.music-card-btn.buy{background:linear-gradient(135deg,rgba(201,169,89,0.22),rgba(201,169,89,0.1));color:var(--gold-soft);border:1px solid rgba(201,169,89,0.35);}
+.music-card-btn.buy:hover{background:rgba(201,169,89,0.32);}
+.music-card-btn.poor{background:rgba(232,124,124,0.06);color:var(--danger);border:1px solid rgba(232,124,124,0.22);cursor:help;}
+.music-card-btn.free-tag{background:rgba(124,184,232,0.06);color:var(--text-muted);border:1px solid var(--border);font-size:8.5px;cursor:default;}
+
+/* 미리듣기 — 잠긴 카드 전용 */
+.music-card.previewing{border-color:rgba(168,124,232,0.55);box-shadow:0 0 18px rgba(168,124,232,0.28);}
+.music-card.previewing .music-card-art{filter:none;animation:previewPulse 1.6s ease infinite;}
+@keyframes previewPulse{0%,100%{filter:brightness(1);}50%{filter:brightness(1.25);}}
+.music-card-preview-mark{position:absolute;top:8px;right:8px;padding:3px 9px;background:rgba(168,124,232,0.92);color:#fff;font-family:'DM Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:0.12em;border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,0.4);}
+.music-card-btn.preview{background:rgba(168,124,232,0.1);color:#a87ce8;border:1px solid rgba(168,124,232,0.3);}
+.music-card-btn.preview:hover{background:rgba(168,124,232,0.2);}
+.music-card-btn.preview-stop{background:rgba(168,124,232,0.22);color:#c2a3ec;border:1px solid rgba(168,124,232,0.5);animation:previewStopPulse 1.2s ease infinite;}
+@keyframes previewStopPulse{0%,100%{box-shadow:0 0 0 rgba(168,124,232,0.4);}50%{box-shadow:0 0 10px rgba(168,124,232,0.6);}}
+
+/* 메인 플레이어 미리듣기 모드 */
+.music-player.preview-mode{box-shadow:0 0 24px rgba(168,124,232,0.25);border:1px solid rgba(168,124,232,0.4);}
+.music-player.preview-mode .pl-art-glyph{color:#a87ce8;animation:previewPulse 1.6s ease infinite;}
+.music-player.preview-mode .pl-title{color:#c2a3ec;}
+.music-player.preview-mode .pl-fill{background:linear-gradient(90deg,#a87ce8,#c2a3ec);}
+
+.music-section{margin-bottom:18px;}
+.music-section:last-child{margin-bottom:0;}
+.music-section-label{font-family:'Cinzel',serif;font-size:13px;font-weight:600;letter-spacing:0.08em;color:var(--gold-soft);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.music-section-count{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.06em;padding:2px 8px;border-radius:8px;background:rgba(201,169,89,0.08);color:var(--gold-soft);font-weight:500;border:1px solid rgba(201,169,89,0.18);}
+
+/* === 햄버거 메뉴 (재생 목록 팝오버) — 장르 탭 === */
+.tl-genre-tabs{display:flex;gap:3px;margin-bottom:10px;padding:3px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;}
+.tl-genre-tab{flex:1;padding:5px 6px;background:transparent;border:none;border-radius:5px;color:var(--text-muted);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.06em;font-weight:500;cursor:pointer;transition:var(--tr);white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:4px;}
+.tl-genre-tab:hover{color:var(--text-secondary);}
+.tl-genre-tab.active{background:rgba(201,169,89,0.14);color:var(--gold-soft);}
+.tl-genre-tab-count{font-size:8px;padding:0 5px;border-radius:6px;background:rgba(255,255,255,0.05);color:inherit;opacity:0.7;}
+.unlock-modal .gm-tabs{margin-bottom:16px;}
+.unlock-modal .gm-tab-content{max-height:65vh;overflow-y:auto;padding:4px 6px 4px 4px;}
+.unlock-modal .gm-tab-content::-webkit-scrollbar{width:5px;}
+.unlock-modal .gm-tab-content::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+.unlock-section{margin-bottom:22px;}
+.unlock-section:last-child{margin-bottom:0;}
+.unlock-section-label{font-family:'Cinzel',serif;font-size:14px;font-weight:600;letter-spacing:0.1em;color:var(--gold-soft);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+
+/* === Guild Level Card === */
+.unlock-level-card{background:linear-gradient(135deg,rgba(201,169,89,0.06),rgba(201,169,89,0.02));border:1px solid rgba(201,169,89,0.25);border-radius:14px;padding:18px 20px;margin-bottom:8px;}
+.unlock-level-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:14px;}
+.unlock-level-card-title{font-family:'Cinzel',serif;font-size:18px;font-weight:600;color:var(--gold-soft);letter-spacing:0.04em;margin-bottom:2px;}
+.unlock-level-card-sub{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);}
+.unlock-lvlup-btn{padding:9px 18px;border-radius:8px;border:none;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:var(--tr);white-space:nowrap;}
+.unlock-lvlup-btn.ready{background:linear-gradient(135deg,var(--gold),var(--gold-soft));color:#1a1000;box-shadow:0 4px 16px rgba(201,169,89,0.35);}
+.unlock-lvlup-btn.ready:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(201,169,89,0.45);}
+.unlock-lvlup-btn.disabled{background:var(--surface3);color:var(--text-muted);border:1px solid var(--border);cursor:help;}
+.unlock-lvlup-btn.maxed{background:rgba(232,160,92,0.1);color:#e8a05c;border:1px solid rgba(232,160,92,0.3);cursor:default;}
+
+.unlock-level-progress{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.unlock-level-progress-row{display:grid;grid-template-columns:46px 1fr 130px;align-items:center;gap:10px;}
+.unlock-level-progress-label{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.18em;font-weight:600;color:var(--text-muted);}
+.unlock-level-progress-label.ready{color:var(--gold-soft);}
+.unlock-level-bar{height:7px;background:rgba(255,255,255,0.04);border-radius:4px;overflow:hidden;border:1px solid var(--border);}
+.unlock-level-bar-fill{height:100%;border-radius:3px;transition:width 0.6s ease;}
+.unlock-level-bar-fill.xp{background:linear-gradient(90deg,#7cb8e8,#a87ce8);box-shadow:0 0 6px rgba(124,184,232,0.3);}
+.unlock-level-bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-soft));box-shadow:0 0 6px rgba(201,169,89,0.25);}
+.unlock-level-progress-val{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--text-secondary);text-align:right;}
+
+.unlock-level-rarity{padding-top:14px;border-top:1px solid rgba(201,169,89,0.12);}
+.unlock-level-rarity-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+.unlock-level-rarity-bars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
+.rar-bar{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 4px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.02);}
+.rar-bar span{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;}
+.rar-bar b{font-family:'Cinzel',serif;font-size:14px;font-weight:600;}
+.rar-bar.normal b{color:var(--text-secondary);}
+.rar-bar.rare{border-color:rgba(124,184,232,0.25);} .rar-bar.rare b{color:#7cb8e8;}
+.rar-bar.epic{border-color:rgba(168,124,232,0.25);} .rar-bar.epic b{color:#a87ce8;}
+.rar-bar.legendary{border-color:rgba(232,160,92,0.3);} .rar-bar.legendary b{color:#e8a05c;}
+.unlock-level-rarity-next{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:0.06em;display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
+.rar-pill{padding:1px 7px;border-radius:8px;font-size:8.5px;font-weight:600;}
+.rar-pill.normal{background:rgba(200,200,210,0.1);color:var(--text-secondary);border:1px solid var(--border);}
+.rar-pill.rare{background:rgba(124,184,232,0.12);color:#7cb8e8;border:1px solid rgba(124,184,232,0.25);}
+.rar-pill.epic{background:rgba(168,124,232,0.12);color:#a87ce8;border:1px solid rgba(168,124,232,0.25);}
+.rar-pill.legendary{background:rgba(232,160,92,0.12);color:#e8a05c;border:1px solid rgba(232,160,92,0.3);}
+
+/* === Functional Unlock Cards (one button per category) === */
+.unlock-cat-card{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;transition:var(--tr);}
+.unlock-cat-card:last-child{margin-bottom:0;}
+.unlock-cat-card.maxed{background:rgba(124,232,168,0.04);border-color:rgba(124,232,168,0.2);}
+.unlock-cat-card-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.unlock-cat-icon{font-size:20px;flex-shrink:0;}
+.unlock-cat-card-titles{flex:1;min-width:0;}
+.unlock-cat-title{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--text-primary);letter-spacing:0.05em;margin-bottom:2px;}
+.unlock-cat-desc{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.05em;color:var(--text-muted);}
+.unlock-cat-card-body{display:flex;align-items:center;justify-content:space-between;gap:14px;padding-top:10px;border-top:1px solid rgba(201,169,89,0.08);}
+
+/* 효과 표시 라인 — 현재 → 다음 */
+.u-cat-effect-line{display:flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.06em;}
+.u-cat-effect-current{color:var(--text-secondary);font-weight:500;}
+.u-cat-arrow{color:var(--text-muted);font-size:10px;}
+.u-cat-effect-next{color:var(--gold-soft);font-weight:600;}
+.u-cat-effect-max{padding:2px 8px;border-radius:4px;background:rgba(124,232,168,0.12);color:var(--success);font-weight:600;font-size:9.5px;letter-spacing:0.1em;border:1px solid rgba(124,232,168,0.25);}
+
+/* 진척도 도트 */
+.u-cat-progress{display:flex;align-items:center;gap:8px;}
+.u-cat-dots{display:flex;gap:4px;}
+.u-cat-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--border);transition:var(--tr);}
+.u-cat-dot.filled{background:var(--gold-soft);border-color:var(--gold-soft);box-shadow:0 0 6px rgba(201,169,89,0.35);}
+.unlock-cat-card.maxed .u-cat-dot.filled{background:var(--success);border-color:var(--success);box-shadow:0 0 6px rgba(124,232,168,0.4);}
+.u-cat-progress-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:0.06em;}
+.u-item-btn{padding:6px 12px;border-radius:6px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;font-weight:600;border:none;white-space:nowrap;cursor:pointer;transition:var(--tr);}
+.u-item-btn.buy{background:linear-gradient(135deg,rgba(201,169,89,0.22),rgba(201,169,89,0.1));color:var(--gold-soft);border:1px solid rgba(201,169,89,0.35);}
+.u-item-btn.buy:hover{background:rgba(201,169,89,0.32);transform:translateY(-1px);}
+.u-item-btn.bought{background:rgba(124,232,168,0.1);color:var(--success);border:1px solid rgba(124,232,168,0.22);cursor:default;}
+.u-item-btn.locked{background:var(--surface3);color:var(--text-muted);border:1px solid var(--border);cursor:help;}
+.u-item-btn.poor{background:rgba(232,124,124,0.06);color:var(--danger);border:1px solid rgba(232,124,124,0.22);cursor:help;}
+
+/* === Content Tab (Tracks + Backgrounds) === */
+.unlock-content-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;}
+.content-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;transition:var(--tr);display:flex;flex-direction:column;gap:6px;}
+.content-card.owned{border-color:rgba(124,232,168,0.25);background:rgba(124,232,168,0.04);}
+.content-card.free{border-color:rgba(124,184,232,0.18);}
+.content-card-icon{font-size:24px;}
+.content-card-name{font-family:'Cinzel',serif;font-size:11.5px;font-weight:600;color:var(--text-primary);letter-spacing:0.04em;}
+.content-card-meta{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.05em;color:var(--text-muted);margin-bottom:4px;}
+.content-card-bg-preview{height:64px;border-radius:8px;background:linear-gradient(135deg,rgba(201,169,89,0.08),rgba(168,124,232,0.06));border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;}
+.content-card-bg-num{font-family:'Cinzel',serif;font-size:18px;color:var(--text-muted);opacity:0.5;font-weight:700;}
+.content-card.owned .content-card-bg-preview{background:linear-gradient(135deg,rgba(124,232,168,0.1),rgba(124,184,232,0.08));border:1px solid rgba(124,232,168,0.3);border-style:solid;}
+.content-card.owned .content-card-bg-num{color:var(--success);opacity:0.8;}
+.content-card-btn{padding:6px 10px;border-radius:6px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.12em;font-weight:600;border:none;cursor:pointer;transition:var(--tr);}
+.content-card-btn.buy{background:linear-gradient(135deg,rgba(201,169,89,0.22),rgba(201,169,89,0.1));color:var(--gold-soft);border:1px solid rgba(201,169,89,0.35);}
+.content-card-btn.buy:hover{background:rgba(201,169,89,0.32);}
+.content-card-btn.bought{background:rgba(124,232,168,0.1);color:var(--success);border:1px solid rgba(124,232,168,0.22);cursor:default;}
+.content-card-btn.poor{background:rgba(232,124,124,0.06);color:var(--danger);border:1px solid rgba(232,124,124,0.22);cursor:help;}
+.content-card-btn.free-tag{background:rgba(124,184,232,0.08);color:var(--rest-c);border:1px solid rgba(124,184,232,0.2);cursor:default;}
+
+/* 콘텐츠 서브탭 — 메인 탭보다 작고 가는 알약 스타일 */
+.unlock-subtabs{display:flex;gap:6px;margin-bottom:14px;padding:3px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;}
+.unlock-subtab{flex:1;padding:7px 14px;background:transparent;border:none;border-radius:7px;color:var(--text-muted);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.12em;font-weight:500;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:8px;}
+.unlock-subtab:hover{color:var(--text-secondary);}
+.unlock-subtab.active{background:rgba(201,169,89,0.12);color:var(--gold-soft);border:1px solid rgba(201,169,89,0.25);}
+.unlock-subtab-count{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.06em;padding:1px 7px;border-radius:8px;background:rgba(255,255,255,0.06);color:var(--text-muted);font-weight:500;}
+.unlock-subtab.active .unlock-subtab-count{background:rgba(201,169,89,0.18);color:var(--gold-soft);}
 
 .hire-result-msg{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.1em;text-align:center;color:var(--gold-soft);margin-bottom:12px;opacity:0;transform:translateY(-8px);transition:opacity 0.4s ease,transform 0.4s ease;}
 .hire-result-msg.show{opacity:1;transform:translateY(0);}
@@ -1049,6 +1362,22 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 @keyframes knockRing{0%{width:0;height:0;opacity:0.7;}100%{width:60px;height:60px;opacity:0;}}
 @keyframes cardWalkIn{0%{opacity:0;transform:translateY(50px) scale(0.85);}100%{opacity:1;transform:translateY(0) scale(1);}}
 
+/* === 길드원 모집 확률 표시 (idle 화면 게시판 상단) === */
+/* idle 모드: 확률표 + 게시판을 세로로 쌓음 (부모 .hire-cards의 가로 flex 무시) */
+.hire-idle-stack{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;}
+.hire-rarity-rates{margin:0 auto 14px;max-width:420px;width:100%;padding:11px 14px;background:linear-gradient(135deg,rgba(201,169,89,0.06),rgba(201,169,89,0.02));border:1px solid rgba(201,169,89,0.22);border-radius:11px;box-sizing:border-box;}
+.hire-rarity-rates-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+.hire-rarity-rates-title{font-family:'Cinzel',serif;font-size:11px;font-weight:600;letter-spacing:0.1em;color:var(--gold-soft);text-transform:uppercase;}
+.hire-rarity-rates-lvl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.14em;font-weight:600;padding:2px 8px;border-radius:5px;background:rgba(201,169,89,0.12);color:var(--gold-soft);border:1px solid rgba(201,169,89,0.25);}
+.hire-rarity-rates-bars{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.hire-rar-bar{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 4px;border-radius:7px;border:1px solid var(--border);background:rgba(255,255,255,0.02);}
+.hire-rar-bar span{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2px;}
+.hire-rar-bar b{font-family:'Cinzel',serif;font-size:13px;font-weight:600;line-height:1;}
+.hire-rar-bar.normal b{color:var(--text-secondary);}
+.hire-rar-bar.rare{border-color:rgba(124,184,232,0.25);} .hire-rar-bar.rare b{color:#7cb8e8;}
+.hire-rar-bar.epic{border-color:rgba(168,124,232,0.25);} .hire-rar-bar.epic b{color:#a87ce8;}
+.hire-rar-bar.legendary{border-color:rgba(232,160,92,0.3);} .hire-rar-bar.legendary b{color:#e8a05c;}
+
 /* === Combo scenario: Bulletin Idle + Body Slam + Burst === */
 .hire-bulletin{position:relative;width:420px;height:280px;margin:0 auto;
   background:radial-gradient(circle at 20% 30%,rgba(80,50,30,0.4),transparent 50%),radial-gradient(circle at 80% 70%,rgba(60,40,20,0.4),transparent 50%),linear-gradient(135deg,#8a6a4a 0%,#6a4a2a 100%);
@@ -1103,10 +1432,102 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
 /* Stage shake variants for hire */
 @keyframes hireShake{0%,100%{transform:translate(0,0);}20%{transform:translate(-3px,2px);}40%{transform:translate(3px,-2px);}60%{transform:translate(-2px,-3px);}80%{transform:translate(2px,3px);}}
 @keyframes hireShakeHard{0%,100%{transform:translate(0,0);}10%{transform:translate(-6px,3px);}20%{transform:translate(6px,-3px);}30%{transform:translate(-5px,-5px);}40%{transform:translate(5px,5px);}50%{transform:translate(-3px,3px);}60%{transform:translate(3px,-3px);}70%{transform:translate(-2px,-2px);}80%{transform:translate(2px,2px);}}
+@keyframes hireShakeMega{0%,100%{transform:translate(0,0);}5%{transform:translate(-10px,5px) rotate(-0.5deg);}12%{transform:translate(10px,-5px) rotate(0.5deg);}20%{transform:translate(-9px,-7px) rotate(-0.4deg);}28%{transform:translate(9px,7px) rotate(0.4deg);}38%{transform:translate(-7px,5px);}48%{transform:translate(7px,-5px);}58%{transform:translate(-5px,-4px);}68%{transform:translate(5px,4px);}78%{transform:translate(-3px,3px);}88%{transform:translate(3px,-3px);}}
+/* 2단계 배반 — 더 큰 플래시 */
+.hire-betrayal-flash.mega{inset:-80px;animation:betrayalFlashMega 0.8s ease-out forwards;}
+@keyframes betrayalFlashMega{0%{opacity:0;transform:scale(0.3);}15%{opacity:1;transform:scale(1.3);}40%{opacity:0.8;transform:scale(1.5);}100%{opacity:0;transform:scale(1.8);}}
+.hire-burst-glow.burst.mega{transform:scale(1.5);}
+/* 2단계 배반 - 풀스크린 화이트 플래시 */
+.hire-betrayal-whiteflash{position:absolute;inset:-100px;background:radial-gradient(circle,rgba(255,255,255,0.9),rgba(255,255,255,0.4) 40%,transparent 70%);z-index:11;pointer-events:none;opacity:0;animation:betrayalWhiteFlash 0.6s ease-out forwards;}
+@keyframes betrayalWhiteFlash{0%{opacity:0;}30%{opacity:1;}100%{opacity:0;}}
 
 /* Select celebration */
 .hire-card-wrap.selected .hire-card{transform:scale(1.08);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 0 20px rgba(201,169,89,0.5),0 0 40px rgba(201,169,89,0.2);border-color:var(--gold)!important;}
 .hire-card-wrap.dismissed{opacity:0;transform:translateY(20px);transition:opacity 0.4s ease,transform 0.4s ease;pointer-events:none;}
+
+/* === v14-style 카드 클릭 선택 (preselect / dimmed) === */
+.hire-card-wrap.clickable{cursor:pointer;}
+.hire-card-wrap.clickable .hire-card{transition:transform 0.3s cubic-bezier(0.4,0,0.2,1),box-shadow 0.3s ease, border-color 0.3s ease;}
+.hire-card-wrap.preselected .hire-card{transform:scale(1.06) translateY(-4px);}
+.hire-card-wrap.preselected.rarity-normal .hire-card-back{box-shadow:0 12px 36px rgba(0,0,0,0.6),0 0 26px rgba(240,237,232,0.4);border-color:var(--text-secondary)!important;}
+.hire-card-wrap.preselected.rarity-rare .hire-card-back{box-shadow:0 12px 36px rgba(0,0,0,0.6),0 0 30px rgba(124,184,232,0.7);border-color:var(--rest-c)!important;}
+.hire-card-wrap.preselected.rarity-epic .hire-card-back{box-shadow:0 12px 36px rgba(0,0,0,0.6),0 0 30px rgba(168,124,232,0.7);border-color:var(--lrest-c)!important;}
+.hire-card-wrap.preselected.rarity-legendary .hire-card-back{box-shadow:0 12px 36px rgba(0,0,0,0.6),0 0 34px rgba(232,160,92,0.8);border-color:var(--legendary,#e8a05c)!important;}
+.hire-card-wrap.preselected{position:relative;}
+.hire-card-wrap.preselected::before{content:'SELECTED';position:absolute;top:-12px;left:50%;transform:translateX(-50%);padding:3px 12px;border-radius:11px;background:var(--gold-soft);color:#1a0a02;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;letter-spacing:0.2em;z-index:5;white-space:nowrap;}
+.hire-card-wrap.dimmed{opacity:0.45;transform:scale(0.94);transition:opacity 0.3s ease,transform 0.3s ease;}
+
+/* === 보유 중 배지 (이미 영입한 이름의 후보 카드 상단) === */
+.hire-card-owned-badge{position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  padding:3px 10px;background:rgba(124,184,232,0.92);color:#06121c;
+  font-family:'DM Mono',monospace;font-size:8.5px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+  border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,0.55),0 0 10px rgba(124,184,232,0.4);
+  z-index:5;pointer-events:none;white-space:nowrap;
+  opacity:0;transition:opacity 0.4s ease 0.5s;}
+.hire-card.flipped .hire-card-owned-badge{opacity:1;}
+
+/* === 정보 모달 — 포함 시너지 섹션 === */
+.hire-info-synergies{display:flex;flex-direction:column;gap:6px;}
+.hire-info-synergy{background:rgba(168,124,232,0.08);border:1px solid rgba(168,124,232,0.22);border-radius:6px;padding:8px 12px;}
+.hire-info-synergy-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:3px;}
+.hire-info-synergy-name{font-family:'Cinzel',serif;font-size:11.5px;font-weight:600;color:var(--lrest-c);}
+.hire-info-synergy-bonus{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--gold-soft);}
+.hire-info-synergy-desc{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.04em;color:var(--text-muted);line-height:1.5;}
+.hire-info-synergies-empty{padding:14px;text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:0.08em;border:1px dashed var(--border);border-radius:6px;}
+
+/* === 길드원 상세 — 종족/직업 태그 (v14 캐릭터 컨셉) === */
+.gm-detail-tags{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0;}
+.gm-detail-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text-secondary);}
+
+/* === 길드원 상세 — 포함 시너지 섹션 (gm-detail 컨텍스트) === */
+.gm-detail-synergies{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+.gm-detail-synergy{background:rgba(168,124,232,0.08);border:1px solid rgba(168,124,232,0.22);border-radius:6px;padding:8px 12px;}
+.gm-detail-synergy-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:3px;}
+.gm-detail-synergy-name{font-family:'Cinzel',serif;font-size:11.5px;font-weight:600;color:var(--lrest-c);}
+.gm-detail-synergy-bonus{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--gold-soft);}
+.gm-detail-synergy-desc{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.04em;color:var(--text-muted);line-height:1.5;}
+.gm-detail-synergies-empty{padding:12px;text-align:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--text-muted);letter-spacing:0.08em;border:1px dashed var(--border);border-radius:6px;}
+
+/* === v14-style 액션 바 (패스 / 정보 확인 / 선택) === */
+.hire-action-bar{display:flex;gap:10px;justify-content:center;margin-top:8px;}
+.hire-action-bar .act-btn{padding:9px 20px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text-primary);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:var(--tr);backdrop-filter:blur(8px);}
+.hire-action-bar .act-btn:hover{border-color:rgba(201,169,89,0.4);background:rgba(201,169,89,0.1);color:var(--gold-soft);}
+.hire-action-bar .act-btn.pass{border-color:rgba(120,120,130,0.3);color:var(--text-muted);}
+.hire-action-bar .act-btn.pass:hover{border-color:var(--text-secondary);color:var(--text-secondary);background:rgba(255,255,255,0.04);}
+.hire-action-bar .act-btn.info{border-color:rgba(124,184,232,0.3);color:var(--rest-c);}
+.hire-action-bar .act-btn.info:hover{border-color:var(--rest-c);background:rgba(124,184,232,0.1);}
+.hire-action-bar .act-btn.select{background:linear-gradient(180deg,rgba(201,169,89,0.3),rgba(201,169,89,0.1));border-color:rgba(201,169,89,0.4);color:var(--gold-soft);}
+.hire-action-bar .act-btn.select:hover{background:linear-gradient(180deg,rgba(201,169,89,0.5),rgba(201,169,89,0.2));box-shadow:0 6px 18px rgba(201,169,89,0.25);}
+.hire-action-bar .act-btn:disabled{opacity:0.3;cursor:not-allowed;pointer-events:none;}
+
+/* === 후보 정보 확인 모달 === */
+#hireInfoModalWrap{z-index:230;}
+.hire-modal.hire-info-modal{max-width:560px;padding:0;display:flex;flex-direction:column;max-height:88vh;overflow:hidden;}
+.hire-info-modal .hire-info-header{display:flex;align-items:flex-start;gap:18px;padding:24px 26px 18px;border-bottom:1px solid rgba(201,169,89,0.12);}
+.hire-info-portrait{width:88px;flex-shrink:0;border-radius:12px;overflow:hidden;border:2px solid var(--glass-b);}
+.hire-info-portrait img{width:100%;aspect-ratio:1160/1760;object-fit:cover;object-position:center top;display:block;}
+.hire-info-portrait.rarity-rare{border-color:rgba(124,184,232,0.5);box-shadow:0 0 16px rgba(124,184,232,0.25);}
+.hire-info-portrait.rarity-epic{border-color:rgba(168,124,232,0.55);box-shadow:0 0 18px rgba(168,124,232,0.3);}
+.hire-info-portrait.rarity-legendary{border-color:rgba(232,160,92,0.6);box-shadow:0 0 22px rgba(232,160,92,0.35);}
+.hire-info-titles{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;}
+.hire-info-name{font-family:'Cinzel',serif;font-size:22px;font-weight:600;letter-spacing:0.06em;color:var(--text-primary);}
+.hire-info-rarity{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;font-weight:600;}
+.hire-info-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px;}
+.hire-info-tag{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;padding:3px 9px;border-radius:6px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--text-secondary);}
+.hire-info-close{width:30px;height:30px;flex-shrink:0;background:transparent;border:1px solid var(--border);color:var(--text-muted);border-radius:8px;font-family:'DM Mono',monospace;font-size:14px;cursor:pointer;transition:var(--tr);}
+.hire-info-close:hover{color:var(--text-primary);border-color:var(--text-secondary);}
+.hire-info-body{flex:1;overflow-y:auto;padding:18px 26px 22px;display:flex;flex-direction:column;gap:16px;}
+.hire-info-body::-webkit-scrollbar{width:5px;}
+.hire-info-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+.hire-info-section-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+.hire-info-stats{display:flex;flex-direction:column;gap:6px;}
+.hire-info-stat{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;background:rgba(255,255,255,0.03);border-left:2px solid var(--gold);border-radius:4px;font-family:'DM Mono',monospace;font-size:11px;}
+.hire-info-stat-label{color:var(--text-secondary);}
+.hire-info-stat-val{color:var(--gold-soft);font-weight:500;}
+.hire-info-story{padding:14px 16px;background:rgba(255,255,255,0.02);border-left:3px solid var(--lrest-c);border-radius:6px;font-size:12.5px;line-height:1.7;color:var(--text-secondary);font-style:italic;}
+.hire-info-story.locked{color:var(--text-muted);font-style:normal;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.05em;display:flex;align-items:center;gap:6px;}
+.hire-info-story.locked::before{content:'🔒';font-size:12px;}
+.hire-info-footer{display:flex;gap:10px;justify-content:flex-end;padding:14px 26px 22px;border-top:1px solid rgba(201,169,89,0.1);}
 
 /* Rarity colors */
 .rarity-normal .hire-card-rarity{color:var(--text-secondary);}
@@ -1278,12 +1699,15 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
           <svg class="pl-ornament" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.09 3.26L16.5 5l-2.73 2.09L15.09 10 12 8.18 8.91 10l1.32-2.91L7.5 5l3.41.26L12 2z"/></svg>
           <span class="pl-label">Bard's Refrain</span>
         </div>
-        <button class="pl-list-btn" onclick="toggleTrackList()">
+        <button class="pl-list-btn" onclick="openMusicLibrary()" title="음악 라이브러리">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </button>
+        <button class="pl-list-btn" onclick="toggleTrackList()" title="재생 목록">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         </button>
       </div>
       <div class="player-tracks" id="playerTracks">
-        <div class="tl-hdr-label">Playlist · 6 Tracks</div>
+        <div class="tl-genre-tabs" id="tlGenreTabs"></div>
         <div id="trackListBody"></div>
       </div>
       <div class="pl-track-row">
@@ -1330,7 +1754,7 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
         <span class="cmd-btn-label">해금</span>
       </button>
-      <button class="cmd-btn glass">
+      <button class="cmd-btn cmd-active glass" onclick="openSettingsModal()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         <span class="cmd-btn-label">환경<br>설정</span>
       </button>
@@ -1407,22 +1831,108 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
     </div>
   </div>
 
-  <!-- MANAGE MODAL (길드원 관리 + 편성) -->
+  <!-- MANAGE MODAL (길드원 관리 + 편성) — 2단 레이아웃 -->
   <div class="hire-modal-wrap" id="manageModalWrap">
-    <div class="hire-modal">
+    <div class="hire-modal manage-modal">
       <div class="hire-title">길드원 관리</div>
-      <div class="gm-tabs">
-        <button class="gm-tab active" onclick="switchGmTab('members')">길드원</button>
-        <button class="gm-tab" onclick="switchGmTab('formation')">편성</button>
+      
+      <!-- 2단 레이아웃: 좌측 보유 길드원 / 우측 편성 -->
+      <div class="manage-screen">
+        <!-- 좌측: 보유 길드원 그리드 (필터 + 카드) -->
+        <div class="manage-col manage-col-left" id="manageColLeft">
+          <div class="manage-col-header">
+            <div class="manage-col-title">보유 길드원</div>
+            <div class="manage-col-meta" id="manageMembersCount">0명</div>
+          </div>
+          <div id="gmMembersList"></div>
+        </div>
+        
+        <!-- 우측: 편성 (프리셋 탭 + 슬롯 + 능력 + 시너지) -->
+        <div class="manage-col manage-col-right">
+          <div class="manage-col-header">
+            <div class="manage-col-title">편성</div>
+            <div class="manage-col-meta">PRESET</div>
+          </div>
+          <div id="gmFormation"></div>
+        </div>
       </div>
-      <div class="gm-tab-content active" id="gmTabMembers">
-        <div id="gmMembersList"></div>
-      </div>
-      <div class="gm-tab-content" id="gmTabFormation">
-        <div id="gmFormation"></div>
-      </div>
-      <div class="gm-modal-footer">
+      
+      <div class="gm-modal-footer gm-modal-footer-with-dev">
+        <div class="gm-dev-tools">
+          <span class="gm-dev-label">DEV</span>
+          <button class="gm-dev-btn" onclick="seedTestCharacters()" title="POOL의 모든 캐릭터를 한 명씩 보유 상태로 추가">+ 캐릭터 12명 채우기</button>
+          <button class="gm-dev-btn danger" onclick="clearAllMembers()" title="모든 길드원과 편성을 삭제">↺ 전체 초기화</button>
+        </div>
         <button class="btn btn-secondary" onclick="closeManageModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- PICKER MODAL (슬롯 클릭 시 길드원 선택) -->
+  <div class="hire-modal-wrap" id="pickerModalWrap">
+    <div class="hire-modal picker-modal-panel">
+      <div class="picker-header">
+        <div class="hire-title" id="pickerTitle">길드원 선택</div>
+        <button class="picker-close-btn" onclick="closePicker()">✕</button>
+      </div>
+      <!-- 현재 슬롯 표시 + 비우기 -->
+      <div class="picker-current" id="pickerCurrent" style="display:none">
+        <div class="picker-current-info">
+          <img class="picker-current-img" id="pickerCurrentImg" src="character/Test_Card/1 (1).png">
+          <div>
+            <div class="picker-current-label">현재 편성</div>
+            <div class="picker-current-name" id="pickerCurrentName"></div>
+          </div>
+        </div>
+        <button class="picker-clear-btn" onclick="clearCurrentSlot()">슬롯 비우기</button>
+      </div>
+      <div id="pickerSections"></div>
+    </div>
+  </div>
+  
+  <!-- CONFIRM POPUP -->
+  <div class="hire-modal-wrap" id="confirmModalWrap">
+    <div class="hire-modal confirm-panel">
+      <div class="confirm-title" id="confirmTitle">확인</div>
+      <div class="confirm-msg" id="confirmMsg"></div>
+      <div class="confirm-actions">
+        <button class="btn btn-secondary" onclick="closeConfirm()">취소</button>
+        <button class="btn btn-primary" onclick="execConfirm()">확인</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- HIRE CANDIDATE INFO MODAL (모집 중 후보 정보 확인) -->
+  <div class="hire-modal-wrap" id="hireInfoModalWrap">
+    <div class="hire-modal hire-info-modal">
+      <div class="hire-info-header">
+        <div class="hire-info-portrait" id="hireInfoPortrait">
+          <img id="hireInfoPortraitImg" src="character/Test_Card/1 (1).png" alt="">
+        </div>
+        <div class="hire-info-titles">
+          <div class="hire-info-name" id="hireInfoName">캐릭터 이름</div>
+          <div class="hire-info-rarity" id="hireInfoRarity">★</div>
+          <div class="hire-info-tags" id="hireInfoTags"></div>
+        </div>
+        <button class="hire-info-close" onclick="closeHireCandidateInfo()">✕</button>
+      </div>
+      <div class="hire-info-body">
+        <div>
+          <div class="hire-info-section-label">⚡ 능력치 (Abilities)</div>
+          <div class="hire-info-stats" id="hireInfoStats"></div>
+        </div>
+        <div>
+          <div class="hire-info-section-label">🤝 포함 시너지 (Synergies)</div>
+          <div id="hireInfoSynergiesContainer"></div>
+        </div>
+        <div>
+          <div class="hire-info-section-label">📜 스토리 (Story)</div>
+          <div id="hireInfoStoryContainer"></div>
+        </div>
+      </div>
+      <div class="hire-info-footer">
+        <button class="btn btn-secondary" onclick="closeHireCandidateInfo()">닫기</button>
+        <button class="btn btn-primary" onclick="confirmHireFromInfo()">이 길드원 선택</button>
       </div>
     </div>
   </div>
@@ -1431,19 +1941,41 @@ body{font-family:'Noto Sans KR',sans-serif;color:var(--text-primary);user-select
   <div class="hire-modal-wrap" id="unlockModalWrap">
     <div class="hire-modal unlock-modal">
       <div class="hire-title">해금</div>
-      <div class="unlock-level-header" id="unlockLevelHeader"></div>
-      <div class="gm-tabs">
-        <button class="gm-tab active" onclick="switchUnlockTab('tree')">레벨 보상</button>
-        <button class="gm-tab" onclick="switchUnlockTab('shop')">상점</button>
-      </div>
-      <div class="gm-tab-content active" id="unlockTabTree">
-        <div id="unlockTree"></div>
-      </div>
-      <div class="gm-tab-content" id="unlockTabShop">
-        <div id="unlockStore"></div>
-      </div>
-      <div class="gm-modal-footer">
+      <div id="unlockTabFeatures"></div>
+      <div class="gm-modal-footer gm-modal-footer-with-dev">
+        <div class="gm-dev-tools">
+          <span class="gm-dev-label">DEV</span>
+          <button class="gm-dev-btn" onclick="devGainGold(50000)" title="골드 +50,000">+50K 골드</button>
+          <button class="gm-dev-btn" onclick="devGainXp(500)" title="EXP +500">+500 EXP</button>
+          <button class="gm-dev-btn" onclick="devGainXp(5000)" title="EXP +5,000">+5K EXP</button>
+        </div>
         <button class="btn btn-secondary" onclick="closeUnlockShop()">닫기</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- SETTINGS MODAL (환경 설정) -->
+  <div class="hire-modal-wrap" id="settingsModalWrap">
+    <div class="hire-modal settings-modal">
+      <div class="hire-title">환경 설정</div>
+      <div class="gm-tabs">
+        <button class="gm-tab active" onclick="switchSettingsTab('background')">배경화면</button>
+        <!-- 향후 확장: 일반 / 알림 / 단축키 등 -->
+      </div>
+      <div class="gm-tab-content active" id="settingsTabBackground"></div>
+      <div class="gm-modal-footer">
+        <button class="btn btn-secondary" onclick="closeSettingsModal()">닫기</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- MUSIC LIBRARY MODAL (음악 라이브러리) -->
+  <div class="hire-modal-wrap" id="musicLibraryModalWrap">
+    <div class="hire-modal music-library-modal">
+      <div class="hire-title">음악 라이브러리</div>
+      <div id="musicLibraryBody"></div>
+      <div class="gm-modal-footer">
+        <button class="btn btn-secondary" onclick="closeMusicLibrary()">닫기</button>
       </div>
     </div>
   </div>
@@ -1550,11 +2082,13 @@ const A={
   // Guild level & XP
   guildLevel:1, guildXp:0, guildTotalXp:0,
   unlockedIds:[],
+  // Visual settings
+  currentBgId:null, // null = 기본 배경, 'bg1' ~ 'bg8' = 해금된 배경 ID
   focusStreakCount:0,
   // Guild members
   guildMembers:[], guildMemberCap:8, squad:[],
   // Hire modal
-  hireState:'idle', hireCandidates:[], hireHistory:[],
+  hireState:'idle', hireCandidates:[], hireHistory:[], hirePreselectedIdx:null,
 };
 
 const CIRC_P=465; // 2π×74 for panel ring r=74
@@ -1902,7 +2436,7 @@ function renderPanelContent(key){
   if(key==='quests') renderQuestsPanel();
   if(key==='archive'){renderArchivePanel();}
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel();closeRecModal();closeRecruitModal();closeManageModal();closeUnlockShop();}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanel();closeRecModal();closeRecruitModal();closeManageModal();closeUnlockShop();closeSettingsModal();closeMusicLibrary();}});
 
 /* ══════════════════════════════════════════
    SESSION MINI WIDGET
@@ -3542,13 +4076,146 @@ function toggleAmbient(){ambOpen=!ambOpen;$('ambientOverlay').classList.toggle('
 ══════════════════════════════════════════ */
 const TRACKS=[{title:'The Ember Vigil',genre:'Medieval',dur:252},{title:'Rain Over Stone Keep',genre:'Lo-fi Fantasy',dur:198},{title:'Moonlit Vow',genre:'Ambient',dur:304},{title:'Torchlit Library',genre:'Lo-fi',dur:221},{title:'Whispers of the Arch',genre:'Orchestral',dur:287},{title:'Forge of Stars',genre:'Medieval',dur:243}];
 const MP={idx:0,playing:false,pos:0,tickId:null};
+// 미리듣기 상태 — 잠긴 곡 30초 시뮬레이션 재생
+const PREVIEW={
+  active:false,        // 미리듣기 활성 여부
+  trackIdx:null,       // 미리듣기 중인 트랙 인덱스
+  pos:0,               // 미리듣기 진행 시간 (초)
+  duration:30,         // 미리듣기 길이 (30초)
+  tickId:null,         // setInterval ID
+  prevPlaying:false,   // 미리듣기 시작 전 본 재생 상태 (복귀용)
+};
+// 미리듣기 시작 — idx의 곡을 30초 시뮬레이션
+function startPreview(idx){
+  // 이미 같은 곡 미리듣기 중이면 정지
+  if(PREVIEW.active&&PREVIEW.trackIdx===idx){ stopPreview(); return; }
+  // 다른 곡 미리듣기 중이면 먼저 정지하고 새로 시작
+  if(PREVIEW.active) stopPreview(true); // skip render
+  // 본 재생 상태 백업 + 일시정지
+  PREVIEW.prevPlaying=MP.playing;
+  if(MP.playing){
+    clearInterval(MP.tickId);
+    MP.playing=false;
+    const ico=$('playIcon'); if(ico) ico.innerHTML='<path d="M8 5v14l11-7z"/>';
+    const mp=$('musicPlayer'); if(mp) mp.classList.remove('playing');
+    const eq=$('eqBars'); if(eq) eq.style.display='none';
+  }
+  // 미리듣기 시작
+  PREVIEW.active=true;
+  PREVIEW.trackIdx=idx;
+  PREVIEW.pos=0;
+  // 메인 플레이어를 미리듣기 모드로 표시
+  showPreviewIndicator();
+  // 1초 틱
+  PREVIEW.tickId=setInterval(()=>{
+    PREVIEW.pos++;
+    updatePreviewIndicator();
+    if(PREVIEW.pos>=PREVIEW.duration){ stopPreview(); }
+  },1000);
+  renderMusicLibrary();
+}
+// 미리듣기 정지 — skipRender: 다른 곡 미리듣기로 전환할 때 중복 렌더 방지
+function stopPreview(skipRender){
+  if(!PREVIEW.active) return;
+  clearInterval(PREVIEW.tickId);
+  const wasIdx=PREVIEW.trackIdx;
+  PREVIEW.active=false;
+  PREVIEW.trackIdx=null;
+  PREVIEW.pos=0;
+  PREVIEW.tickId=null;
+  hidePreviewIndicator();
+  // 본 재생 상태 복귀 (미리듣기 전에 재생 중이었다면 다시 재생)
+  if(PREVIEW.prevPlaying){
+    PREVIEW.prevPlaying=false;
+    togglePlay();
+  }
+  if(!skipRender) renderMusicLibrary();
+}
+// 미리듣기 인디케이터 — 메인 플레이어에 30초 카운트다운 + 보라 글로우
+function showPreviewIndicator(){
+  const mp=$('musicPlayer');
+  if(mp){ mp.classList.add('preview-mode'); }
+  // 트랙 정보를 미리듣기 곡으로 일시 변경
+  const t=TRACKS[PREVIEW.trackIdx];
+  const title=$('trackTitle'); if(title) title.textContent='👂 '+t.title;
+  const sub=$('trackSub'); if(sub) sub.textContent=`미리듣기 · ${t.genre}`;
+  updatePreviewIndicator();
+}
+function updatePreviewIndicator(){
+  const pCur=$('pCur'); if(pCur) pCur.textContent=fmtT(PREVIEW.pos);
+  const pTot=$('pTot'); if(pTot) pTot.textContent=fmtT(PREVIEW.duration);
+  const pFill=$('pFill'); if(pFill) pFill.style.width=(PREVIEW.pos/PREVIEW.duration*100)+'%';
+}
+function hidePreviewIndicator(){
+  const mp=$('musicPlayer');
+  if(mp){ mp.classList.remove('preview-mode'); }
+  // 본 트랙 정보 복원
+  renderTrackInfo();
+}
 function fmtT(s){return`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;}
 function renderTrackInfo(){const t=TRACKS[MP.idx];$('trackTitle').textContent=t.title;$('trackSub').textContent=`${t.genre} · ${fmtT(t.dur)}`;$('pTot').textContent=fmtT(t.dur);$('pCur').textContent=fmtT(MP.pos);$('pFill').style.width=(MP.pos/t.dur*100)+'%';}
-function renderTrackList(){$('trackListBody').innerHTML=TRACKS.map((t,i)=>`<div class="tl-item${i===MP.idx?' active':''}" onclick="selectTrack(${i})"><div class="tl-icon">${i===MP.idx&&MP.playing?'<div class="eq-bars"><div class="eq-bar"></div><div class="eq-bar"></div></div>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" opacity=".6"/></svg>'}</div><div class="tl-body"><div class="tl-track-title">${t.title}</div><div class="tl-track-sub">${t.genre}</div></div><div class="tl-dur">${fmtT(t.dur)}</div></div>`).join('');}
+// 햄버거 메뉴의 활성 장르 탭 상태 ('all' = 전체, 또는 그룹 키)
+// 그룹 매핑: Lo-fi Fantasy + Lo-fi → 'lofi' 한 그룹으로 묶음 (좁은 팝오버 공간 절약)
+const TRACK_GENRE_GROUPS=[
+  { key:'all',        label:'전체',       match:()=>true },
+  { key:'medieval',   label:'Medieval',   match:t=>t.genre==='Medieval' },
+  { key:'lofi',       label:'Lo-fi',      match:t=>t.genre==='Lo-fi'||t.genre==='Lo-fi Fantasy' },
+  { key:'ambient',    label:'Ambient',    match:t=>t.genre==='Ambient' },
+  { key:'orchestral', label:'Orchestral', match:t=>t.genre==='Orchestral' },
+];
+let trackListActiveGenre='all';
+function switchTrackGenre(key){
+  trackListActiveGenre=key;
+  renderTrackList();
+}
+function renderTrackList(){
+  // 장르 탭 헤더 — 곡이 1개 이상 있는 그룹만 노출
+  const tabsEl=$('tlGenreTabs');
+  if(tabsEl){
+    const groupsWithCount=TRACK_GENRE_GROUPS.map(g=>{
+      const count=TRACKS.filter(g.match).length;
+      return {...g,count};
+    }).filter(g=>g.count>0);
+    tabsEl.innerHTML=groupsWithCount.map(g=>
+      `<button class="tl-genre-tab ${g.key===trackListActiveGenre?'active':''}" onclick="switchTrackGenre('${g.key}')">${esc(g.label)}<span class="tl-genre-tab-count">${g.count}</span></button>`
+    ).join('');
+  }
+  // 활성 그룹의 매칭 함수
+  const activeGroup=TRACK_GENRE_GROUPS.find(g=>g.key===trackListActiveGenre)||TRACK_GENRE_GROUPS[0];
+  // 트랙 본문
+  $('trackListBody').innerHTML=TRACKS.map((t,i)=>{
+    if(!activeGroup.match(t)) return '';
+    const unlocked=isTrackUnlocked(i);
+    const cls=`tl-item${i===MP.idx?' active':''}${!unlocked?' locked':''}`;
+    const onClick=unlocked?`onclick="selectTrack(${i})"`:`onclick="showToast('라이브러리에서 구매하세요')"`;
+    const iconHtml=unlocked
+      ?(i===MP.idx&&MP.playing?'<div class="eq-bars"><div class="eq-bar"></div><div class="eq-bar"></div></div>':'<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" opacity=".6"/></svg>')
+      :'<span style="opacity:0.5">🔒</span>';
+    return `<div class="${cls}" ${onClick}><div class="tl-icon">${iconHtml}</div><div class="tl-body"><div class="tl-track-title">${t.title}</div><div class="tl-track-sub">${t.genre}${unlocked?'':' · 🔒 잠김'}</div></div><div class="tl-dur">${fmtT(t.dur)}</div></div>`;
+  }).join('');
+}
 function togglePlay(){MP.playing=!MP.playing;const ico=$('playIcon'),mp=$('musicPlayer'),eq=$('eqBars');if(MP.playing){ico.innerHTML='<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>';mp.classList.add('playing');eq.style.display='flex';MP.tickId=setInterval(()=>{MP.pos++;if(MP.pos>=TRACKS[MP.idx].dur){nextTrack();return;}renderTrackInfo();},1000);}else{ico.innerHTML='<path d="M8 5v14l11-7z"/>';mp.classList.remove('playing');eq.style.display='none';clearInterval(MP.tickId);}renderTrackList();}
-function selectTrack(i){MP.idx=i;MP.pos=0;renderTrackInfo();renderTrackList();$('playerTracks').classList.remove('open');if(!MP.playing)togglePlay();}
-function prevTrack(){if(MP.pos>3){MP.pos=0;renderTrackInfo();return;}MP.idx=(MP.idx-1+TRACKS.length)%TRACKS.length;MP.pos=0;renderTrackInfo();renderTrackList();if(MP.playing){clearInterval(MP.tickId);MP.playing=false;togglePlay();}}
-function nextTrack(){MP.idx=(MP.idx+1)%TRACKS.length;MP.pos=0;renderTrackInfo();renderTrackList();if(MP.playing){clearInterval(MP.tickId);MP.playing=false;togglePlay();}}
+function selectTrack(i){
+  if(!isTrackUnlocked(i)){showToast('해금되지 않은 곡입니다');return;}
+  MP.idx=i;MP.pos=0;renderTrackInfo();renderTrackList();$('playerTracks').classList.remove('open');if(!MP.playing)togglePlay();
+}
+function findNextUnlockedTrack(start,dir){
+  let i=start;
+  for(let k=0;k<TRACKS.length;k++){
+    i=(i+dir+TRACKS.length)%TRACKS.length;
+    if(isTrackUnlocked(i)) return i;
+  }
+  return start;
+}
+function prevTrack(){
+  if(MP.pos>3){MP.pos=0;renderTrackInfo();return;}
+  MP.idx=findNextUnlockedTrack(MP.idx,-1);MP.pos=0;renderTrackInfo();renderTrackList();
+  if(MP.playing){clearInterval(MP.tickId);MP.playing=false;togglePlay();}
+}
+function nextTrack(){
+  MP.idx=findNextUnlockedTrack(MP.idx,1);MP.pos=0;renderTrackInfo();renderTrackList();
+  if(MP.playing){clearInterval(MP.tickId);MP.playing=false;togglePlay();}
+}
 function seekTrack(e){const r=e.currentTarget.getBoundingClientRect();MP.pos=Math.floor(TRACKS[MP.idx].dur*Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)));renderTrackInfo();}
 function setVolume(e){const r=e.currentTarget.getBoundingClientRect();$('volFill').style.width=(Math.max(0,Math.min(1,(e.clientX-r.left)/r.width))*100)+'%';}
 function toggleTrackList(){$('playerTracks').classList.toggle('open');}
@@ -3562,27 +4229,175 @@ document.addEventListener('click',e=>{
 /* ══════════════════════════════════════════
    GUILD LEVEL & UNLOCK SYSTEM
 ══════════════════════════════════════════ */
-const LEVEL_XP=[0,0,50,100,180,280,400,550,720,900,1100];
-const MAX_LEVEL=10;
-const GUILD_TITLES=['','견습 길드마스터','초보 길드마스터','정식 길드마스터',
-  '숙련 길드마스터','노련한 길드마스터','전략가 길드마스터','원로 길드마스터',
-  '대길드마스터','전설의 길드마스터','만고불변의 길드마스터'];
-const RARITY_BY_LEVEL={1:[25,25,25,25],2:[25,25,25,25],4:[25,25,25,25],6:[25,25,25,25],8:[25,25,25,25]};
-const UNLOCKS=[
-  {id:'cap10',level:3,type:'auto',desc:'길드원 보유 상한 +2',detail:'8명 → 10명'},
-  {id:'cap12',level:7,type:'auto',desc:'길드원 보유 상한 +2',detail:'10명 → 12명'},
-  {id:'stat_xp',level:3,type:'auto',desc:'새 능력치 해금',detail:'경험치 보너스'},
-  {id:'stat_rest',level:6,type:'auto',desc:'새 능력치 해금',detail:'휴식 효율'},
-  {id:'goldcap2500',level:4,type:'auto',desc:'퀘스트 골드 상한 +500',detail:'2,000 → 2,500'},
-  {id:'goldcap3000',level:7,type:'auto',desc:'퀘스트 골드 상한 +500',detail:'2,500 → 3,000'},
-  {id:'preset4',level:4,type:'purchase',cost:3000,desc:'스쿼드 프리셋 +1',detail:'3 → 4'},
-  {id:'preset5',level:8,type:'purchase',cost:5000,desc:'스쿼드 프리셋 +1',detail:'4 → 5'},
-  {id:'squad5',level:5,type:'purchase',cost:5000,desc:'편성 슬롯 +1',detail:'4 → 5'},
-  {id:'squad6',level:9,type:'purchase',cost:8000,desc:'편성 슬롯 +1',detail:'5 → 6'},
-  {id:'amb_thunder',level:2,type:'purchase',cost:1500,desc:'앰비언트 해금',detail:'Thunder ⚡'},
-  {id:'amb_cave',level:5,type:'purchase',cost:2000,desc:'앰비언트 해금',detail:'Cave 🦇'},
-  {id:'amb_tavern',level:8,type:'purchase',cost:3000,desc:'앰비언트 해금',detail:'Tavern 🍺'},
+/* ══════════════════════════════════════════
+   GUILD LEVEL & UNLOCK SYSTEM (v2 — 신사양)
+══════════════════════════════════════════ */
+const MAX_LEVEL=99;             // 무한 성장 (실질 만렙은 시각적으로 20)
+const MAX_DESIGN_LEVEL=20;      // 해금/효과가 멈추는 레벨 (디자인 캡)
+
+// 레벨업 필요 EXP — base × multiplier^(Lv-1) (base=100, mult=1.4)
+function levelUpXp(level){
+  if(level>=MAX_LEVEL) return Infinity;
+  return Math.floor(100*Math.pow(1.4,level-1));
+}
+// 레벨업 골드 비용 — 500 × Lv (선형)
+function levelUpGoldCost(level){
+  if(level>=MAX_LEVEL) return Infinity;
+  return 500*level;
+}
+// 길드 칭호 (디자인 레벨 기준)
+const GUILD_TITLES_V2=[
+  '','견습 길드마스터','초보 길드마스터','초보 길드마스터','정식 길드마스터',
+  '정식 길드마스터','숙련 길드마스터','숙련 길드마스터','노련한 길드마스터',
+  '노련한 길드마스터','전략가 길드마스터','전략가 길드마스터','원로 길드마스터',
+  '원로 길드마스터','대길드마스터','대길드마스터','대길드마스터',
+  '전설의 길드마스터','전설의 길드마스터','전설의 길드마스터','만고불변의 길드마스터'
 ];
+function getGuildTitle(level){
+  return GUILD_TITLES_V2[Math.min(level,MAX_DESIGN_LEVEL)]||'만고불변의 길드마스터';
+}
+
+// 레벨별 모집 확률 — 단계별 점프 (요청 사양)
+// 키: 그 레벨 이상일 때 적용되는 가중치 (가장 큰 키 우선)
+const RARITY_BY_LEVEL_V2={
+  1:  [80,20, 0, 0],
+  3:  [60,35, 5, 0],
+  5:  [45,40,13, 2],
+  8:  [30,40,25, 5],
+  12: [15,35,35,15],
+  16: [ 5,25,40,30],
+  20: [ 0,15,45,40],
+};
+function getRarityWeights(level){
+  const brackets=Object.keys(RARITY_BY_LEVEL_V2).map(Number).sort((a,b)=>b-a);
+  const bracket=brackets.find(b=>level>=b)||1;
+  return RARITY_BY_LEVEL_V2[bracket];
+}
+
+// 행동별 길드 EXP 적립
+const XP_REWARDS={
+  stopwatchPerMin:10,
+  timerComplete:20,
+  questComplete:50,
+};
+
+/* ── 기능 해금 정의 (Functional Unlocks) ──
+   각 항목: id / category / cost / desc / detail / 해금 조건 (없으면 항상 구매 가능)
+   카테고리: preset / squad / stopwatch / timer / quest */
+const UNLOCKS_V2=[
+  // 프리셋 — 최초 1개, 2/3번 슬롯 해금
+  { id:'preset2',  cat:'preset',    cost: 8000, desc:'스쿼드 프리셋 슬롯 2',     detail:'1 → 2' },
+  { id:'preset3',  cat:'preset',    cost:25000, desc:'스쿼드 프리셋 슬롯 3',     detail:'2 → 3', requires:'preset2' },
+  // 편성 슬롯 — 최초 2명, 3/4번 슬롯 해금
+  { id:'squad3',   cat:'squad',     cost:15000, desc:'편성 슬롯 3',              detail:'2 → 3' },
+  { id:'squad4',   cat:'squad',     cost:50000, desc:'편성 슬롯 4',              detail:'3 → 4', requires:'squad3' },
+  // 스톱워치 보상 — 5단계, 단계당 +20%, 비용 ×2.5 점증
+  { id:'stopwatch1', cat:'stopwatch', cost: 3000, desc:'스톱워치 보상 +20%',     detail:'+0% → +20%',   tier:1 },
+  { id:'stopwatch2', cat:'stopwatch', cost: 8000, desc:'스톱워치 보상 +40%',     detail:'+20% → +40%', tier:2, requires:'stopwatch1' },
+  { id:'stopwatch3', cat:'stopwatch', cost:18000, desc:'스톱워치 보상 +60%',     detail:'+40% → +60%', tier:3, requires:'stopwatch2' },
+  { id:'stopwatch4', cat:'stopwatch', cost:35000, desc:'스톱워치 보상 +80%',     detail:'+60% → +80%', tier:4, requires:'stopwatch3' },
+  { id:'stopwatch5', cat:'stopwatch', cost:60000, desc:'스톱워치 보상 +100%',    detail:'+80% → +100%',tier:5, requires:'stopwatch4' },
+  // 타이머 보상
+  { id:'timer1',     cat:'timer',     cost: 3000, desc:'타이머 보상 +20%',        detail:'+0% → +20%',  tier:1 },
+  { id:'timer2',     cat:'timer',     cost: 8000, desc:'타이머 보상 +40%',        detail:'+20% → +40%', tier:2, requires:'timer1' },
+  { id:'timer3',     cat:'timer',     cost:18000, desc:'타이머 보상 +60%',        detail:'+40% → +60%', tier:3, requires:'timer2' },
+  { id:'timer4',     cat:'timer',     cost:35000, desc:'타이머 보상 +80%',        detail:'+60% → +80%', tier:4, requires:'timer3' },
+  { id:'timer5',     cat:'timer',     cost:60000, desc:'타이머 보상 +100%',       detail:'+80% → +100%',tier:5, requires:'timer4' },
+  // 퀘스트 보상
+  { id:'quest1',     cat:'quest',     cost: 3000, desc:'퀘스트 보상 +20%',        detail:'+0% → +20%',  tier:1 },
+  { id:'quest2',     cat:'quest',     cost: 8000, desc:'퀘스트 보상 +40%',        detail:'+20% → +40%', tier:2, requires:'quest1' },
+  { id:'quest3',     cat:'quest',     cost:18000, desc:'퀘스트 보상 +60%',        detail:'+40% → +60%', tier:3, requires:'quest2' },
+  { id:'quest4',     cat:'quest',     cost:35000, desc:'퀘스트 보상 +80%',        detail:'+60% → +80%', tier:4, requires:'quest3' },
+  { id:'quest5',     cat:'quest',     cost:60000, desc:'퀘스트 보상 +100%',       detail:'+80% → +100%',tier:5, requires:'quest4' },
+];
+
+/* ── 콘텐츠 해금 (Content Unlocks: 곡 + 배경) ── */
+const CONTENT_UNLOCKS=[
+  // 곡 해금 — TRACKS 인덱스로 매핑 (0/1번은 기본 제공)
+  { id:'track2', cat:'track', cost: 3000, trackIdx:3, name:'Torchlit Library',     genre:'Lo-fi'      },
+  { id:'track3', cat:'track', cost: 5000, trackIdx:5, name:'Forge of Stars',       genre:'Medieval'   },
+  { id:'track4', cat:'track', cost: 8000, trackIdx:2, name:'Moonlit Vow',          genre:'Ambient'    },
+  { id:'track5', cat:'track', cost:12000, trackIdx:4, name:'Whispers of the Arch', genre:'Orchestral' },
+  // 배경화면 해금 — 8슬롯 placeholder
+  { id:'bg1', cat:'bg', cost: 2000, name:'Misty Forest',     hint:'안개 낀 숲',     gradient:'radial-gradient(ellipse 80% 60% at 50% 40%,rgba(120,150,130,0.3) 0%,transparent 60%),linear-gradient(180deg,#1a2520 0%,#0d1612 100%)' },
+  { id:'bg2', cat:'bg', cost: 3000, name:'Ancient Library',  hint:'고대 도서관',    gradient:'radial-gradient(ellipse 70% 55% at 50% 45%,rgba(160,120,80,0.25) 0%,transparent 60%),linear-gradient(180deg,#1f1610 0%,#100a06 100%)' },
+  { id:'bg3', cat:'bg', cost: 5000, name:'Stone Keep',       hint:'돌의 요새',      gradient:'radial-gradient(ellipse 75% 60% at 50% 50%,rgba(140,140,150,0.22) 0%,transparent 60%),linear-gradient(180deg,#15171c 0%,#0a0b0f 100%)' },
+  { id:'bg4', cat:'bg', cost: 7000, name:'Starry Night',     hint:'별이 빛나는 밤', gradient:'radial-gradient(ellipse 90% 70% at 50% 30%,rgba(100,120,200,0.3) 0%,transparent 65%),linear-gradient(180deg,#0a1028 0%,#040618 100%)' },
+  { id:'bg5', cat:'bg', cost:10000, name:'Mountain Pass',    hint:'산악 고개',      gradient:'radial-gradient(ellipse 80% 60% at 50% 35%,rgba(180,180,200,0.2) 0%,transparent 60%),linear-gradient(180deg,#1c1f28 0%,#0d0f15 100%)' },
+  { id:'bg6', cat:'bg', cost:14000, name:'Royal Throne Room',hint:'왕의 옥좌실',    gradient:'radial-gradient(ellipse 70% 55% at 50% 45%,rgba(201,169,89,0.3) 0%,transparent 60%),linear-gradient(180deg,#1a1208 0%,#0a0704 100%)' },
+  { id:'bg7', cat:'bg', cost:20000, name:'Dragon\'s Lair',   hint:'용의 둥지',      gradient:'radial-gradient(ellipse 85% 65% at 50% 50%,rgba(232,124,92,0.32) 0%,transparent 60%),linear-gradient(180deg,#1a0a08 0%,#0a0303 100%)' },
+  { id:'bg8', cat:'bg', cost:30000, name:'Celestial Realm',  hint:'천상의 영역',    gradient:'radial-gradient(ellipse 95% 75% at 50% 40%,rgba(168,124,232,0.3) 0%,rgba(124,184,232,0.18) 30%,transparent 70%),linear-gradient(180deg,#0d0a1f 0%,#04030a 100%)' },
+];
+
+// 해금된 ID 집합으로 현재 활성 효과 계산
+function getActivePresetCount(){
+  const ids=A.unlockedIds||[];
+  if(ids.includes('preset3')) return 3;
+  if(ids.includes('preset2')) return 2;
+  return 1;
+}
+function getActiveSquadSlots(){
+  const ids=A.unlockedIds||[];
+  if(ids.includes('squad4')) return 4;
+  if(ids.includes('squad3')) return 3;
+  return 2;
+}
+function getRewardMultiplier(category){ // 'stopwatch' | 'timer' | 'quest'
+  const ids=A.unlockedIds||[];
+  let bonus=0;
+  for(let t=5;t>=1;t--){
+    if(ids.includes(`${category}${t}`)){ bonus=t*0.2; break; }
+  }
+  return 1+bonus;
+}
+function isTrackUnlocked(idx){
+  // 0, 1번은 기본 제공
+  if(idx===0||idx===1) return true;
+  const c=CONTENT_UNLOCKS.find(u=>u.cat==='track'&&u.trackIdx===idx);
+  return !c||(A.unlockedIds||[]).includes(c.id);
+}
+
+// 카테고리의 현재 진척도 — { current, total, currentDesc, currentDetail }
+function getCategoryProgress(catKey){
+  const items=UNLOCKS_V2.filter(u=>u.cat===catKey);
+  const total=items.length;
+  // 순서대로 보유 여부 확인 (requires 체인이 순서를 보장)
+  let current=0;
+  for(const item of items){
+    if((A.unlockedIds||[]).includes(item.id)) current++;
+    else break;
+  }
+  return { current, total, items };
+}
+
+// 카테고리에서 다음에 구매할 항목 (없으면 null = 만렙)
+function getNextUnlockInCategory(catKey){
+  const { current, items } = getCategoryProgress(catKey);
+  return items[current]||null;
+}
+
+// 카테고리의 현재 효과 텍스트 (예: '+40%', '슬롯 3개', '프리셋 1개')
+function getCurrentEffectText(catKey){
+  const { current } = getCategoryProgress(catKey);
+  switch(catKey){
+    case 'preset':    return `프리셋 ${1+current}개`;
+    case 'squad':     return `슬롯 ${2+current}개`;
+    case 'stopwatch': case 'timer': case 'quest':
+      return `+${current*20}%`;
+  }
+  return '';
+}
+function getNextEffectText(catKey){
+  const { current, total } = getCategoryProgress(catKey);
+  if(current>=total) return null;
+  switch(catKey){
+    case 'preset':    return `프리셋 ${1+current+1}개`;
+    case 'squad':     return `슬롯 ${2+current+1}개`;
+    case 'stopwatch': case 'timer': case 'quest':
+      return `+${(current+1)*20}%`;
+  }
+  return '';
+}
 
 /* ══════════════════════════════════════════
    GUILD MEMBER HIRE SYSTEM
@@ -3594,21 +4409,74 @@ const RARITY_WEIGHTS=[
   {rarity:'epic',weight:25,label:'Epic',stars:'★★★',color:'#a87ce8'},
   {rarity:'legendary',weight:25,label:'Legendary',stars:'★★★★',color:'#e8a05c'},
 ];
+// STAT_POOL — v14 고정 캐릭터들이 사용하는 모든 능력치 종류 (필터/스쿼드 합산용)
 const STAT_POOL=[
-  {name:'집중 시간',unit:'%'},{name:'골드 획득',unit:'%'},
-  {name:'퀘스트 보상',unit:'%'},{name:'스톱워치 보상',unit:'%'},
+  {name:'집중 시간',unit:'%'},   {name:'골드 획득',unit:'%'},
+  {name:'퀘스트 보상',unit:'%'}, {name:'스톱워치 보상',unit:'%'},
+  {name:'명중 보너스',unit:'%'}, {name:'경험치 보너스',unit:'%'},
+  {name:'연속 보상',unit:'%'},   {name:'모든 보상',unit:'%'},
+  {name:'경험치 부스트',unit:'%'},
 ];
-const RARITY_STATS={
-  normal:{count:1,min:3,max:8},
-  rare:{count:1,min:5,max:12},
-  epic:{count:2,min:8,max:15},
-  legendary:{count:2,min:12,max:20},
+
+// === v14 고정 캐릭터 풀 — 12명, 등급별로 고정 컨셉(이름·종족·직업·스탯·스토리·관계) ===
+const POOL={
+  normal:[
+    { name:'Cael', portrait:'🏹', race:'Human', job:'Archer',
+      stats:[{name:'퀘스트 보상',value:4,unit:'%'}],
+      story:'변경 마을 출신의 활잡이. 아버지를 따라 사냥꾼이 되었으나, 더 큰 세상을 보고 싶어 길드의 문을 두드렸다.',
+      relations:{likes:['Mira','Lyra'],dislikes:['Brom']} },
+    { name:'Brom', portrait:'🪓', race:'Human', job:'Berserker',
+      stats:[{name:'집중 시간',value:3,unit:'%'}],
+      story:'거친 산악 부족 출신. 도끼 한 자루로 모든 문제를 해결할 수 있다고 믿는다. 단순하지만 의리 있는 사내.',
+      relations:{likes:['Jora'],dislikes:['Cael','Korin']} },
+    { name:'Jora', portrait:'🛡️', race:'Dwarf', job:'Guardian',
+      stats:[{name:'골드 획득',value:3,unit:'%'}],
+      story:'광산 길드 출신의 드워프 방패병. 황금에 대한 본능적 감각이 있으며 동료를 지키는 일에 진심이다.',
+      relations:{likes:['Brom','Aldric'],dislikes:[]} },
+  ],
+  rare:[
+    { name:'Aldric', portrait:'🛡️', race:'Human', job:'Knight',
+      stats:[{name:'집중 시간',value:8,unit:'%'},{name:'퀘스트 보상',value:5,unit:'%'}],
+      story:'명문가에서 추방당한 기사. 가문의 명예를 되찾기 위해 모험가가 되었다. 모든 것을 계산하고 움직이는 신중함이 무기.',
+      relations:{likes:['Lyra','Jora'],dislikes:['Vex']} },
+    { name:'Mira', portrait:'🏹', race:'Elf', job:'Ranger',
+      stats:[{name:'명중 보너스',value:8,unit:'%'},{name:'골드 획득',value:5,unit:'%'}],
+      story:'천 년 숲의 엘프. 인간들의 짧은 삶과 강렬한 열정에 매료되어 길드에 합류했다.',
+      relations:{likes:['Cael','Korin'],dislikes:[]} },
+    { name:'Vex', portrait:'⚡', race:'Human', job:'Trickster',
+      stats:[{name:'연속 보상',value:8,unit:'%'},{name:'집중 시간',value:5,unit:'%'}],
+      story:'도시의 그늘에서 자란 정보상. 빠른 손과 더 빠른 입을 가졌다. 신뢰할 수는 없지만 결정적일 때 도움이 된다.',
+      relations:{likes:['Saron'],dislikes:['Aldric','Astaroth']} },
+  ],
+  epic:[
+    { name:'Lyra', portrait:'⚔️', race:'Human', job:'Sword Saint',
+      stats:[{name:'골드 획득',value:12,unit:'%'},{name:'스톱워치 보상',value:10,unit:'%'}],
+      story:'전설의 검술 도장 마지막 제자. 스승의 죽음 이후 진정한 검의 의미를 찾아 여행 중이다.',
+      relations:{likes:['Aldric','Cael'],dislikes:['Drakthus']} },
+    { name:'Korin', portrait:'🔮', race:'Elf', job:'Sage',
+      stats:[{name:'집중 시간',value:12,unit:'%'},{name:'경험치 보너스',value:10,unit:'%'}],
+      story:'고대 마법 학원의 졸업생. 책보다 실전에서 배울 것이 많다며 학원을 떠났다. 차가워 보이지만 호기심이 많다.',
+      relations:{likes:['Mira','Seraphine'],dislikes:['Brom']} },
+    { name:'Saron', portrait:'🗡️', race:'Half-Demon', job:'Assassin',
+      stats:[{name:'퀘스트 보상',value:12,unit:'%'},{name:'연속 보상',value:10,unit:'%'}],
+      story:'인간과 마족 사이에서 태어난 혼혈. 양쪽 모두에게 거부당했지만 길드 안에서 처음으로 가족 같은 느낌을 받았다.',
+      relations:{likes:['Vex','Drakthus'],dislikes:[]} },
+  ],
+  legendary:[
+    { name:'Astaroth', portrait:'👑', race:'Demon Lord', job:'Overlord',
+      stats:[{name:'모든 보상',value:18,unit:'%'},{name:'집중 시간',value:15,unit:'%'}],
+      story:'봉인되었던 마계의 군주. 어떤 이유에서인지 인간 길드의 마스터에게 흥미를 보이며 부하를 자처하고 있다.',
+      relations:{likes:['Drakthus','Seraphine'],dislikes:['Vex']} },
+    { name:'Seraphine', portrait:'✨', race:'Celestial', job:'High Priest',
+      stats:[{name:'경험치 부스트',value:18,unit:'%'},{name:'골드 획득',value:15,unit:'%'}],
+      story:'하늘에서 추방당한 천사. 인간을 사랑한 죄로 날개를 잃었지만, 그 사랑은 잃지 않았다.',
+      relations:{likes:['Korin','Astaroth'],dislikes:[]} },
+    { name:'Drakthus', portrait:'🔥', race:'Dragon', job:'Dragonkin',
+      stats:[{name:'연속 보상',value:18,unit:'%'},{name:'스톱워치 보상',value:15,unit:'%'}],
+      story:'인간의 모습을 한 고대 용. 천 년의 잠에서 깨어나 새로운 시대의 영웅 곁에 머무르고 있다.',
+      relations:{likes:['Astaroth','Saron'],dislikes:['Lyra']} },
+  ],
 };
-const MEMBER_NAMES=[
-  'Aldric','Brenna','Cedric','Dahlia','Erion','Fiora','Gareth','Helena',
-  'Ivran','Jorin','Kael','Lyris','Maren','Nyx','Orin','Petra',
-  'Quinn','Rowan','Selene','Thane','Uriel','Vera','Wynn','Xara','Yoren','Zara',
-];
 
 /* — Gold economy — */
 function goldTick(){
@@ -3631,32 +4499,96 @@ function openRecruitModal(){
 }
 function closeRecruitModal(){
   $('hireModalWrap').classList.remove('open');
+  closeHireCandidateInfo();
   A.hireState='idle';
+  A.hirePreselectedIdx=null;
 }
 
-/* — Manage modal (길드원 + 편성) — */
-function openGuildManage(tab){
-  switchGmTab(tab||'members');
+/* — Manage modal (길드원 + 편성) — 2단 레이아웃, 동시 렌더 — */
+function openGuildManage(){
+  // 픽커/확인 팝업 상태 초기화
+  pickerSlotIdx=null;
+  confirmCallback=null;
+  // 양쪽 컬럼 모두 즉시 렌더
+  renderMembersList();
+  renderFormation();
   $('manageModalWrap').classList.add('open');
 }
 function closeManageModal(){
   $('manageModalWrap').classList.remove('open');
+  closePicker();
+  closeConfirm();
 }
 
-function switchGmTab(tab){
-  gmActiveTab=tab;
-  const tabs=$('manageModalWrap').querySelectorAll('.gm-tab');
-  tabs.forEach((t,i)=>{
-    t.classList.toggle('active',['members','formation'][i]===tab);
+// 외부에서 호출되는 곳을 위한 호환 stub (탭 시스템은 사라졌지만 인자 무시)
+function switchGmTab(/* tab */){
+  renderMembersList();
+  renderFormation();
+}
+
+/* ══════════════════════════════════════════
+   DEV TOOLS — 임시 테스트 데이터
+══════════════════════════════════════════ */
+// POOL의 모든 캐릭터(12명)를 한 명씩 보유 상태로 추가. 이미 보유 중인 이름은 스킵.
+function seedTestCharacters(){
+  const ownedNames=new Set(A.guildMembers.map(m=>m.name));
+  const baseTime=Date.now();
+  let idOffset=0,added=0;
+  ['normal','rare','epic','legendary'].forEach(rarityKey=>{
+    const rarityMeta=RARITY_WEIGHTS.find(r=>r.rarity===rarityKey);
+    if(!rarityMeta) return;
+    (POOL[rarityKey]||[]).forEach(ch=>{
+      if(ownedNames.has(ch.name)) return;
+      A.guildMembers.push({
+        rarity:rarityKey,
+        label:rarityMeta.label,
+        stars:rarityMeta.stars,
+        color:rarityMeta.color,
+        name:ch.name, portrait:ch.portrait, race:ch.race, job:ch.job,
+        stats:ch.stats.map(s=>({...s})),
+        story:ch.story, relations:ch.relations,
+        level:1,
+        id:baseTime+idOffset,
+      });
+      idOffset++;
+      added++;
+    });
   });
-  $('manageModalWrap').querySelectorAll('.gm-tab-content').forEach(c=>c.classList.remove('active'));
-  if(tab==='members'){
-    $('gmTabMembers').classList.add('active');
-    renderMembersList();
-  }else if(tab==='formation'){
-    $('gmTabFormation').classList.add('active');
-    renderFormation();
+  renderMembersList();
+  renderFormation();
+  showToast(added>0?`테스트 데이터 +${added}명 추가 (총 ${A.guildMembers.length}명)`:'이미 모든 캐릭터를 보유 중입니다');
+}
+
+// 모든 길드원과 편성 초기화
+function clearAllMembers(){
+  if(A.guildMembers.length===0){
+    showToast('이미 비어있습니다');
+    return;
   }
+  if(!confirm('모든 길드원과 편성을 초기화하시겠습니까?\n이 작업은 되돌릴 수 없습니다.')) return;
+  A.guildMembers=[];
+  // 잠금 사양에 맞춰 프리셋 배열 갯수 결정
+  const presetCnt=getActivePresetCount();
+  A.squadPresets=Array.from({length:presetCnt},()=>[]);
+  A.squad=[];
+  A.activePreset=0;
+  renderMembersList();
+  renderFormation();
+  showToast('전체 초기화 완료');
+}
+
+// 골드 직접 지급 (테스트용)
+function devGainGold(amount){
+  A.gold+=amount;
+  updateGoldDisplay();
+  showToast(`💰 +${amount.toLocaleString()}G (총 ${A.gold.toLocaleString()})`);
+  if($('unlockModalWrap').classList.contains('open')) renderUnlockShop();
+}
+
+// 길드 EXP 직접 지급 (테스트용)
+function devGainXp(amount){
+  gainXp(amount);
+  showToast(`✨ +${amount.toLocaleString()} EXP`);
 }
 
 /* — Recruit tab — */
@@ -3666,12 +4598,28 @@ function renderHireIdle(){
   // Clean up particles
   document.querySelectorAll('.card-particle').forEach(p=>p.remove());
   $('hireModalWrap').classList.remove('legendary-flash');
+  // 현재 길드 레벨에 맞는 등급 확률 가져오기
+  const w=getRarityWeights(A.guildLevel);
   const cards=$('hireCards');
   cards.innerHTML=`
-    <div class="hire-bulletin" id="hireBulletin">
-      <div class="hire-bulletin-paper"><div class="hire-bulletin-pin"></div>RECRUIT<br>QUEST</div>
-      <div class="hire-bulletin-paper"><div class="hire-bulletin-pin"></div>RECRUIT<br>QUEST</div>
-      <div class="hire-bulletin-paper"><div class="hire-bulletin-pin"></div>RECRUIT<br>QUEST</div>
+    <div class="hire-idle-stack">
+      <div class="hire-rarity-rates">
+        <div class="hire-rarity-rates-label">
+          <span class="hire-rarity-rates-title">길드원 모집 확률</span>
+          <span class="hire-rarity-rates-lvl">Lv.${A.guildLevel}</span>
+        </div>
+        <div class="hire-rarity-rates-bars">
+          <div class="hire-rar-bar normal"><span>Normal</span><b>${w[0]}%</b></div>
+          <div class="hire-rar-bar rare"><span>Rare</span><b>${w[1]}%</b></div>
+          <div class="hire-rar-bar epic"><span>Epic</span><b>${w[2]}%</b></div>
+          <div class="hire-rar-bar legendary"><span>Legendary</span><b>${w[3]}%</b></div>
+        </div>
+      </div>
+      <div class="hire-bulletin" id="hireBulletin">
+        <div class="hire-bulletin-paper"><div class="hire-bulletin-pin"></div>RECRUIT<br>QUEST</div>
+        <div class="hire-bulletin-paper"><div class="hire-bulletin-pin"></div>RECRUIT<br>QUEST</div>
+        <div class="hire-bulletin-paper"><div class="hire-bulletin-pin"></div>RECRUIT<br>QUEST</div>
+      </div>
     </div>`;
   const canHire=A.gold>=HIRE_COST&&A.guildMembers.length<A.guildMemberCap;
   $('hireActions').innerHTML=`
@@ -3700,10 +4648,20 @@ function startHire(){
   const solidColors={normal:'#f0ede8',rare:'#7cb8e8',epic:'#a87ce8',legendary:'#e8a05c'};
   const burstRGB={normal:'153,153,160',rare:'124,184,232',epic:'168,124,232',legendary:'232,160,92'};
   const best=A.hireCandidates.reduce((a,b)=>rarityOrder[a.rarity]>=rarityOrder[b.rarity]?a:b);
-  // Betrayal gacha: 50% chance when best >= Rare
+  // Betrayal gacha (확인용 임시: 배반 없음 / 1단계 / 2단계 = 33.3% 균등)
+  //   기존 로직: bestTier>=1일 때 50% 발동 → 그 중 1단계 70% / 2단계 30%
+  //   임시 로직: bestTier>=1일 때 균등 1/3 분배 (단 2단계는 bestTier>=2일 때만)
   const bestTier=rarityOrder[best.rarity];
-  const betrayal=bestTier>=1&&Math.random()<0.5;
-  const fakeRarity=betrayal?rarityTiers[bestTier-1]:best.rarity;
+  let jumpSteps=0; // 0 = 배반 없음, 1 = 1단계 점프, 2 = 2단계 점프
+  if(bestTier>=1){
+    const r=Math.random();
+    if(r<1/3) jumpSteps=0;
+    else if(r<2/3) jumpSteps=1;
+    else jumpSteps=(bestTier>=2)?2:1; // Rare 베스트는 2단계 불가 → 1단계로 대체
+  }
+  const betrayal=jumpSteps>0;
+  const isMegaBetrayal=jumpSteps>=2;
+  const fakeRarity=betrayal?rarityTiers[bestTier-jumpSteps]:best.rarity;
   const lightColor=colors[fakeRarity];
   const burstColor=betrayal?burstRGB[fakeRarity]:burstRGB[best.rarity];
 
@@ -3850,51 +4808,81 @@ function startHire(){
     },2800);
 
     if(betrayal){
-      // Phase 3.5: Betrayal — light explodes, color shifts to real rarity
-      setTimeout(()=>{
+      // 폭발 한 번을 수행하는 내부 함수
+      // — fromRarity: 현재 빛 색상의 등급 (참고용 / 디버깅)
+      // — toRarity:   이번 폭발로 전환할 등급
+      // — opts.mega:  2단계 배반의 두 번째 폭발 — 더 화려하게
+      const detonate=(toRarity,opts={})=>{
+        const mega=!!opts.mega;
         const light=$('hireDoorLight');
-        const realColor=colors[best.rarity];
-        const realSolid=solidColors[best.rarity];
-        const realRGB=burstRGB[best.rarity];
+        const realColor=colors[toRarity];
+        const realSolid=solidColors[toRarity];
+        const realRGB=burstRGB[toRarity];
         // Flash burst
         const flash=document.createElement('div');
-        flash.className='hire-betrayal-flash';
+        flash.className='hire-betrayal-flash'+(mega?' mega':'');
         flash.style.background=`radial-gradient(circle,${realSolid},transparent 70%)`;
         doorWrap.appendChild(flash);
+        // Mega 폭발에는 풀스크린 화이트 플래시 추가
+        if(mega){
+          const whiteFlash=document.createElement('div');
+          whiteFlash.className='hire-betrayal-whiteflash';
+          doorWrap.appendChild(whiteFlash);
+          setTimeout(()=>whiteFlash.remove(),700);
+        }
         // Shake
-        doorWrap.parentElement.style.animation='hireShakeHard 0.6s ease';
-        setTimeout(()=>{doorWrap.parentElement.style.animation='';},600);
-        // Spawn burst particles in real rarity color
-        const burstCount=16+Math.floor(Math.random()*8);
+        doorWrap.parentElement.style.animation=mega?'hireShakeMega 0.9s ease':'hireShakeHard 0.6s ease';
+        setTimeout(()=>{doorWrap.parentElement.style.animation='';},mega?900:600);
+        // Particles
+        const burstCount=mega?(32+Math.floor(Math.random()*12)):(16+Math.floor(Math.random()*8));
+        const distMul=mega?1.5:1;
+        const sizeMul=mega?1.4:1;
         for(let i=0;i<burstCount;i++){
           const p=document.createElement('div');
           p.className='hire-betrayal-particle';
           const angle=Math.random()*Math.PI*2;
-          const dist=40+Math.random()*80;
+          const dist=(40+Math.random()*80)*distMul;
           const dx=Math.cos(angle)*dist;
           const dy=Math.sin(angle)*dist;
-          const size=2+Math.random()*4;
+          const size=(2+Math.random()*4)*sizeMul;
           p.style.cssText=`left:50%;top:50%;width:${size}px;height:${size}px;--dx:${dx}px;--dy:${dy}px;background:${realSolid};box-shadow:0 0 ${4+Math.random()*6}px ${realSolid};animation-delay:${Math.random()*0.1}s;`;
           doorWrap.appendChild(p);
           setTimeout(()=>p.remove(),1000);
         }
-        // Second burst glow in real color
+        // Glow
         const glow2=document.createElement('div');
-        glow2.className='hire-burst-glow burst';
+        glow2.className='hire-burst-glow burst'+(mega?' mega':'');
         glow2.style.background=`radial-gradient(circle,rgba(255,235,180,1) 0%,rgba(${realRGB},0.85) 20%,rgba(${realRGB},0.4) 45%,transparent 70%)`;
         doorWrap.appendChild(glow2);
+        setTimeout(()=>glow2.remove(),1200);
         // Shift light color
         setTimeout(()=>{
           light.style.background=`radial-gradient(ellipse at center,${realColor},transparent 70%)`;
-          light.style.width='220px';
-          setTimeout(()=>{light.style.width='180px';},300);
+          light.style.width=mega?'280px':'220px';
+          setTimeout(()=>{light.style.width='180px';},mega?400:300);
           flash.remove();
         },200);
-      },4000);
-      // Phase 4: Render cards (delayed for betrayal)
-      setTimeout(()=>{
-        renderHireRevealed();
-      },5400);
+      };
+      
+      if(isMegaBetrayal){
+        // 2단계 배반: 가짜 → 중간(1단계 위) → 진짜(2단계 위, 베스트)
+        const midRarity=rarityTiers[bestTier-1]; // 가짜와 진짜의 중간
+        // 1차 폭발 (4000ms): 가짜 → 중간
+        setTimeout(()=>detonate(midRarity,{mega:false}),4000);
+        // 2차 폭발 (5600ms): 중간 → 진짜 (mega 연출)
+        // 1차 후 1.6초 텀 — 빛이 안정되고 "중간 등급이구나" 인지할 시간 확보
+        setTimeout(()=>{
+          detonate(best.rarity,{mega:true});
+          showToast('✨✨ 2단계 반전!');
+        },5600);
+        // Phase 4: Render cards (2차 폭발 후 1.6초 더 대기)
+        setTimeout(()=>renderHireRevealed(),7200);
+      }else{
+        // 1단계 배반: 가짜 → 진짜
+        setTimeout(()=>detonate(best.rarity,{mega:false}),4000);
+        // Phase 4: Render cards
+        setTimeout(()=>renderHireRevealed(),5400);
+      }
     }else{
       // Phase 4: Render cards (normal)
       setTimeout(()=>{
@@ -3931,38 +4919,58 @@ function showKnockEffect(container){
 }
 
 function generateCandidate(){
+  // 등급 가중치로 등급 결정
   const total=RARITY_WEIGHTS.reduce((s,r)=>s+r.weight,0);
   let roll=Math.random()*total, rarity=RARITY_WEIGHTS[0];
   for(const r of RARITY_WEIGHTS){roll-=r.weight;if(roll<=0){rarity=r;break;}}
-  const rs=RARITY_STATS[rarity.rarity];
-  const pool=[...STAT_POOL].sort(()=>Math.random()-0.5);
-  const stats=[];
-  for(let i=0;i<rs.count;i++){
-    stats.push({name:pool[i].name,value:rs.min+Math.floor(Math.random()*(rs.max-rs.min+1)),unit:pool[i].unit});
-  }
-  const name=MEMBER_NAMES[Math.floor(Math.random()*MEMBER_NAMES.length)];
-  return{rarity:rarity.rarity,label:rarity.label,stars:rarity.stars,color:rarity.color,name,stats};
+  // 해당 등급 풀에서 무작위 캐릭터 선택 (고정 캐릭터 — 같은 캐릭터가 중복 등장 가능)
+  const candidates=POOL[rarity.rarity]||POOL.normal;
+  const ch=candidates[Math.floor(Math.random()*candidates.length)];
+  // 풀 데이터를 얕은 복사하여 후보 생성 (등급 메타 + 캐릭터 컨셉)
+  return{
+    rarity:rarity.rarity, label:rarity.label, stars:rarity.stars, color:rarity.color,
+    name:ch.name, portrait:ch.portrait, race:ch.race, job:ch.job,
+    stats:ch.stats.map(s=>({...s})),
+    story:ch.story, relations:ch.relations,
+  };
 }
 
 function renderHireRevealed(){
   const cards=$('hireCards');
   cards.innerHTML='';
+  // preselect 상태 초기화
+  A.hirePreselectedIdx=null;
   const msg=document.createElement('div');
   msg.className='hire-result-msg';
   msg.id='hireResultMsg';
   msg.textContent='3 Adventurers Applied!';
   cards.parentNode.insertBefore(msg,cards);
   setTimeout(()=>msg.classList.add('show'), 200);
+  // 액션바 먼저 DOM에 삽입 (disabled 상태) — 카드가 클릭 가능해지기 전에 버튼이 존재해야
+  // preselectCandidate가 disabled 토글을 안전하게 수행할 수 있음
+  $('hireActions').innerHTML=`
+    <div class="hire-action-bar">
+      <button class="act-btn pass" onclick="passHire()">패스</button>
+      <button class="act-btn info" id="hireInfoBtn" onclick="openHireCandidateInfo()" disabled>정보 확인</button>
+      <button class="act-btn select" id="hireSelectBtn" onclick="confirmHireFromActionBar()" disabled>선택</button>
+    </div>`;
+  $('hireInfo').style.opacity='1';
+  
   A.hireCandidates.forEach((cand,i)=>{
     const wrap=document.createElement('div');
-    wrap.className='hire-card-wrap';
+    wrap.className='hire-card-wrap rarity-'+cand.rarity;
+    wrap.dataset.idx=String(i);
     const c=document.createElement('div');
     c.className='hire-card rarity-'+cand.rarity;
     const extStatsHtml=cand.stats.map(s=>`<div class="hire-card-ext-stat">${esc(s.name)} +${s.value}${s.unit}</div>`).join('');
+    // 같은 이름의 길드원을 이미 보유 중인지 확인
+    const alreadyOwned=A.guildMembers.some(m=>m.name===cand.name);
+    const ownedBadgeHtml=alreadyOwned?'<div class="hire-card-owned-badge">보유 중</div>':'';
     c.innerHTML=`
       <div class="hire-card-inner">
         <div class="hire-card-front"><div class="hire-card-front-icon">?</div></div>
         <div class="hire-card-back">
+          ${ownedBadgeHtml}
           <img class="hire-card-img" src="Character/Test_Card/1 (1).png" alt="${esc(cand.name)}">
           <div class="hire-card-body">
             <div class="hire-card-rarity" ${cand.color?`style="color:${cand.color}"`:''}>${cand.stars} ${cand.label}</div>
@@ -3976,12 +4984,6 @@ function renderHireRevealed(){
     statsEl.className='hire-card-ext-stats';
     statsEl.innerHTML=extStatsHtml;
     wrap.appendChild(statsEl);
-    // External select button (below stats)
-    const selBtn=document.createElement('button');
-    selBtn.className='hire-card-ext-select';
-    selBtn.textContent='선택';
-    selBtn.onclick=()=>selectCandidate(i);
-    wrap.appendChild(selBtn);
     cards.appendChild(wrap);
 
     // Card walk-in animation
@@ -3990,19 +4992,114 @@ function renderHireRevealed(){
     setTimeout(()=>{
       c.classList.add('flipped');
       setTimeout(()=>spawnCardParticles(c, cand), 600);
-      // Show ext stats + select after flip
+      // Show ext stats after flip
       setTimeout(()=>{
         statsEl.classList.add('show');
-        selBtn.classList.add('show');
       },400);
+      // 카드 뒤집힘이 끝난 후에 클릭 가능 상태로 전환
+      setTimeout(()=>{
+        wrap.classList.add('clickable');
+        wrap.onclick=()=>preselectCandidate(i);
+      },800);
     }, 600 + i*300);
   });
-  // Show pass button after all flips
-  setTimeout(()=>{
-    $('hireActions').innerHTML='<button class="hire-pass-btn" onclick="passHire()">패스</button>';
-    $('hireInfo').style.opacity='1';
-  }, 600 + 2*300 + 800);
   $('hireMemberCount').textContent='보유: '+A.guildMembers.length+'/'+A.guildMemberCap;
+}
+
+/* — v14 스타일 카드 preselect / 정보 확인 흐름 — */
+function preselectCandidate(i){
+  const wraps=document.querySelectorAll('.hire-card-wrap');
+  // 이미 선택된 카드를 다시 누르면 해제
+  if(A.hirePreselectedIdx===i){
+    wraps.forEach(w=>w.classList.remove('preselected','dimmed'));
+    A.hirePreselectedIdx=null;
+    const ib=$('hireInfoBtn'); if(ib) ib.disabled=true;
+    const sb=$('hireSelectBtn'); if(sb) sb.disabled=true;
+    return;
+  }
+  // 다른 카드 선택 — 기존 해제 후 새로 선택, 나머지는 dim
+  wraps.forEach((w,idx)=>{
+    w.classList.remove('preselected','dimmed');
+    if(idx===i){
+      w.classList.add('preselected');
+    }else{
+      w.classList.add('dimmed');
+    }
+  });
+  A.hirePreselectedIdx=i;
+  const ib=$('hireInfoBtn'); if(ib) ib.disabled=false;
+  const sb=$('hireSelectBtn'); if(sb) sb.disabled=false;
+}
+
+function openHireCandidateInfo(){
+  if(A.hirePreselectedIdx===null) return;
+  const cand=A.hireCandidates[A.hirePreselectedIdx];
+  if(!cand) return;
+  // 초상화 + 이름 + 등급
+  $('hireInfoPortrait').className='hire-info-portrait rarity-'+cand.rarity;
+  $('hireInfoPortraitImg').src='character/Test_Card/1 (1).png';
+  $('hireInfoPortraitImg').alt=cand.name;
+  $('hireInfoName').textContent=cand.name;
+  const rarityEl=$('hireInfoRarity');
+  rarityEl.textContent=`${cand.stars} ${cand.label}`;
+  rarityEl.style.color=cand.color||'';
+  // 태그 — 등급 + 종족 + 직업 (v14 스타일)
+  const tagsHtml=[
+    `<span class="hire-info-tag">${esc(cand.label)}</span>`,
+    cand.race?`<span class="hire-info-tag">${esc(cand.race)}</span>`:'',
+    cand.job?`<span class="hire-info-tag">${esc(cand.job)}</span>`:'',
+  ].filter(Boolean).join('');
+  $('hireInfoTags').innerHTML=tagsHtml;
+  // 능력치
+  $('hireInfoStats').innerHTML=cand.stats.map(s=>`
+    <div class="hire-info-stat">
+      <span class="hire-info-stat-label">${esc(s.name)}</span>
+      <span class="hire-info-stat-val">+${s.value}${s.unit}</span>
+    </div>`).join('');
+  // 포함 시너지
+  const synergies=getCharacterSynergies(cand);
+  const synergiesContainer=$('hireInfoSynergiesContainer');
+  if(synergies.length===0){
+    synergiesContainer.innerHTML='<div class="hire-info-synergies-empty">기여 가능한 시너지가 없습니다</div>';
+  }else{
+    synergiesContainer.innerHTML='<div class="hire-info-synergies">'+synergies.map(syn=>{
+      // 본인은 present, 나머지 멤버는 보유 여부에 따라 owned/missing
+      const memList=renderSynergyMembersHtml(syn,[],cand.name);
+      return `<div class="hire-info-synergy">
+        <div class="hire-info-synergy-head">
+          <span class="hire-info-synergy-name">${esc(syn.name)}</span>
+          <span class="hire-info-synergy-bonus">+${syn.bonus.value}% ${esc(syn.bonus.stat)}</span>
+        </div>
+        <div class="gm-synergy-item-mems">${memList}</div>
+        <div class="hire-info-synergy-desc">${esc(syn.desc)}</div>
+      </div>`;
+    }).join('')+'</div>';
+  }
+  // 스토리 (현재는 미해금 placeholder — renderMemberDetail과 동일 패턴)
+  const storyContainer=$('hireInfoStoryContainer');
+  if(cand.story){
+    storyContainer.innerHTML=`<div class="hire-info-story">${esc(cand.story)}</div>`;
+  }else{
+    storyContainer.innerHTML=`<div class="hire-info-story locked">이 길드원의 이야기는 아직 밝혀지지 않았습니다...</div>`;
+  }
+  $('hireInfoModalWrap').classList.add('open');
+}
+
+function closeHireCandidateInfo(){
+  $('hireInfoModalWrap').classList.remove('open');
+}
+
+function confirmHireFromInfo(){
+  closeHireCandidateInfo();
+  if(A.hirePreselectedIdx!==null){
+    selectCandidate(A.hirePreselectedIdx);
+  }
+}
+
+function confirmHireFromActionBar(){
+  if(A.hirePreselectedIdx!==null){
+    selectCandidate(A.hirePreselectedIdx);
+  }
 }
 
 function spawnCardParticles(cardEl, cand){
@@ -4038,15 +5135,19 @@ function spawnCardParticles(cardEl, cand){
 
 function selectCandidate(i){
   const cand=A.hireCandidates[i];
+  if(!cand) return;
   A.guildMembers.push({...cand,level:1,id:Date.now()});
   A.hireHistory.push({name:cand.name,stars:cand.stars,color:cand.color,rarity:cand.rarity,action:'selected'});
   showToast(`${cand.name} (${cand.label}) 영입 완료!`);
   // Micro-animation: selected card scales up, others fade out
   const wraps=document.querySelectorAll('.hire-card-wrap');
   wraps.forEach((w,idx)=>{
+    w.classList.remove('preselected','dimmed','clickable');
+    w.onclick=null;
     if(idx===i) w.classList.add('selected');
     else w.classList.add('dismissed');
   });
+  A.hirePreselectedIdx=null;
   setTimeout(()=>{
     A.hireState='idle';
     renderHireIdle();
@@ -4058,7 +5159,12 @@ function passHire(){
   A.hireHistory.push({name:best.name,stars:best.stars,color:best.color,rarity:best.rarity,action:'passed'});
   // All cards fade out
   const wraps=document.querySelectorAll('.hire-card-wrap');
-  wraps.forEach(w=>w.classList.add('dismissed'));
+  wraps.forEach(w=>{
+    w.classList.remove('preselected','dimmed','clickable');
+    w.onclick=null;
+    w.classList.add('dismissed');
+  });
+  A.hirePreselectedIdx=null;
   setTimeout(()=>{
     A.hireState='idle';
     renderHireIdle();
@@ -4082,6 +5188,10 @@ function getFilteredMembers(){
 
 function renderMembersList(){
   const el=$('gmMembersList');
+  // 헤더의 보유 카운트 갱신
+  const countEl=$('manageMembersCount');
+  if(countEl) countEl.textContent=`${A.guildMembers.length}/${A.guildMemberCap}명`;
+  
   if(A.guildMembers.length===0){
     el.innerHTML='<div class="gm-members-empty">보유한 길드원이 없습니다.<br>모집 탭에서 길드원을 모집하세요.</div>';
     return;
@@ -4106,11 +5216,14 @@ function renderMembersList(){
       <option value="recent"${gmSortBy==='recent'?' selected':''}>최근 획득순</option>
     </select>
   </div>`;
+  // 어떤 멤버가 어느 프리셋 슬롯에 있는지 매핑 (다중 프리셋 고려)
+  const equippedMap=getEquippedMapAll();
   const grid=filtered.map(m=>{
     const statsHtml=m.stats.map(s=>`<div class="gm-member-stat"><span>${esc(s.name)}</span><span class="gm-member-stat-val">+${s.value}${s.unit}</span></div>`).join('');
-    const inSquad=A.squad.includes(m.id);
-    const squadBadge=inSquad?'<div class="gm-member-squad-badge">편성중</div>':'';
-    return`<div class="gm-member-card rarity-${m.rarity}${inSquad?' in-squad':''}" onclick="renderMemberDetail(${m.id})">
+    const eq=equippedMap[m.id];
+    const inAnyPreset=!!eq;
+    const squadBadge=inAnyPreset?`<div class="gm-member-squad-badge">P${eq.preset+1}·S${eq.slot+1}</div>`:'';
+    return`<div class="gm-member-card rarity-${m.rarity}${inAnyPreset?' in-squad':''}" onclick="renderMemberDetail(${m.id})">
       <img class="gm-member-img" src="character/Test_Card/1 (1).png" alt="${esc(m.name)}">
       <div class="gm-member-info">
         <div class="gm-member-name">${esc(m.name)}</div>
@@ -4120,24 +5233,40 @@ function renderMembersList(){
       </div>
     </div>`;
   }).join('');
-  const footer=`<div class="gm-members-footer">
-    <span>보유: ${A.guildMembers.length}/${A.guildMemberCap}</span>
-  </div>`;
-  el.innerHTML=filterBar+'<div class="gm-members-grid">'+grid+'</div>'+footer;
+  el.innerHTML=filterBar+'<div class="gm-members-grid">'+grid+'</div>';
+}
+
+// 모든 프리셋에서 어떤 멤버가 어디에 편성되어 있는지 매핑
+function getEquippedMapAll(){
+  const map={};
+  (A.squadPresets||[]).forEach((preset,pi)=>{
+    (preset||[]).forEach((id,si)=>{
+      if(id&&!map[id]) map[id]={preset:pi,slot:si};
+    });
+  });
+  return map;
 }
 
 function renderMemberDetail(id){
   const m=A.guildMembers.find(x=>x.id===id);
   if(!m)return;
   const el=$('gmMembersList');
-  const inSquad=A.squad.includes(m.id);
+  const equippedMap=getEquippedMapAll();
+  const eq=equippedMap[m.id];
+  const inActiveSquad=eq&&eq.preset===A.activePreset;
+  const inOtherPreset=eq&&eq.preset!==A.activePreset;
   const statsHtml=m.stats.map(s=>`<div class="gm-detail-stat"><span class="gm-detail-stat-name">${esc(s.name)}</span><span class="gm-detail-stat-val">+${s.value}${s.unit}</span></div>`).join('');
   const acquiredDate=new Date(m.id).toLocaleDateString('ko-KR');
-  const squadBtn=inSquad
-    ?`<button class="gm-unsquad-btn" onclick="removeFromSquad(${m.id});renderMemberDetail(${m.id})">스쿼드에서 제거</button>`
-    :(getActiveSquad().length<SQUAD_SLOTS
-      ?`<button class="gm-squad-btn" onclick="addToSquad(${m.id});renderMemberDetail(${m.id})">스쿼드에 편성</button>`
-      :'');
+  
+  // 액션 버튼 — 활성 스쿼드 편성/해제 또는 다른 프리셋에서 이동
+  let squadBtn='';
+  if(inActiveSquad){
+    squadBtn=`<button class="gm-unsquad-btn" onclick="removeFromSquad(${m.id});renderMemberDetail(${m.id})">현재 스쿼드에서 제거</button>`;
+  }else if(inOtherPreset){
+    squadBtn=`<button class="gm-squad-btn" onclick="moveToActiveFromDetail(${m.id})">스쿼드 ${A.activePreset+1}로 이동</button>`;
+  }else if(getActiveSquad().length<SQUAD_SLOTS){
+    squadBtn=`<button class="gm-squad-btn" onclick="addToSquad(${m.id});renderMemberDetail(${m.id})">스쿼드 ${A.activePreset+1}에 편성</button>`;
+  }
 
   // Story content (placeholder for future system)
   const storyData=m.story||null;
@@ -4154,6 +5283,36 @@ function renderMemberDetail(id){
     </div>`;
   }
 
+  // 편성 상태 표시
+  let statusHtml='';
+  if(inActiveSquad){
+    statusHtml=`<div class="gm-detail-meta">편성: <span>✦ 스쿼드 ${eq.preset+1} / 슬롯 ${eq.slot+1}</span></div>`;
+  }else if(inOtherPreset){
+    statusHtml=`<div class="gm-detail-meta">편성: <span>스쿼드 ${eq.preset+1} / 슬롯 ${eq.slot+1}</span></div>`;
+  }else{
+    statusHtml='<div class="gm-detail-meta">편성: <span style="color:var(--text-muted)">미편성</span></div>';
+  }
+
+  // 포함 시너지
+  const memberSynergies=getCharacterSynergies(m);
+  let synergyHtml;
+  if(memberSynergies.length===0){
+    synergyHtml='<div class="gm-detail-synergies-empty">기여 가능한 시너지가 없습니다</div>';
+  }else{
+    synergyHtml='<div class="gm-detail-synergies">'+memberSynergies.map(syn=>{
+      // 본인은 present, 다른 멤버는 보유 여부로 owned/missing
+      const memList=renderSynergyMembersHtml(syn,[],m.name);
+      return `<div class="gm-detail-synergy">
+        <div class="gm-detail-synergy-head">
+          <span class="gm-detail-synergy-name">${esc(syn.name)}</span>
+          <span class="gm-detail-synergy-bonus">+${syn.bonus.value}% ${esc(syn.bonus.stat)}</span>
+        </div>
+        <div class="gm-synergy-item-mems">${memList}</div>
+        <div class="gm-detail-synergy-desc">${esc(syn.desc)}</div>
+      </div>`;
+    }).join('')+'</div>';
+  }
+
   el.innerHTML=`
     <button class="gm-back-btn" onclick="renderMembersList()">← 뒤로</button>
     <div class="gm-detail">
@@ -4166,12 +5325,15 @@ function renderMemberDetail(id){
         </div>
         <div class="gm-detail-rarity" ${m.color?`style="color:${m.color}"`:''}>${m.stars} ${m.label}</div>
         <div class="gm-detail-name">${esc(m.name)}</div>
+        ${(m.race||m.job)?`<div class="gm-detail-tags">${m.race?`<span class="gm-detail-tag">${esc(m.race)}</span>`:''}${m.job?`<span class="gm-detail-tag">${esc(m.job)}</span>`:''}</div>`:''}
         <div class="gm-detail-level">Lv.${m.level||1}</div>
         <div class="gm-detail-section-label">능력치</div>
         ${statsHtml}
+        <div class="gm-detail-section-label">포함 시너지</div>
+        ${synergyHtml}
         ${storyHtml}
         <div class="gm-detail-section-label">상태</div>
-        ${inSquad?'<div class="gm-detail-meta">편성: <span>✦ 스쿼드</span></div>':''}
+        ${statusHtml}
         <div class="gm-detail-meta">획득일: ${acquiredDate}</div>
       </div>
     </div>
@@ -4181,22 +5343,56 @@ function renderMemberDetail(id){
     </div>`;
 }
 
+// 디테일 화면에서 "스쿼드 N로 이동" 버튼 클릭 — 확인 팝업 거쳐서 이동
+function moveToActiveFromDetail(id){
+  const m=A.guildMembers.find(x=>x.id===id);
+  if(!m)return;
+  const equippedMap=getEquippedMapAll();
+  const eq=equippedMap[id];
+  if(!eq)return;
+  
+  // 활성 프리셋에 빈 슬롯이 있는지
+  const activePreset=A.squadPresets[A.activePreset];
+  if(activePreset.length>=SQUAD_SLOTS){
+    showToast(`스쿼드 ${A.activePreset+1}에 빈 슬롯이 없습니다`);
+    return;
+  }
+  
+  openConfirm({
+    title:'스쿼드 이동',
+    msgHtml:`<strong>${esc(m.name)}</strong>님은 현재 <span class="hl-rare">스쿼드 ${eq.preset+1} / 슬롯 ${eq.slot+1}</span>에 편성되어 있습니다.<br><span class="hl-warn">기존 편성을 해제하고</span> 스쿼드 ${A.activePreset+1}로 이동하시겠습니까?`,
+    onConfirm:()=>{
+      A.squadPresets[eq.preset]=A.squadPresets[eq.preset].filter(x=>x!==id);
+      A.squadPresets[A.activePreset].push(id);
+      A.squad=A.squadPresets[A.activePreset];
+      renderFormation();
+      renderMemberDetail(id);
+      showToast(`${m.name}님이 스쿼드 ${A.activePreset+1}로 이동했습니다`);
+    }
+  });
+}
+
 function dismissMember(id){
   const m=A.guildMembers.find(x=>x.id===id);
   if(!m)return;
   if(!confirm(`${m.name} (${m.label})을(를) 방출하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`))return;
-  A.squad=A.squad.filter(sid=>sid!==id);
+  // 모든 프리셋에서 제거
+  (A.squadPresets||[]).forEach((preset,pi)=>{
+    A.squadPresets[pi]=preset.filter(sid=>sid!==id);
+  });
+  A.squad=A.squadPresets[A.activePreset];
   A.guildMembers=A.guildMembers.filter(x=>x.id!==id);
   showToast(`${m.name} 방출 완료`);
   renderMembersList();
+  renderFormation();
 }
 
 /* — Formation tab — */
-let SQUAD_SLOTS=4;
-let PRESET_COUNT=3;
-// Migrate A.squad to preset system
+let SQUAD_SLOTS=2;
+let PRESET_COUNT=1;
+// Migrate A.squad to preset system — 기본 1개로 시작 (해금에 따라 확장)
 if(!A.squadPresets){
-  A.squadPresets=[[...A.squad],[],[]];
+  A.squadPresets=[[...A.squad]];
   A.activePreset=0;
 }
 
@@ -4207,6 +5403,7 @@ function switchPreset(idx){
   A.activePreset=idx;
   A.squad=A.squadPresets[idx];
   renderFormation();
+  renderMembersList();
 }
 
 function calcSquadStats(memberIds){
@@ -4222,10 +5419,9 @@ function calcSquadStats(memberIds){
 
 function renderFormation(){
   const el=$('gmFormation');
+  if(!el)return;
   const squad=getActiveSquad();
   const squadMembers=squad.map(id=>A.guildMembers.find(m=>m.id===id)).filter(Boolean);
-  const bench=A.guildMembers.filter(m=>!squad.includes(m.id));
-  const isFull=squadMembers.length>=SQUAD_SLOTS;
 
   // Preset bar
   let presetHtml='<div class="gm-preset-bar">';
@@ -4237,21 +5433,20 @@ function renderFormation(){
   }
   presetHtml+='</div>';
 
-  // Squad slots — with clearer remove UX
+  // Squad slots — 슬롯 클릭이 픽커 모달을 연다
   let slotsHtml='';
   for(let i=0;i<SQUAD_SLOTS;i++){
     const m=squadMembers[i];
     if(m){
-      slotsHtml+=`<div class="gm-slot filled rarity-${m.rarity}">
+      slotsHtml+=`<div class="gm-slot filled rarity-${m.rarity}" onclick="openPicker(${i})">
         <img class="gm-slot-img" src="character/Test_Card/1 (1).png" alt="${esc(m.name)}">
         <div class="gm-slot-name">${esc(m.name)}</div>
         <div class="gm-slot-rarity" ${m.color?`style="color:${m.color}"`:''}>${m.stars}</div>
-        <div class="gm-slot-remove" onclick="removeFromSquad(${m.id})" title="슬롯에서 제거">✕</div>
       </div>`;
     }else{
-      slotsHtml+=`<div class="gm-slot drop-target" onclick="highlightBench()">
+      slotsHtml+=`<div class="gm-slot drop-target" onclick="openPicker(${i})">
         <div class="gm-slot-empty-icon">+</div>
-        <div class="gm-slot-empty-text">탭하여 추가</div>
+        <div class="gm-slot-empty-text">슬롯 ${i+1}</div>
       </div>`;
     }
   }
@@ -4262,41 +5457,310 @@ function renderFormation(){
   STAT_POOL.forEach(s=>{
     const val=stats[s.name]||0;
     const zeroClass=val===0?' zero':'';
-    summaryHtml+=`<div class="gm-summary-item"><span class="gm-summary-label">${s.name}</span><span class="gm-summary-value${zeroClass}">+${val}%</span></div>`;
+    summaryHtml+=`<div class="gm-summary-item"><span class="gm-summary-label">${s.name}</span><span class="gm-summary-value${zeroClass}">+${val}${s.unit||'%'}</span></div>`;
   });
   summaryHtml+='</div>';
+  
+  // Synergy panel
+  const synergyHtml=renderSynergyHtml(squadMembers);
 
-  // Bench — with add overlay + stat hint
-  let benchHtml='';
-  if(bench.length>0){
-    benchHtml=bench.map(m=>{
-      const statHint=m.stats.map(s=>`${s.name.slice(0,2)}+${s.value}`).join(' ');
-      return`<div class="gm-bench-card rarity-${m.rarity}" onclick="addToSquad(${m.id})"${isFull?' style="opacity:0.5;pointer-events:none"':''}>
-        <img class="gm-bench-img" src="character/Test_Card/1 (1).png" alt="${esc(m.name)}">
-        <div class="gm-bench-add">+</div>
-        <div class="gm-bench-name">${esc(m.name)}</div>
-        <div class="gm-bench-stat-hint">${statHint}</div>
-      </div>`;
-    }).join('');
-  }else if(A.guildMembers.length===0){
-    benchHtml='<div class="gm-members-empty">보유한 길드원이 없습니다.<br>모집 탭에서 길드원을 모집하세요.</div>';
-  }else{
-    benchHtml='<div class="gm-formation-hint">모든 길드원이 편성되었습니다</div>';
-  }
-
-  // Hint text
-  const hintText=isFull
-    ?'슬롯의 ✕를 눌러 길드원을 제거할 수 있습니다'
-    :'아래 대기 길드원을 클릭하면 빈 슬롯에 편성됩니다';
+  const hintText='슬롯을 눌러 길드원을 편성하거나 변경하세요';
 
   el.innerHTML=`
     ${presetHtml}
     <div class="gm-squad-label">Squad (${squadMembers.length}/${SQUAD_SLOTS})</div>
     <div class="gm-squad-slots">${slotsHtml}</div>
     ${summaryHtml}
-    <div class="gm-formation-hint">${hintText}</div>
-    ${A.guildMembers.length>0?`<div class="gm-bench-label">대기 길드원 (${bench.length})</div>
-    <div class="gm-bench" id="gmBench">${benchHtml}</div>`:''}`;
+    ${synergyHtml}
+    <div class="gm-formation-hint">${hintText}</div>`;
+}
+
+/* ══════════════════════════════════════════
+   NAME-BASED SYNERGIES (v14 스타일 — 캐릭터 컨셉/관계 기반)
+══════════════════════════════════════════ */
+const SYNERGIES=[
+  // 페어 시너지
+  { id:'sword-rivals', name:'검술 라이벌', members:['Aldric','Lyra'],
+    bonus:{stat:'집중 시간',value:5},
+    desc:'검을 든 두 영웅의 라이벌리가 집중력을 끌어올린다.' },
+  { id:'archer-duo', name:'활잡이 듀오', members:['Cael','Mira'],
+    bonus:{stat:'명중 보너스',value:6},
+    desc:'서로의 화살을 보고 자세를 다듬는다.' },
+  { id:'elf-bond', name:'엘프의 인연', members:['Mira','Korin'],
+    bonus:{stat:'경험치 보너스',value:4},
+    desc:'같은 숲에서 자란 두 엘프의 교감.' },
+  { id:'shadow-pact', name:'그림자 협정', members:['Vex','Saron'],
+    bonus:{stat:'연속 보상',value:5},
+    desc:'도시의 정보상과 혼혈 어쌔신의 어두운 거래.' },
+  { id:'guardian-bond', name:'수호의 맹세', members:['Aldric','Jora'],
+    bonus:{stat:'집중 시간',value:3},
+    desc:'기사와 드워프 방패병의 신뢰 관계.' },
+  // 트리오 시너지
+  { id:'demon-court', name:'마계의 군림', members:['Astaroth','Drakthus','Seraphine'],
+    bonus:{stat:'모든 보상',value:10},
+    desc:'마왕, 용, 추방천사가 모이는 전설적인 진영.' },
+  { id:'human-honor', name:'인간의 명예', members:['Aldric','Cael','Lyra'],
+    bonus:{stat:'퀘스트 보상',value:7},
+    desc:'인간 영웅 셋이 모이면 평범한 모험도 전설이 된다.' },
+];
+
+// 활성 시너지: 시너지의 모든 멤버가 활성 스쿼드(squadMembers)에 모두 포함될 때 활성
+function computeActiveSynergies(squadMembers){
+  const presentNames=new Set(squadMembers.map(m=>m.name));
+  return SYNERGIES.filter(syn=>syn.members.every(n=>presentNames.has(n)));
+}
+
+// 비활성 시너지의 부족 인원 — 시너지 멤버 중 squad에 없는 사람 수
+function computeRemaining(syn,squadMembers){
+  const presentNames=new Set(squadMembers.map(m=>m.name));
+  return syn.members.filter(n=>!presentNames.has(n)).length;
+}
+
+// 특정 캐릭터(후보/길드원)가 포함된 시너지 목록 — 이름 기반 매칭
+function getCharacterSynergies(member){
+  if(!member||!member.name) return [];
+  return SYNERGIES.filter(syn=>syn.members.includes(member.name));
+}
+
+// 캐릭터 이름으로 등급 조회 — POOL에서 검색, 없으면 'normal' 기본값
+function getCharacterRarity(name){
+  if(!name) return 'normal';
+  for(const r of ['normal','rare','epic','legendary']){
+    if((POOL[r]||[]).some(c=>c.name===name)) return r;
+  }
+  return 'normal';
+}
+
+// 시너지의 멤버 리스트를 칩 형태로 렌더 — 3상태 + 등급 클래스
+// — present: 활성 스쿼드 멤버 또는 정보 모달에서 보고 있는 본인 (selfName)
+// — owned:   보유 중이지만 활성 스쿼드 밖
+// — missing: 미보유
+// rarity-{등급} 클래스는 항상 부착되며, 색상 변경은 상세 컨텍스트(.hire-info-synergy / .gm-detail-synergy) CSS에서 스코핑
+function renderSynergyMembersHtml(syn,squadMembers,selfName){
+  const presentNames=new Set((squadMembers||[]).map(m=>m.name));
+  const ownedNames=new Set((A.guildMembers||[]).map(m=>m.name));
+  return syn.members.map(name=>{
+    let cls;
+    if(selfName&&name===selfName) cls='present';
+    else if(presentNames.has(name)) cls='present';
+    else if(ownedNames.has(name)) cls='owned';
+    else cls='missing';
+    const rarity=getCharacterRarity(name);
+    return `<span class="gm-synergy-mem ${cls} rarity-${rarity}">${esc(name)}</span>`;
+  }).join('');
+}
+
+function renderSynergyHtml(squadMembers){
+  const activeSyns=computeActiveSynergies(squadMembers);
+  const activeIds=new Set(activeSyns.map(s=>s.id));
+  
+  // 정렬: (1) 활성 먼저 (2) 남은 인원 적은 순 (3) 멤버 수 적은 시너지 먼저(쉬운 시너지 우선)
+  const sorted=[...SYNERGIES].sort((a,b)=>{
+    const aA=activeIds.has(a.id)?0:1;
+    const bA=activeIds.has(b.id)?0:1;
+    if(aA!==bA) return aA-bA;
+    const aR=computeRemaining(a,squadMembers);
+    const bR=computeRemaining(b,squadMembers);
+    if(aR!==bR) return aR-bR;
+    return a.members.length-b.members.length;
+  });
+  
+  const itemsHtml=sorted.map(syn=>{
+    const isActive=activeIds.has(syn.id);
+    const remaining=computeRemaining(syn,squadMembers);
+    const headPrefix=isActive?'✨ ':`<span class="gm-synergy-remaining">남은 ${remaining}명</span> `;
+    const memList=renderSynergyMembersHtml(syn,squadMembers);
+    return `<div class="gm-synergy-item ${isActive?'active':'inactive'}">
+      <div class="gm-synergy-item-head">
+        <span class="gm-synergy-item-name">${headPrefix}${esc(syn.name)}</span>
+        <span class="gm-synergy-item-bonus">+${syn.bonus.value}% ${esc(syn.bonus.stat)}</span>
+      </div>
+      <div class="gm-synergy-item-mems">${memList}</div>
+      <div class="gm-synergy-item-desc">${esc(syn.desc)}</div>
+    </div>`;
+  }).join('');
+  
+  return `<div class="gm-synergy-panel">
+    <div class="gm-synergy-header">
+      <div class="gm-synergy-title">✨ 시너지</div>
+      <div class="gm-synergy-count">${activeSyns.length}개 활성</div>
+    </div>
+    <div class="gm-synergy-list">${itemsHtml}</div>
+  </div>`;
+}
+
+/* ══════════════════════════════════════════
+   PICKER MODAL — 슬롯 클릭 시 길드원 선택
+══════════════════════════════════════════ */
+let pickerSlotIdx=null;
+
+function openPicker(slotIdx){
+  pickerSlotIdx=slotIdx;
+  const sectionsEl=$('pickerSections');
+  const equippedMap=getEquippedMapAll();
+  const currentSlotId=A.squadPresets[A.activePreset][slotIdx];
+  const currentSlotMember=currentSlotId?A.guildMembers.find(m=>m.id===currentSlotId):null;
+  
+  $('pickerTitle').textContent=`스쿼드 ${A.activePreset+1} / 슬롯 ${slotIdx+1} 편성`;
+  
+  // 현재 슬롯 캐릭터 표시 (있으면 비우기 버튼 노출)
+  const currentEl=$('pickerCurrent');
+  if(currentSlotMember){
+    currentEl.style.display='flex';
+    $('pickerCurrentName').textContent=`${currentSlotMember.name} · ${currentSlotMember.label}`;
+  }else{
+    currentEl.style.display='none';
+  }
+  
+  if(A.guildMembers.length===0){
+    sectionsEl.innerHTML='<div class="picker-empty">아직 영입한 길드원이 없습니다.<br>먼저 모집을 진행하세요.</div>';
+    $('pickerModalWrap').classList.add('open');
+    return;
+  }
+  
+  // 모든 길드원에 status 부여
+  // 우선순위: current > available > other (등급순 안에서)
+  const STATUS_ORDER={current:0,available:1,other:2};
+  const RARITY_ORDER=['legendary','epic','rare','normal'];
+  const items=A.guildMembers.map(m=>{
+    const eq=equippedMap[m.id];
+    let status,ext=null;
+    if(eq&&eq.preset===A.activePreset&&eq.slot===slotIdx){
+      status='current';
+    }else if(!eq){
+      status='available';
+    }else{
+      status='other'; ext=eq;
+    }
+    return{member:m,status,eq:ext};
+  });
+  items.sort((a,b)=>{
+    const so=STATUS_ORDER[a.status]-STATUS_ORDER[b.status];
+    if(so!==0)return so;
+    return RARITY_ORDER.indexOf(a.member.rarity)-RARITY_ORDER.indexOf(b.member.rarity);
+  });
+  
+  sectionsEl.innerHTML=`
+    <div class="picker-section-label">
+      <span>편성 가능한 길드원</span>
+      <span class="picker-section-label-count">${items.length}명</span>
+    </div>
+    <div class="picker-section-grid">
+      ${items.map(it=>renderPickerCard(it.member,it.status,it.eq)).join('')}
+    </div>`;
+  
+  $('pickerModalWrap').classList.add('open');
+}
+
+function renderPickerCard(member,status,eq){
+  let extraClass='';
+  let badgeHtml='';
+  let footerHtml='';
+  if(status==='current'){
+    extraClass='in-current-slot';
+    badgeHtml='<span class="picker-card-badge current">현재</span>';
+    footerHtml='<div class="picker-card-footer current">이 슬롯에 편성됨</div>';
+  }else if(status==='other'&&eq){
+    extraClass='in-other-slot';
+    badgeHtml=`<span class="picker-card-badge other">P${eq.preset+1}·S${eq.slot+1}</span>`;
+    footerHtml=`<div class="picker-card-footer other">스쿼드 ${eq.preset+1} / 슬롯 ${eq.slot+1}</div>`;
+  }
+  return `<div class="picker-card rarity-${member.rarity} ${extraClass}" onclick="handlePickerCardClick(${member.id},'${status}')">
+    ${badgeHtml}
+    <img class="picker-card-img" src="character/Test_Card/1 (1).png" alt="${esc(member.name)}">
+    <div class="picker-card-info">
+      <div class="picker-card-name">${esc(member.name)}</div>
+      <div class="picker-card-rarity" ${member.color?`style="color:${member.color}"`:''}>${member.stars} ${member.label}</div>
+    </div>
+    ${footerHtml}
+  </div>`;
+}
+
+function handlePickerCardClick(memberId,status){
+  const member=A.guildMembers.find(m=>m.id===memberId);
+  if(!member)return;
+  
+  if(status==='current'){
+    showToast('이미 배치된 길드원입니다');
+    return;
+  }
+  
+  if(status==='available'){
+    // 즉시 교체 (또는 빈 슬롯에 배치)
+    A.squadPresets[A.activePreset][pickerSlotIdx]=member.id;
+    syncActiveSquadFromPreset();
+    closePicker();
+    renderFormation();
+    renderMembersList();
+    showToast(`${member.name}님이 배치되었습니다`);
+    return;
+  }
+  
+  if(status==='other'){
+    // 다른 슬롯에 편성된 길드원 → 확인 팝업
+    const equippedMap=getEquippedMapAll();
+    const eq=equippedMap[member.id];
+    if(!eq)return;
+    openConfirm({
+      title:'길드원 이동',
+      msgHtml:`<strong>${esc(member.name)}</strong>님은 현재 <span class="hl-rare">스쿼드 ${eq.preset+1} / 슬롯 ${eq.slot+1}</span>에 편성되어 있습니다.<br><span class="hl-warn">기존 편성을 해제하고</span> 이 슬롯으로 이동하시겠습니까?`,
+      onConfirm:()=>{
+        A.squadPresets[eq.preset][eq.slot]=null;
+        // null이 들어간 슬롯은 squad 배열에서 제거 (compact)
+        A.squadPresets[eq.preset]=A.squadPresets[eq.preset].filter(x=>x!=null);
+        A.squadPresets[A.activePreset][pickerSlotIdx]=member.id;
+        syncActiveSquadFromPreset();
+        closePicker();
+        renderFormation();
+        renderMembersList();
+        showToast(`${member.name}님이 이동되었습니다`);
+      }
+    });
+  }
+}
+
+function clearCurrentSlot(){
+  if(pickerSlotIdx===null)return;
+  const preset=A.squadPresets[A.activePreset];
+  preset[pickerSlotIdx]=null;
+  // null 제거 후 compact (기존 코드 패턴 유지)
+  A.squadPresets[A.activePreset]=preset.filter(x=>x!=null);
+  syncActiveSquadFromPreset();
+  closePicker();
+  renderFormation();
+  renderMembersList();
+}
+
+function closePicker(){
+  $('pickerModalWrap').classList.remove('open');
+  pickerSlotIdx=null;
+}
+
+function syncActiveSquadFromPreset(){
+  // null 제거 후 A.squad 동기화
+  A.squadPresets[A.activePreset]=(A.squadPresets[A.activePreset]||[]).filter(x=>x!=null);
+  A.squad=A.squadPresets[A.activePreset];
+}
+
+/* ══════════════════════════════════════════
+   CONFIRM POPUP
+══════════════════════════════════════════ */
+let confirmCallback=null;
+
+function openConfirm({title,msgHtml,onConfirm}){
+  $('confirmTitle').textContent=title;
+  $('confirmMsg').innerHTML=msgHtml;
+  confirmCallback=onConfirm;
+  $('confirmModalWrap').classList.add('open');
+}
+function closeConfirm(){
+  $('confirmModalWrap').classList.remove('open');
+  confirmCallback=null;
+}
+function execConfirm(){
+  const cb=confirmCallback;
+  closeConfirm();
+  if(cb)cb();
 }
 
 function addToSquad(id){
@@ -4306,6 +5770,7 @@ function addToSquad(id){
   squad.push(id);
   setActiveSquad(squad);
   renderFormation();
+  renderMembersList();
   // Animate the newly filled slot
   const slots=document.querySelectorAll('.gm-slot.filled');
   const last=slots[slots.length-1];
@@ -4316,239 +5781,572 @@ function removeFromSquad(id){
   const squad=getActiveSquad().filter(sid=>sid!==id);
   setActiveSquad(squad);
   renderFormation();
+  renderMembersList();
 }
 
-function highlightBench(){
-  const bench=document.getElementById('gmBench');
-  if(!bench)return;
-  bench.classList.add('highlight-mode');
-  bench.scrollIntoView({behavior:'smooth',block:'nearest'});
-  setTimeout(()=>bench.classList.remove('highlight-mode'),2000);
-}
+// 구버전 호환 — bench 영역이 사라졌으므로 no-op
+function highlightBench(){}
 
 /* ══════════════════════════════════════════
-   GUILD LEVEL — XP ENGINE
+   GUILD LEVEL — XP ENGINE (v2)
 ══════════════════════════════════════════ */
 function gainXp(amount){
-  if(A.guildLevel>=MAX_LEVEL)return;
+  if(!amount||amount<=0) return;
+  if(A.guildLevel>=MAX_LEVEL) return;
   A.guildXp+=amount;
   A.guildTotalXp+=amount;
-  showToast(`+${amount} XP`);
-  while(A.guildLevel<MAX_LEVEL&&A.guildXp>=LEVEL_XP[A.guildLevel+1]){
-    A.guildXp-=LEVEL_XP[A.guildLevel+1];
-    A.guildLevel++;
-    onLevelUp(A.guildLevel);
-  }
+  // 자동 레벨업은 더 이상 일어나지 않음 — 골드+EXP 충족 후 사용자가 명시적으로 클릭
   updateGuildLevelDisplay();
+  if(typeof renderUnlockShop==='function'&&$('unlockModalWrap').classList.contains('open')){
+    renderUnlockShop();
+  }
 }
 
-function onLevelUp(newLevel){
-  showToast(`길드 레벨 ${newLevel} 달성! — ${GUILD_TITLES[newLevel]}`);
-  UNLOCKS.filter(u=>u.type==='auto'&&u.level===newLevel&&!A.unlockedIds.includes(u.id))
-    .forEach(u=>{applyUnlock(u);A.unlockedIds.push(u.id);});
-  applyRarityWeights(newLevel);
+// 사용자가 명시적으로 길드 레벨업 클릭
+function tryGuildLevelUp(){
+  if(A.guildLevel>=MAX_LEVEL){showToast('이미 만렙입니다');return;}
+  const need=levelUpXp(A.guildLevel);
+  const goldCost=levelUpGoldCost(A.guildLevel);
+  if(A.guildXp<need){showToast(`EXP가 ${(need-A.guildXp).toLocaleString()} 부족합니다`);return;}
+  if(A.gold<goldCost){showToast(`골드가 ${(goldCost-A.gold).toLocaleString()}G 부족합니다`);return;}
+  A.guildXp-=need;
+  A.gold-=goldCost;
+  A.guildLevel++;
+  showToast(`✨ 길드 레벨 ${A.guildLevel} 달성! — ${getGuildTitle(A.guildLevel)}`);
   triggerLevelUpAnimation();
+  applyRarityWeightsByLevel(A.guildLevel);
+  updateGoldDisplay();
+  updateGuildLevelDisplay();
+  renderUnlockShop();
 }
 
-function applyRarityWeights(level){
-  const brackets=Object.keys(RARITY_BY_LEVEL).map(Number).sort((a,b)=>b-a);
-  const bracket=brackets.find(b=>level>=b)||1;
-  const w=RARITY_BY_LEVEL[bracket];
+function applyRarityWeightsByLevel(level){
+  const w=getRarityWeights(level);
   RARITY_WEIGHTS[0].weight=w[0];
   RARITY_WEIGHTS[1].weight=w[1];
   RARITY_WEIGHTS[2].weight=w[2];
   RARITY_WEIGHTS[3].weight=w[3];
 }
 
-function applyUnlock(u){
-  switch(u.id){
-    case 'cap10': A.guildMemberCap=10; break;
-    case 'cap12': A.guildMemberCap=12; break;
-    case 'stat_xp': addStatIfMissing('경험치 보너스','%'); break;
-    case 'stat_rest': addStatIfMissing('휴식 효율','%'); break;
-    case 'goldcap2500': A.questGoldDailyCap=2500; break;
-    case 'goldcap3000': A.questGoldDailyCap=3000; break;
-    case 'preset4': expandPresets(4); break;
-    case 'preset5': expandPresets(5); break;
-    case 'squad5': SQUAD_SLOTS=5; break;
-    case 'squad6': SQUAD_SLOTS=6; break;
-    case 'amb_thunder': addAmbientSound('thunder','Thunder','⚡'); break;
-    case 'amb_cave': addAmbientSound('cave','Cave','🦇'); break;
-    case 'amb_tavern': addAmbientSound('tavern','Tavern','🍺'); break;
+/* 새 해금 적용 (id 기반) */
+function applyUnlockV2(id){
+  switch(id){
+    case 'preset2': case 'preset3':
+      // 프리셋 배열 확장
+      const cnt=getActivePresetCount();
+      while((A.squadPresets||[]).length<cnt) A.squadPresets.push([]);
+      PRESET_COUNT=cnt;
+      break;
+    case 'squad3': case 'squad4':
+      SQUAD_SLOTS=getActiveSquadSlots();
+      break;
+    // 보상 배수, 곡, 배경 — 별도 적용 없음 (각 헬퍼 getRewardMultiplier/isTrackUnlocked가 동적으로 읽음)
   }
 }
 
-function addStatIfMissing(name,unit){
-  if(!STAT_POOL.find(s=>s.name===name)){
-    STAT_POOL.push({name,unit});
-  }
-}
-
-function expandPresets(newCount){
-  PRESET_COUNT=newCount;
-  if(A.squadPresets){
-    while(A.squadPresets.length<newCount) A.squadPresets.push([]);
-  }
-}
-
-function addAmbientSound(id,name,icon){
-  const container=$('ambientSounds');
-  if(!container||container.querySelector(`[data-amb="${id}"]`))return;
-  const div=document.createElement('div');
-  div.className='amb-track';
-  div.setAttribute('data-amb',id);
-  div.innerHTML=`<span class="amb-icon">${icon}</span><span class="amb-name">${name}</span><div class="amb-bar" onclick="setAmb(event,'${id}')"><div class="amb-fill" id="ambFill_${id}" style="width:0%"></div></div>`;
-  container.appendChild(div);
-}
-
-/* — Unlock Shop Modal — */
-let unlockActiveTab='tree';
+/* ══════════════════════════════════════════
+   UNLOCK MODAL — 탭 1: 길드 레벨 + 기능 해금 / 탭 2: 콘텐츠 해금
+══════════════════════════════════════════ */
 function openUnlockShop(){
   $('unlockModalWrap').classList.add('open');
-  unlockActiveTab='tree';
   renderUnlockShop();
 }
 function closeUnlockShop(){
   $('unlockModalWrap').classList.remove('open');
 }
-function switchUnlockTab(tab){
-  unlockActiveTab=tab;
-  const wrap=$('unlockModalWrap');
-  const tabs=wrap.querySelectorAll('.gm-tab');
-  tabs.forEach((t,i)=>t.classList.toggle('active',['tree','shop'][i]===tab));
-  wrap.querySelectorAll('.gm-tab-content').forEach(c=>c.classList.remove('active'));
-  if(tab==='tree') $('unlockTabTree').classList.add('active');
-  else $('unlockTabShop').classList.add('active');
-  renderUnlockShop();
-}
+
 function renderUnlockShop(){
-  renderUnlockHeader();
-  if(unlockActiveTab==='tree') renderUnlockTree();
-  else renderUnlockStore();
-}
-function renderUnlockHeader(){
-  const h=$('unlockLevelHeader');
-  if(!h)return;
-  const isMax=A.guildLevel>=MAX_LEVEL;
-  const need=isMax?1:LEVEL_XP[A.guildLevel+1];
-  const pct=isMax?100:(need>0?Math.min(100,A.guildXp/need*100):0);
-  h.innerHTML=`
-    <div class="unlock-lvl-title">Lv.${A.guildLevel} ${GUILD_TITLES[A.guildLevel]}</div>
-    <div class="unlock-xp-bar-wrap"><div class="unlock-xp-bar" style="width:${pct}%"></div></div>
-    <div class="unlock-xp-label">${isMax?'MAX LEVEL':`XP: ${A.guildXp} / ${need}`}</div>`;
-}
-function renderUnlockTree(){
-  const el=$('unlockTree');
-  if(!el)return;
-  // Group unlocks by level, also include rarity & title auto-unlocks
-  const levels=[];
-  for(let lv=2;lv<=MAX_LEVEL;lv++){
-    const items=[];
-    // Rarity boost at 2,4,6,8
-    if(RARITY_BY_LEVEL[lv]){
-      const w=RARITY_BY_LEVEL[lv];
-      const idx=Object.keys(RARITY_BY_LEVEL).filter(k=>Number(k)<=lv).length;
-      items.push({type:'auto',desc:`모집 확률 보정 ${['I','II','III','IV','V'][idx-1]||idx}`,detail:`Normal ${w[0]} / Rare ${w[1]} / Epic ${w[2]} / Legendary ${w[3]}`,unlocked:A.guildLevel>=lv});
-    }
-    // Regular unlocks
-    UNLOCKS.filter(u=>u.level===lv).forEach(u=>{
-      const owned=A.unlockedIds.includes(u.id);
-      items.push({...u,unlocked:u.type==='auto'?A.guildLevel>=lv:owned,owned});
-    });
-    // Title
-    items.push({type:'auto',desc:'길드 칭호',detail:GUILD_TITLES[lv],unlocked:A.guildLevel>=lv});
-    levels.push({lv,items});
-  }
-  let html='';
-  for(const{lv,items}of levels){
-    const isCurrent=A.guildLevel===lv;
-    const isCompleted=A.guildLevel>lv;
-    const isLocked=A.guildLevel<lv;
-    const cls=isCurrent?'current':isCompleted?'completed':'locked';
-    const badge=isCurrent?'<span class="badge badge-current">CURRENT</span>':isCompleted?'<span class="badge badge-done">✓</span>':'';
-    html+=`<div class="unlock-level-block ${cls}">
-      <div class="unlock-level-label">Lv.${lv} ${badge}</div>`;
-    for(const item of items){
-      const icon=item.unlocked?'✅':'🔒';
-      let tag='';
-      if(item.type==='auto'){
-        tag=`<span class="unlock-item-tag tag-auto">AUTO</span>`;
-      }else if(item.owned){
-        tag=`<span class="unlock-item-tag tag-purchased">구매완료</span>`;
-      }else if(A.guildLevel>=item.level){
-        tag=`<button class="unlock-item-tag tag-buy" onclick="purchaseUnlock('${item.id}')">${item.cost.toLocaleString()}G</button>`;
-      }else{
-        tag=`<span class="unlock-item-tag tag-locked">${item.cost.toLocaleString()}G</span>`;
-      }
-      html+=`<div class="unlock-item">
-        <div class="unlock-item-info">
-          <div class="unlock-item-name">${icon} ${esc(item.desc)}</div>
-          <div class="unlock-item-detail">${esc(item.detail)}</div>
-        </div>
-        ${tag}
-      </div>`;
-    }
-    html+=`</div>`;
-  }
-  el.innerHTML=`<div class="unlock-tree">${html}</div>`;
-}
-function renderUnlockStore(){
-  const el=$('unlockStore');
-  if(!el)return;
-  const purchasable=UNLOCKS.filter(u=>u.type==='purchase');
-  const icons={preset4:'📋',preset5:'📋',squad5:'⚔️',squad6:'⚔️',amb_thunder:'⚡',amb_cave:'🦇',amb_tavern:'🍺'};
-  let html='';
-  for(const u of purchasable){
-    const owned=A.unlockedIds.includes(u.id);
-    const levelMet=A.guildLevel>=u.level;
-    const cls=owned?'purchased':levelMet?'available':'level-locked';
-    let btn='';
-    if(owned){
-      btn=`<div class="unlock-store-btn bought">구매 완료</div>`;
-    }else if(levelMet){
-      btn=`<button class="unlock-store-btn buyable" onclick="purchaseUnlock('${u.id}')">💰 ${u.cost.toLocaleString()}</button>`;
-    }else{
-      btn=`<div class="unlock-store-btn locked">🔒 Lv.${u.level}</div>`;
-    }
-    html+=`<div class="unlock-store-card ${cls}">
-      <div class="unlock-store-icon">${icons[u.id]||'🔓'}</div>
-      <div class="unlock-store-name">${esc(u.desc)}</div>
-      <div class="unlock-store-req">${esc(u.detail)} · Lv.${u.level}</div>
-      ${btn}
-    </div>`;
-  }
-  el.innerHTML=`<div class="unlock-store-grid">${html}</div>`;
+  // 단일 화면 — 길드 레벨 카드 + 기능 해금 카테고리들
+  renderFeaturesTab();
 }
 
-function purchaseUnlock(unlockId){
-  const u=UNLOCKS.find(x=>x.id===unlockId);
-  if(!u||u.type!=='purchase')return;
-  if(A.guildLevel<u.level){showToast('레벨이 부족합니다');return;}
-  if(A.unlockedIds.includes(u.id)){showToast('이미 해금되었습니다');return;}
-  if(A.gold<u.cost){showToast('골드가 부족합니다');return;}
+/* — 단일 패널: Guild Level Card + Functional Unlocks — */
+function renderFeaturesTab(){
+  const el=$('unlockTabFeatures');
+  if(!el) return;
+  el.innerHTML=renderGuildLevelCard()+renderFunctionalUnlocks();
+}
+
+function renderGuildLevelCard(){
+  const lvl=A.guildLevel;
+  const isMax=lvl>=MAX_LEVEL;
+  const need=isMax?Infinity:levelUpXp(lvl);
+  const goldCost=isMax?Infinity:levelUpGoldCost(lvl);
+  const xp=A.guildXp;
+  const xpPct=isMax?100:Math.min(100,(xp/need)*100);
+  const xpReady=xp>=need;
+  const goldReady=A.gold>=goldCost;
+  const canLevelUp=!isMax&&xpReady&&goldReady;
+  
+  const w=getRarityWeights(lvl);
+  const wNext=isMax?w:getRarityWeights(lvl+1);
+  const weightsChanged=!isMax&&w.some((v,i)=>v!==wNext[i]);
+  
+  let btnHtml,btnTooltip='';
+  if(isMax){
+    btnHtml=`<div class="unlock-lvlup-btn maxed">MAX LEVEL</div>`;
+  }else if(canLevelUp){
+    btnHtml=`<button class="unlock-lvlup-btn ready" onclick="tryGuildLevelUp()">레벨업 (${goldCost.toLocaleString()}G)</button>`;
+  }else{
+    // 부족 사유를 명시
+    const reasons=[];
+    if(!xpReady) reasons.push(`EXP ${(need-xp).toLocaleString()} 부족`);
+    if(!goldReady) reasons.push(`골드 ${(goldCost-A.gold).toLocaleString()}G 부족`);
+    btnTooltip=reasons.join(' · ');
+    btnHtml=`<button class="unlock-lvlup-btn disabled" onclick="tryGuildLevelUp()" title="${esc(btnTooltip)}">레벨업 (${goldCost.toLocaleString()}G)</button>`;
+  }
+  
+  return `<div class="unlock-section">
+    <div class="unlock-section-label">⚜ 길드 레벨</div>
+    <div class="unlock-level-card">
+      <div class="unlock-level-card-head">
+        <div>
+          <div class="unlock-level-card-title">Lv.${lvl} ${getGuildTitle(lvl)}</div>
+          <div class="unlock-level-card-sub">${isMax?'최고 레벨':`다음 레벨까지`}</div>
+        </div>
+        ${btnHtml}
+      </div>
+      <div class="unlock-level-progress">
+        <div class="unlock-level-progress-row">
+          <span class="unlock-level-progress-label ${xpReady?'ready':''}">EXP</span>
+          <div class="unlock-level-bar"><div class="unlock-level-bar-fill xp" style="width:${xpPct}%"></div></div>
+          <span class="unlock-level-progress-val">${xp.toLocaleString()} / ${isMax?'∞':need.toLocaleString()}</span>
+        </div>
+        <div class="unlock-level-progress-row">
+          <span class="unlock-level-progress-label ${goldReady?'ready':''}">GOLD</span>
+          <div class="unlock-level-bar"><div class="unlock-level-bar-fill gold" style="width:${isMax?100:Math.min(100,A.gold/goldCost*100)}%"></div></div>
+          <span class="unlock-level-progress-val">${A.gold.toLocaleString()} / ${isMax?'∞':goldCost.toLocaleString()}</span>
+        </div>
+      </div>
+      <div class="unlock-level-rarity">
+        <div class="unlock-level-rarity-label">현재 모집 확률</div>
+        <div class="unlock-level-rarity-bars">
+          <div class="rar-bar normal"><span>Normal</span><b>${w[0]}%</b></div>
+          <div class="rar-bar rare"><span>Rare</span><b>${w[1]}%</b></div>
+          <div class="rar-bar epic"><span>Epic</span><b>${w[2]}%</b></div>
+          <div class="rar-bar legendary"><span>Legendary</span><b>${w[3]}%</b></div>
+        </div>
+        ${weightsChanged?`<div class="unlock-level-rarity-next">다음 레벨에서: ${wNext.map((v,i)=>`<span class="rar-pill ${['normal','rare','epic','legendary'][i]}">${v}%</span>`).join('')}</div>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderFunctionalUnlocks(){
+  const cats=[
+    { key:'preset',    title:'스쿼드 프리셋', icon:'📋', desc:'전투 진형을 여러 세트로 저장' },
+    { key:'squad',     title:'편성 슬롯',     icon:'⚔️', desc:'동시에 출전 가능한 길드원 수' },
+    { key:'stopwatch', title:'스톱워치 보상', icon:'⏱', desc:'스톱워치 완료 시 골드 배수' },
+    { key:'timer',     title:'타이머 보상',   icon:'⏲', desc:'타이머 완료 시 골드 배수' },
+    { key:'quest',     title:'퀘스트 보상',   icon:'📜', desc:'퀘스트 달성 시 골드 배수' },
+  ];
+  let html='<div class="unlock-section"><div class="unlock-section-label">🔓 기능 해금</div>';
+  for(const cat of cats){
+    const { current, total } = getCategoryProgress(cat.key);
+    const next=getNextUnlockInCategory(cat.key);
+    const isMaxed=!next;
+    const currentEffect=getCurrentEffectText(cat.key);
+    const nextEffect=getNextEffectText(cat.key);
+    
+    // 진척도 도트
+    const dots=Array.from({length:total},(_,i)=>
+      `<span class="u-cat-dot ${i<current?'filled':''}"></span>`
+    ).join('');
+    
+    // 효과 표시: "현재 → 다음" 형식
+    const effectLine=isMaxed
+      ? `<span class="u-cat-effect-current">${esc(currentEffect)}</span> <span class="u-cat-effect-max">최대</span>`
+      : `<span class="u-cat-effect-current">${esc(currentEffect)}</span> <span class="u-cat-arrow">→</span> <span class="u-cat-effect-next">${esc(nextEffect)}</span>`;
+    
+    // 단일 버튼 — 4상태 (최대/구매가능/골드부족)
+    let btnClass, btnText, tooltip='';
+    if(isMaxed){
+      btnClass='bought'; btnText='✓ 최대';
+    }else if(A.gold<next.cost){
+      btnClass='poor'; btnText=`${next.cost.toLocaleString()}G`;
+      tooltip=`골드가 ${(next.cost-A.gold).toLocaleString()}G 부족합니다`;
+    }else{
+      btnClass='buy'; btnText=`${next.cost.toLocaleString()}G`;
+    }
+    const titleAttr=tooltip?` title="${esc(tooltip)}"`:'';
+    const onClick=isMaxed?'':`onclick="purchaseUnlockV2('${next.id}')"`;
+    
+    html+=`<div class="unlock-cat-card ${isMaxed?'maxed':''}">
+      <div class="unlock-cat-card-head">
+        <span class="unlock-cat-icon">${cat.icon}</span>
+        <div class="unlock-cat-card-titles">
+          <div class="unlock-cat-title">${esc(cat.title)}</div>
+          <div class="unlock-cat-desc">${esc(cat.desc)}</div>
+        </div>
+        <button class="u-item-btn ${btnClass}" ${onClick}${titleAttr}>${btnText}</button>
+      </div>
+      <div class="unlock-cat-card-body">
+        <div class="u-cat-effect-line">${effectLine}</div>
+        <div class="u-cat-progress">
+          <div class="u-cat-dots">${dots}</div>
+          <span class="u-cat-progress-label">${current}/${total}단계</span>
+        </div>
+      </div>
+    </div>`;
+  }
+  html+='</div>';
+  return html;
+}
+
+/* — 콘텐츠 탭은 제거됨 (곡 해금 → 음악 라이브러리, 배경화면 → 환경 설정) — */
+
+function purchaseUnlockV2(unlockId){
+  const u=UNLOCKS_V2.find(x=>x.id===unlockId);
+  if(!u){showToast('해금 항목을 찾을 수 없습니다');return;}
+  if(A.unlockedIds.includes(u.id)){showToast(`이미 ${u.desc} 해금됨`);return;}
+  if(u.requires&&!A.unlockedIds.includes(u.requires)){
+    const reqItem=UNLOCKS_V2.find(x=>x.id===u.requires);
+    showToast(reqItem?`먼저 "${reqItem.desc}"을(를) 해금하세요`:'선행 해금이 필요합니다');
+    return;
+  }
+  if(A.gold<u.cost){
+    showToast(`골드가 ${(u.cost-A.gold).toLocaleString()}G 부족합니다`);
+    return;
+  }
   A.gold-=u.cost;
-  applyUnlock(u);
+  A.unlockedIds.push(u.id);
+  applyUnlockV2(u.id);
+  updateGoldDisplay();
+  showToast(`✨ ${u.desc} 해금!`);
+  renderUnlockShop();
+  // 프리셋/슬롯 변경은 길드 관리 화면에 즉시 반영
+  if($('manageModalWrap').classList.contains('open')){
+    renderFormation();
+    renderMembersList();
+  }
+}
+
+/* ══════════════════════════════════════════
+   SETTINGS MODAL — 환경 설정
+══════════════════════════════════════════ */
+let settingsActiveTab='background';
+function openSettingsModal(){
+  $('settingsModalWrap').classList.add('open');
+  settingsActiveTab='background';
+  renderSettingsModal();
+}
+function closeSettingsModal(){
+  $('settingsModalWrap').classList.remove('open');
+}
+function switchSettingsTab(tab){
+  settingsActiveTab=tab;
+  renderSettingsModal();
+}
+function renderSettingsModal(){
+  if(settingsActiveTab==='background') renderBackgroundSettings();
+  // 향후: else if(settingsActiveTab==='general') ...
+}
+
+function renderBackgroundSettings(){
+  const el=$('settingsTabBackground');
+  if(!el) return;
+  
+  const ownedBgs=CONTENT_UNLOCKS.filter(u=>u.cat==='bg'&&A.unlockedIds.includes(u.id));
+  const lockedBgs=CONTENT_UNLOCKS.filter(u=>u.cat==='bg'&&!A.unlockedIds.includes(u.id));
+  
+  // 기본 배경 카드 (항상 첫 번째)
+  let html='<div class="bg-grid">';
+  const isDefaultApplied=A.currentBgId===null;
+  html+=`<div class="bg-card ${isDefaultApplied?'applied':''}">
+    <div class="bg-card-preview bg-card-preview-default">
+      ${isDefaultApplied?'<div class="bg-card-applied-badge">적용중</div>':''}
+    </div>
+    <div class="bg-card-info">
+      <div>
+        <div class="bg-card-name">기본 배경</div>
+        <div class="bg-card-hint">Default Stage</div>
+      </div>
+      ${isDefaultApplied
+        ?'<div class="bg-card-btn applied">✓ 적용중</div>'
+        :`<button class="bg-card-btn apply" onclick="applyBackground(null)">적용하기</button>`}
+    </div>
+  </div>`;
+  
+  // 해금된 배경
+  for(const bg of ownedBgs){
+    const isApplied=A.currentBgId===bg.id;
+    html+=`<div class="bg-card ${isApplied?'applied':''}">
+      <div class="bg-card-preview" style="background:${bg.gradient||''}">
+        ${isApplied?'<div class="bg-card-applied-badge">적용중</div>':''}
+      </div>
+      <div class="bg-card-info">
+        <div>
+          <div class="bg-card-name">${esc(bg.name)}</div>
+          <div class="bg-card-hint">${esc(bg.hint)}</div>
+        </div>
+        ${isApplied
+          ?'<div class="bg-card-btn applied">✓ 적용중</div>'
+          :`<button class="bg-card-btn apply" onclick="applyBackground('${bg.id}')">적용하기</button>`}
+      </div>
+    </div>`;
+  }
+  
+  // 미해금된 배경 (구매 가능 — 해금 모달 거치지 않고 여기서 바로 구매)
+  for(const bg of lockedBgs){
+    const canBuy=A.gold>=bg.cost;
+    let btnHtml,tooltip='';
+    if(canBuy){
+      btnHtml=`<button class="bg-card-btn buy" onclick="purchaseAndApplyBackground('${bg.id}')">${bg.cost.toLocaleString()}G 해금</button>`;
+    }else{
+      tooltip=`골드가 ${(bg.cost-A.gold).toLocaleString()}G 부족합니다`;
+      btnHtml=`<button class="bg-card-btn poor" onclick="purchaseAndApplyBackground('${bg.id}')" title="${esc(tooltip)}">${bg.cost.toLocaleString()}G 해금</button>`;
+    }
+    html+=`<div class="bg-card locked">
+      <div class="bg-card-preview" style="background:${bg.gradient||''}">
+        <div class="bg-card-overlay">
+          <div class="bg-card-overlay-icon">🔒</div>
+        </div>
+      </div>
+      <div class="bg-card-info">
+        <div>
+          <div class="bg-card-name">${esc(bg.name)}</div>
+          <div class="bg-card-hint">${esc(bg.hint)}</div>
+        </div>
+        ${btnHtml}
+      </div>
+    </div>`;
+  }
+  html+='</div>';
+  
+  // 안내 메시지 (해금된 배경이 없을 때만)
+  if(ownedBgs.length===0){
+    html=`<div class="bg-empty-msg">
+      해금된 배경화면이 없습니다.<br>
+      <b>잠긴 배경의 가격을 눌러</b> 새 배경을 구매하세요.
+    </div>`+html;
+  }
+  
+  el.innerHTML=html;
+}
+
+// 배경 구매 + 즉시 적용 (환경 설정 전용)
+function purchaseAndApplyBackground(bgId){
+  const bg=CONTENT_UNLOCKS.find(u=>u.id===bgId&&u.cat==='bg');
+  if(!bg){showToast('배경화면을 찾을 수 없습니다');return;}
+  if(A.unlockedIds.includes(bg.id)){
+    // 이미 해금돼 있으면 그냥 적용만
+    applyBackground(bgId);
+    return;
+  }
+  if(A.gold<bg.cost){
+    showToast(`골드가 ${(bg.cost-A.gold).toLocaleString()}G 부족합니다`);
+    return;
+  }
+  A.gold-=bg.cost;
+  A.unlockedIds.push(bg.id);
+  updateGoldDisplay();
+  showToast(`🖼 ${bg.name} 해금 & 적용!`);
+  // 해금 후 즉시 적용
+  applyBackground(bgId);
+  // 해금 모달이 열려있으면 카운트 갱신
+  if($('unlockModalWrap').classList.contains('open')){
+    renderUnlockShop();
+  }
+}
+
+/* ══════════════════════════════════════════
+   MUSIC LIBRARY MODAL — 음악 라이브러리
+══════════════════════════════════════════ */
+function openMusicLibrary(){
+  $('musicLibraryModalWrap').classList.add('open');
+  // 햄버거 메뉴가 열려있으면 닫기
+  $('playerTracks').classList.remove('open');
+  renderMusicLibrary();
+}
+function closeMusicLibrary(){
+  // 모달 닫을 때 미리듣기 중이면 정지 (본 재생 복귀)
+  if(PREVIEW.active) stopPreview(true);
+  $('musicLibraryModalWrap').classList.remove('open');
+}
+
+// 트랙 인덱스 → 카드 아트 클래스 (장르별)
+function getTrackArtClass(genre){
+  if(genre==='Medieval') return 'medieval';
+  if(genre==='Lo-fi'||genre==='Lo-fi Fantasy') return 'lofi';
+  if(genre==='Ambient') return 'ambient';
+  if(genre==='Orchestral') return 'orchestral';
+  return '';
+}
+// 트랙 인덱스 → CONTENT_UNLOCKS의 항목 (없으면 null = 기본 제공)
+function getTrackUnlockItem(idx){
+  return CONTENT_UNLOCKS.find(u=>u.cat==='track'&&u.trackIdx===idx)||null;
+}
+
+function renderMusicLibrary(){
+  const el=$('musicLibraryBody');
+  if(!el) return;
+  
+  // 보유 vs 잠금 분리
+  const ownedIdx=[], lockedIdx=[];
+  TRACKS.forEach((t,i)=>{
+    if(isTrackUnlocked(i)) ownedIdx.push(i);
+    else lockedIdx.push(i);
+  });
+  
+  let html='';
+  
+  // 보유 곡 섹션
+  html+=`<div class="music-section">
+    <div class="music-section-label">▶ 보유 곡 <span class="music-section-count">${ownedIdx.length}</span></div>
+    <div class="music-grid">${ownedIdx.map(i=>renderMusicCard(i,false)).join('')}</div>
+  </div>`;
+  
+  // 잠긴 곡 섹션 (있을 때만)
+  if(lockedIdx.length>0){
+    html+=`<div class="music-section">
+      <div class="music-section-label">🔒 해금 가능 <span class="music-section-count">${lockedIdx.length}</span></div>
+      <div class="music-grid">${lockedIdx.map(i=>renderMusicCard(i,true)).join('')}</div>
+    </div>`;
+  }
+  
+  el.innerHTML=html;
+}
+
+// 음악 카드 1개 렌더 — idx + locked 여부
+function renderMusicCard(idx,isLocked){
+  const t=TRACKS[idx];
+  const artClass=getTrackArtClass(t.genre);
+  const unlockItem=getTrackUnlockItem(idx); // null = 기본 제공 곡
+  const isPlaying=idx===MP.idx&&!PREVIEW.active;
+  const isFreeTrack=!unlockItem; // 기본 제공 곡 (TRACKS[0], TRACKS[1])
+  const isPreviewing=PREVIEW.active&&PREVIEW.trackIdx===idx;
+  
+  let btn,artExtra='';
+  if(isLocked){
+    artExtra=`<div class="music-card-lock">🔒</div>`;
+    if(isPreviewing){
+      // 미리듣기 중인 잠긴 카드: 진행 표시 + 중지 버튼
+      const remain=PREVIEW.duration-PREVIEW.pos;
+      artExtra+=`<div class="music-card-preview-mark">미리듣기 ${fmtT(remain)}</div>`;
+    }
+    const canBuy=A.gold>=unlockItem.cost;
+    let buyBtn;
+    if(canBuy){
+      buyBtn=`<button class="music-card-btn buy" onclick="purchaseTrackUnlock('${unlockItem.id}')">${unlockItem.cost.toLocaleString()}G 해금</button>`;
+    }else{
+      const tooltip=`골드가 ${(unlockItem.cost-A.gold).toLocaleString()}G 부족합니다`;
+      buyBtn=`<button class="music-card-btn poor" onclick="purchaseTrackUnlock('${unlockItem.id}')" title="${esc(tooltip)}">${unlockItem.cost.toLocaleString()}G 해금</button>`;
+    }
+    // 미리듣기 버튼 — 듣는 중이면 "중지", 아니면 "👂 30초 미리듣기"
+    const previewBtn=isPreviewing
+      ?`<button class="music-card-btn preview-stop" onclick="stopPreview()">■ 미리듣기 중지</button>`
+      :`<button class="music-card-btn preview" onclick="startPreview(${idx})">👂 30초 미리듣기</button>`;
+    btn=previewBtn+buyBtn;
+  }else if(isPlaying){
+    artExtra=`<div class="music-card-playing-mark">재생 중</div>`;
+    btn=`<div class="music-card-btn playing">▶ 재생 중</div>`;
+  }else{
+    btn=`<button class="music-card-btn play" onclick="playFromLibrary(${idx})">▶ 재생</button>`;
+  }
+  
+  // 기본 제공 곡 표시
+  const freeTagHtml=isFreeTrack&&!isLocked?`<div class="music-card-btn free-tag">기본 제공</div>`:'';
+  
+  return `<div class="music-card ${isLocked?'locked':'owned'} ${isPlaying?'playing':''} ${isPreviewing?'previewing':''}">
+    <div class="music-card-art ${artClass} ${isLocked?'locked':''}">
+      ${getMusicCardIcon(t.genre)}
+      ${artExtra}
+    </div>
+    <div class="music-card-info">
+      <div class="music-card-meta-row">
+        <div>
+          <div class="music-card-name">${esc(t.title)}</div>
+          <div class="music-card-genre">${esc(t.genre)}</div>
+        </div>
+        <div class="music-card-dur">${fmtT(t.dur)}</div>
+      </div>
+      ${btn}
+      ${freeTagHtml}
+    </div>
+  </div>`;
+}
+
+function getMusicCardIcon(genre){
+  if(genre==='Medieval') return '⚔';
+  if(genre==='Lo-fi'||genre==='Lo-fi Fantasy') return '☕';
+  if(genre==='Ambient') return '🌙';
+  if(genre==='Orchestral') return '🎻';
+  return '♪';
+}
+
+// 라이브러리에서 재생 — 모달 닫지 않고 바로 재생
+function playFromLibrary(idx){
+  if(!isTrackUnlocked(idx)){showToast('해금되지 않은 곡입니다');return;}
+  // 미리듣기 중이면 먼저 정지 (본 재생 복귀 로직 끄기 — 새 곡으로 덮어쓰기)
+  if(PREVIEW.active){
+    clearInterval(PREVIEW.tickId);
+    PREVIEW.active=false; PREVIEW.trackIdx=null; PREVIEW.pos=0;
+    PREVIEW.tickId=null; PREVIEW.prevPlaying=false;
+    hidePreviewIndicator();
+  }
+  MP.idx=idx;MP.pos=0;
+  renderTrackInfo();
+  renderTrackList();
+  renderMusicLibrary(); // 카드 상태 갱신 (재생 중 표시)
+  if(!MP.playing) togglePlay();
+}
+
+// 라이브러리에서 곡 해금 — 구매 후 카드 상태 즉시 갱신 + 트랙 리스트 갱신
+function purchaseTrackUnlock(unlockId){
+  const u=CONTENT_UNLOCKS.find(x=>x.id===unlockId&&x.cat==='track');
+  if(!u){showToast('곡을 찾을 수 없습니다');return;}
+  if(A.unlockedIds.includes(u.id)){showToast('이미 해금된 곡입니다');return;}
+  if(A.gold<u.cost){
+    showToast(`골드가 ${(u.cost-A.gold).toLocaleString()}G 부족합니다`);
+    return;
+  }
+  // 미리듣기 중인 곡을 구매했다면 미리듣기 정지하고 본격 재생으로 전환
+  const wasPreviewingThis=PREVIEW.active&&u.trackIdx===PREVIEW.trackIdx;
+  if(PREVIEW.active) stopPreview(true);
+  A.gold-=u.cost;
   A.unlockedIds.push(u.id);
   updateGoldDisplay();
-  showToast('해금 완료!');
-  if(typeof renderUnlockShop==='function') renderUnlockShop();
+  showToast(`🎵 ${u.name} 해금!`);
+  renderMusicLibrary();
+  renderTrackList();
+  // 미리듣기 중이던 곡이면 해금 후 자동 재생 (자연스러운 흐름)
+  if(wasPreviewingThis&&u.trackIdx!=null){
+    playFromLibrary(u.trackIdx);
+  }
+}
+
+// 배경 적용 — bgId가 null이면 기본 배경
+function applyBackground(bgId){
+  A.currentBgId=bgId;
+  const stage=document.querySelector('.stage');
+  if(!stage) return;
+  if(bgId===null){
+    // 기본 배경으로 복원
+    stage.style.background=''; // CSS 정의값 사용
+  }else{
+    const bg=CONTENT_UNLOCKS.find(u=>u.id===bgId);
+    if(bg&&bg.gradient) stage.style.background=bg.gradient;
+  }
+  renderBackgroundSettings(); // 적용 상태 갱신
+  const name=bgId===null?'기본 배경':(CONTENT_UNLOCKS.find(u=>u.id===bgId)?.name||'');
+  showToast(`🖼 ${name} 적용`);
 }
 
 function updateGuildLevelDisplay(){
   const lvEl=$('guildLvl');
   if(lvEl) lvEl.textContent=`Lv.${A.guildLevel}`;
   const subEl=$('guildSub');
-  if(subEl) subEl.textContent=GUILD_TITLES[A.guildLevel];
+  if(subEl) subEl.textContent=getGuildTitle(A.guildLevel);
   const xpBar=$('guildXpBar');
   const xpText=$('guildXpText');
   if(A.guildLevel>=MAX_LEVEL){
     if(xpBar) xpBar.style.width='100%';
     if(xpText) xpText.textContent='MAX LEVEL';
   }else{
-    const need=LEVEL_XP[A.guildLevel+1];
+    const need=levelUpXp(A.guildLevel);
     const pct=need>0?(A.guildXp/need*100):0;
-    if(xpBar) xpBar.style.width=pct+'%';
-    if(xpText) xpText.textContent=`XP: ${A.guildXp} / ${need}`;
+    if(xpBar) xpBar.style.width=Math.min(100,pct)+'%';
+    if(xpText) xpText.textContent=`XP: ${A.guildXp.toLocaleString()} / ${need.toLocaleString()}`;
   }
 }
 
@@ -4564,8 +6362,15 @@ function triggerLevelUpAnimation(){
 renderTrackInfo();renderTrackList();renderTlTodos();
 initMidnightRollover();
 updateGoldDisplay();
-applyRarityWeights(A.guildLevel);
+applyRarityWeightsByLevel(A.guildLevel);
+// 초기 잠금 상태에 맞춰 PRESET_COUNT / SQUAD_SLOTS 동기화
+PRESET_COUNT=getActivePresetCount();
+SQUAD_SLOTS=getActiveSquadSlots();
 updateGuildLevelDisplay();
+// 저장된 배경 복원 (A.currentBgId가 null이 아닐 때만)
+if(A.currentBgId){
+  applyBackground(A.currentBgId);
+}
 </script>
 </body>
 </html>
